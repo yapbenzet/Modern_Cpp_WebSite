@@ -1,0 +1,522 @@
+== Kalıtım
+
+Sınıflar diğer sınıflardan türetilebilir.(is a) Bu özelliğer kalıtım denir. Biyolojideki kalıtım gibi sınıflar da üst sınıflardan özellikler taşırlar.
+
+Kalıtılan sınıfa "base class" denir. Kalıtan sınıf da subclassdır.
+
+Örnek
+
+[source,C++]
+----
+
+class arac
+{
+    string isim;
+    string renk;
+}
+
+class araba : arac
+{
+    // ana sinifin uyeleri bu sinif tarafindan erisilebilirdir.
+}
+----
+
+**Kalıtım Tipleri**
+
+|====
+| public | protected | private
+| public üyeler  subclassda da publicdir ve üye fonksiyonlar ve üye olmayanlar tarafından erişilebilirdir. | public üyeler subclassda protected olurlar ve sınıfın üyeleri tarafından erişilebilirdir. | public üyeler private olurlar ve subclass üyeleri tarafından erişilebilirler.
+| protected üyeler protected olarak kalırlar ve subclass üyeleri tarafından erişilebilirdirler. | protected üyeler protected olarak kalırlar ve subclass üyeleri tarafından erişilebilirdirler. | protected üyeler private olurlar ve subclass üyeleri tarafından erişilebilirdirler.
+| Erişilemez | Erişilemez|Erişilemez
+|====
+
+Örnek: Public Inheritence
+
+[source,C++]
+----
+class Base
+{
+public:
+    int m_public;
+private:
+    int m_private;
+protected:
+    int m_protected;
+    
+}; 
+
+class Pub: public Base // note: public inheritance
+{    
+// Public inheritance means:    
+// Public inherited members stay public (so m_public is treated as public)    
+// Protected inherited members stay protected (so m_protected is treated as protected)    
+// Private inherited members stay inaccessible (so m_private is inaccessible)
+
+public:    
+    Pub()    
+    {        
+        m_public = 1; // okay: m_public was inherited as public       
+        m_private = 2; // not okay: m_private is inaccessible from derived class        
+        m_protected = 3; // okay: m_protected was inherited as protected    
+        
+    }
+    
+}; 
+
+int main()
+{    
+// Outside access uses the access specifiers of the class being accessed.    
+
+    Base base;    
+    base.m_public = 1; // okay: m_public is public in Base    
+    base.m_private = 2; // not okay: m_private is private in Base    
+    base.m_protected = 3; // not okay: m_protected is protected in Base     
+    
+    Pub pub;    
+    pub.m_public = 1; // okay: m_public is public in Pub    
+    pub.m_private = 2; // not okay: m_private is inaccessible in Pub    
+    pub.m_protected = 3; // not okay: m_protected is protected in Pub
+----
+
+Private Inheritence örnek:
+
+[source,C++]
+----
+class Base
+{
+public:    
+    int m_public;
+private:    
+    int m_private;
+protected:    
+    int m_protected;
+    
+}; 
+class Pri: private Base // note: private inheritance
+{    
+    // Private inheritance means:    
+    // Public inherited members become private (so m_public is treated as private)    
+    // Protected inherited members become private (so m_protected is treated as private)
+    // Private inherited members stay inaccessible (so m_private is inaccessible)
+    
+public:    
+
+    Pri()    
+    {        
+        m_public = 1; // okay: m_public is now private in Pri        
+        m_private = 2; // not okay: derived classes can't access private members in the base class        
+        m_protected = 3; // okay: m_protected is now private in Pri    
+        
+    }
+    
+}; 
+int main()
+{   
+    // Outside access uses the access specifiers of the class being accessed.    
+    // In this case, the access specifiers of base.    
+    
+    Base base;    
+    
+    base.m_public = 1; // okay: m_public is public in Base    
+    base.m_private = 2; // not okay: m_private is private in Base    
+    base.m_protected = 3; // not okay: m_protected is protected in Base     
+    
+    Pri pri;    
+    pri.m_public = 1; // not okay: m_public is now private in Pri    
+    pri.m_private = 2; // not okay: m_private is inaccessible in Pri   
+    pri.m_protected = 3; // not okay: m_protected is now private in Pri
+----
+
+
+=== Kalıtım
+
+Yeni sınıflar kalıtım mekanizmasıyla var olan sınıflardan türetilebilirler. Sınıfların türetildiği sınıflara ana sınıf ve türetilen sınıflara ise alt sınıf denir.
+
+[source, c++]
+----
+class Arac
+{
+private:
+    string Mensei;    
+    string Renk;
+    ...
+};
+
+class Araba : Arac
+{
+    ///Mensei ve Renk özelliklerini içerir
+    ///Araba için diğer özellikler burada bulunacaktır
+};
+----
+
+Bu örnekte Arac ana sınıf, Araba ise türetilmiş sınıftır. Araba sınıfı otomatik olarak Mensei ve Renk özelliklerini kalıtır ve Araba'ya özel özellikleri ve fonksiyonları eklemekte özgürdür.
+
+==== C{plus}{plus}'da Kalıtım Tipleri
+
+C{plus}{plus} public, private ve protected olmak üzere 3 çeşit kalıtım tipini destekler. Public kalıtım'da türetilen sınıf ana sınıfın private ve public tüm üye değişkenlerini kalıtır fakat sadece ana sınıfın public elemanlarına doğrudan erişebilir. 
+
+**Insan.h**
+
+[source,c++]
+----
+#pragma once
+
+#include 
+#include <string>
+using namespace std;
+
+class Insan {
+private:
+    string isim;
+    string soyIsim;
+    int yas;
+public:
+    Insan();
+    Insan(string i, string s);
+    Insan(string i, string s, int y);
+
+    ~Insan();
+
+    void merhaba() const;
+};
+----
+
+
+**Ogrenci.h**
+
+[source, c++]
+----
+#pragma once  
+#include "Insan.h"  
+
+class Ogrenci :  public Insan  
+{  
+public:  
+    Ogrenci();  
+    ~Ogrenci();  
+};  
+----
+
+**Ogrenci.cpp**
+
+[source, c++]
+----
+#include "Ogrenci.h"  
+
+    Ogrenci::Ogrenci()  
+    {  
+    }  
+
+    Ogrenci::~Ogrenci()  
+    {  
+    }
+----
+
+**main.cpp**
+
+[source, c++]
+----
+#include "Insan.h"  
+#include "Ogrenci.h"  
+
+int main()  
+{  
+
+    Ogrenci ogrenci1;  
+
+    //student1.firstName = "Tom";///Hata: private elemana doğrudan erişim  
+
+    student1.merhaba();  
+
+    return 0;  
+}
+----
+
+Bu örnekte bir Insan sınıfı var. Daha sonra Ogrenci sınıfı geliyor ve ":" işareti ve public Insan ile devam ediyor. Bu, Ogrenci sınıfının, Insan sınıfının public kalıtımlı alt sınıfı olduğunu gösteriyor. Aynı zamanda Ogrenci sınıfının varsayılan yapıcı ve yıkıcı fonksiyonları vardır ki bunlar Insan sınıfınınkilerden ayrıdır.
+
+Bahsedildiği gibi C{plus}{plus} kalıtımında public, private ve protected olmak üzere 3 tip vardır.
+
+.Erişim
+|====
+| Erişim | public | protected | private
+| Aynı sınıf | yes | yes | yes
+| Türetilmiş sınıf | yes | yes | no
+| Sınıf dışı | yes | no | no
+|====
+
+Örnek: Public Inheritence
+
+[source,C++]
+----
+class Base
+{
+public:
+    int m_public;
+private:
+    int m_private;
+protected:
+    int m_protected;
+    
+}; 
+
+class Pub: public Base
+{    
+public:    
+    Pub()    
+    {        
+        m_public = 1; // doğru: m_public public olarak kalıtılmıştır       
+        m_private = 2; // yanlış: m_private türetilmiş sınıftan erişilemez        
+        m_protected = 3; // doğru: m_protected protected olarak kalıtılmıştır   
+        
+    }
+    
+}; 
+
+int main()
+{    
+    Base base;    
+    base.m_public = 1; // doğru
+    base.m_private = 2; // yanlış: m_private erişilemez
+    base.m_protected = 3; // yanlış: m_protected doğrudan erişilemez
+    
+    Pub pub;    
+    pub.m_public = 1; // doğru    
+    pub.m_private = 2; // yanlış: m_private Pub tarafından erişilemez    
+    pub.m_protected = 3; // yanlış: m_protected doğrudan erişilemez
+----
+
+Örnek: Private Inheritence
+
+[source,C++]
+----
+class Base
+{
+public:    
+    int m_public;
+private:    
+    int m_private;
+protected:    
+    int m_protected;
+    
+}; 
+class Pri: private Base
+{    
+    
+public:    
+
+    Pri()    
+    {        
+        m_public = 1; // okay: m_public is now private in Pri        
+        m_private = 2; // not okay: derived classes can't access private members in the base class        
+        m_protected = 3; // okay: m_protected is now private in Pri    
+        
+    }
+    
+}; 
+int main()
+{   
+    // Outside access uses the access specifiers of the class being accessed.    
+    // In this case, the access specifiers of base.    
+    
+    Base base;    
+    
+    base.m_public = 1; // okay: m_public is public in Base    
+    base.m_private = 2; // not okay: m_private is private in Base    
+    base.m_protected = 3; // not okay: m_protected is protected in Base     
+    
+    Pri pri;    
+    pri.m_public = 1; // not okay: m_public is now private in Pri    
+    pri.m_private = 2; // not okay: m_private is inaccessible in Pri   
+    pri.m_protected = 3; // not okay: m_protected is now private in Pri
+----
+
+|====
+| public | protected | private
+| public üyeler türetilmiş sınıfta da public olur ve üye ve üye olmayan fonksiyonlar tarafından doğrudan erişilebilirler| public üyeler türetilmiş sınıfta protected olurlar ve üye fonksiyonlar tarafından erişilebilirler | public üyeler türetilmiş sınıfta private olurlar ve üye fonksiyonlar tarafından erişilebilirler
+| protected üyeler türetilmiş sınıfta da protected olur ve üye fonksiyonlar tarafından erişilebilirler |  üyeler türetilmiş fonksiyonda yine protected olurlar ve üye fonksiyonlar tarafından erişilebilirler | protected üyeler türetilmiş sınıfta private olurlar ve üye fonksiyonlar tarafından erişilebilirler
+| private üyeler türetilmiş sınıfta gizlidir ve üye fonksiyonlar tarafından erişilebilirler | private üyeler türetilmiş sınıfta gizlidir ve erişilemezler | private üyeler türetilmiş sınıfta gizlidir ve erişilemezler
+|====
+
+== Inheritance (Kalıtım)
+
+Kalıtım (inheritance) bir nesnenin başka bir nesnenin özelliklerini birebir devralmasıdır.Eğer  
+tanımlamak istediğimiz bir nesne önceden tanımlanmış bir nesnenin de özelliklerine sahip ise kalıtım  
+yolu ile bu nesnenin özeliklerini alıp ek özellikleri ilave ederek nesneyi oluşturabiliriz.
+
+Özellikleri devralınan sınıf **Temel sınıf(base class)** olarak  
+isimlendirilir. Temel sınıfın dahil edildiği sınıf **türemiş sınıf(Derived class)** olarak isimlendirilir.
+
+
+Örneğin;
+[Source,C++]
+----
+class Arac  
+{   
+    private:  
+       string tur;  
+       string renk;  
+       ...  
+};   
+
+class Araba: Arac  
+{   
+   //Araba class'ına dair özellikler 
+};
+----
+
+Yukarıda Araba class'ı Arac classından türetilmiştir. 
+
+Burada (:) bir sınıftan başka bir sınıf türetme için kullanılmıştır.
+
+
+
+**Kalıtımda Erişim**
+|====
+| **Erişim** | **public** | **protected** | **private**
+| Aynı Sınıf| var | var | var
+| Türetilmiş Sınıf| var | var | yok
+| Farklı Sınıf | var | yok | yok
+|====
+
+
+**Kalıtıma Örnek Kod**
+[source,C++]
+----
+1|#include <iostream>
+
+//Base class (ana sınıf)
+2|class Sekil {
+3|   public:
+4|      void setWidth(int w) {
+5|         width = w;
+6|      }
+7|      void setHeight(int h) {
+8|         height = h;
+9|      }
+10|   protected:
+11|      int width;
+12|     int height;
+13|};
+
+14|class PaintCost{
+15|   public:
+16|     int getCost(int area) {
+17|         return area * 70;
+18|      }
+19|};
+
+// Derived class(Türetilmiş sınıf)
+20| class Rectangle: public Shape, public PaintCost {
+21|  public:
+22|      int getArea() { 
+23|        return (width * height); 
+24|      }
+25|};
+
+26|int main(void) 
+27|{
+28|   Rectangle Rect;
+29|   int area;
+
+30|   Rect.setWidth(5);
+31|  Rect.setHeight(7);
+
+32|   area = Rect.getArea();
+
+   // Print the area of the object.
+33|   std::cout << "Total area: " << Rect.getArea() << std::endl;
+
+   // Print the total cost of painting
+34|   std::cout << "Total paint cost: $" << Rect.getCost(area) << std::endl;
+35|   return 0;
+36|}
+----
+
+= Kalıtım
+Bir sınıfın başka bir sınıfın özelliklerini devralmasıdır. Özellikleri devralan sınıf Temel sınıf (base class), devredilen sınıf ise türetilmiş (drived class) olarak isimlendirilir.
+
+Genel Yapısı:
+[source,c++]
+----
+class TuretilenSinif : erisimTürü TemelSinif{
+
+
+};
+----
+
+
+
+.Örnek
+[source,c++]
+----
+#include <iostream>
+using namespace std;
+
+const float pi= 3.14159;
+class sekil{ <1>
+public:
+    float alan;
+    float hacim;
+    void yaz(){
+        cout << "Alan: " << alan << endl;
+        cout << "Hacim: " << hacim << endl;
+    }
+};
+class kup : sekil{  <2>
+public:
+    float kenar;
+    kup(float x){
+        kenar = x;
+        alan = kenar * kenar;
+        hacim = kenar * kenar * kenar;
+    }
+    void goster(){
+        cout << "Karenin kenar uzunlugu: " << kenar << endl;
+        yaz();
+    }
+};
+class kure : sekil{  <3>
+public:
+    float yariCap;
+    kure(float r){
+        yariCap = r;
+        alan = 4 * pi * yariCap * yariCap;
+        hacim = (4 * pi * yariCap * yariCap * yariCap)/3;
+    }
+    void goster(){
+        cout << "Yuvarlagin yaricapi: " << yariCap << endl;
+        yaz();
+    }
+};
+int main()
+{
+    kup sekil1(5);
+    sekil1.goster();
+    kure sekil2(2);
+    sekil2.goster();
+    return 0;
+}
+----
+<1> Temel sınıf
+<2> Türetilmiş sınıf
+<3> Türetilmiş sınıf
+
+Yukarıdaki kodda şekil sınıfından küp ve küre sınıfı türetilmiştir. Şekil sınıfının sahip olduğu değişkenler ve fonksiyonlar otomatik olarak türetilen sınıfa aktarılmıştır.
+
+
+
+.Erişim
+|====
+| Erişim | public | protected | private
+| Aynı sınıf | yes | yes | yes
+| Türetilmiş sınıf | yes | yes | no
+| Sınıf dışı | yes | no | no
+|====
+
+Aynı sınıf içerisinde erişim her zaman sağlanır. 
+
+Türetilmiş sınıflarda private hariç erişim sağlanır.
+
+Dışarıdan erişimde sadece public'e erişim sağlanır.
+
+image::kalıtım.png[]
