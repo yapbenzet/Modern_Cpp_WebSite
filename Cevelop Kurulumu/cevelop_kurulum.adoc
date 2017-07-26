@@ -1,0 +1,189 @@
+== Cevelop IDE kurulumu Ve Derleyici Ayarları
+
+
+Cevelop IDe'sini https://www.cevelop.com/[buradaki] linkten indirebilirsiniz.
+
+image::cevelop_2.png[]
+
+Açılan bu sayfadan işletim sisteminize uygun olan bağlantıdan indirebilirsiniz.
+
+**Windows üzerinde kurulumu**
+
+Açılan sayfadan windows olan seçeneği seçtiğinizde dosya .rar olarak indirilmeye başlayacaktır.
+
+image::cevelop_3.png[]
+
+Dosyaları çıkartarak cevelop.exe uygulamasını çalıştırırsanız karşınıza böyle bir ekran çıkacaktır;
+
+image::cevelop_acilis.png[]
+
+Launch dedikten sora karşınıza ilk olarak böyle bir sayfa açılacaktır.
+
+image::cevelop_6.png[]
+
+
+**Cevelop ile  Proje oluşturma**
+
+
+Cevelopda proje oluşturmak için;
+
+image::cevelop_proje.png[]
+
+Sonrasında proje sağ tık-> properties kısmına geliniz.
+
+**Kütüphane Eklemek için;**
+
+C++17 destekli gcc 7.1 derleyicisini kullanarak kütüphane ekleme işlemlerini ve c{plus}{plus}
+standardını ayarlama işlemlerini yapacağız.
+
+image::kutuphane.png[]
+
+* Burada Properties->Preprocessor Include Path, macros etc 
+sekmesinde;
+
+image::Kütüphane_ekle.png[]
+
+image::ekle_2.png[]
+
+image::ekle_3.png[]
+
+* Sonrasında Properties->C\C++ General -> Paths And Symsbols Kısmına da aynı kütüphane yolunu ekleyeceğiz.
+
+image::ekle_4.png[]
+
+Kütüphane ayarlarını yaptıktan sonra;
+
+image::cevelop_17.png[]
+
+* C{plus}{plus} 17 standardında çalışacağımız için resimdeki gibi  seçiyoruz. ISO C{plus}{plus} 1y(-std=c++1y)
+
+Sonrasında resimde gösterilen ayarı yapınız.
+
+image::17_ayarı.png[]
+
+
+* Build ayarları için;
+
+image::Build.png[]
+
+Build ayarrını da resimde gösterildiği gibi yapınız.
+
+
+* Sonrasında Proje->Properties->C\C++ Build->settings  kısmına resimde gösterildiği gibi 
+
+----
+-std=c++1y
+----
+
+ekleyiniz.
+
+image::setting.png[]
+
+**İlk Proje açma ve derleme**
+
+image::source_2.png[]
+
+Sonrasında .cpp uzantılı source dosyasını açtığınızda boş bir proje açılacaktır.
+
+image::source_3.png[]
+
+image::proje_1.png[]
+
+
+ilk kod olarak aşağıdaki kodu derleyip çalıştırabilirsiniz.
+
+----
+#include <iostream>
+int main()
+{
+    std::cout<<"Hello World";
+    return 0;
+}
+----
+
+** Projeyi derlemek için**
+
+image::debug.png[]
+
+* Resimdeki 1 numara ile gösterilen kısım derlemk için.
+
+* 2 numara ile gösterilen kısım derledikten sonra çalıştırmak içindir.
+
+
+**Debug Ayarları**
+
+Yukarıdaki resimden 1 numara ile gösterilen alana tıklayınız. 
+
+Debug Configurations->C\C++ Application sekmesine tıklayınız.
+
+image::debug_1.png[]
+
+Resimde gösterildiği gibi debug edebilirsiniz.
+
+
+==== Ubuntu Üzerinde Cevelop Kurulumu
+
+
+
+**C++ 17 için GCC 7.1 derleyicisini kurmak:**
+
+Linux işletim sisteminde;
+Terminal'i açarak aşağıdaki kodları ekleyiniz.
+
+----
+sudo add-apt-repository ppa:jonathonf/gcc-7.1
+sudo apt-get update
+sudo apt-get install gcc-7 g++-7
+----
+
+GCC-7.1 derleyicisini kurdurduktan sonra;
+
+https://www.cevelop.com/download/[Buradan] cevelop IDE'sini linux için indirebilirsiniz.
+
+İndirdikten sonra indirdiğiniz klasöre giderek resimde gösterildiği gibi;
+
+image::installation-linux-1.png[]
+
+Dosyaları çıkartınız.
+
+image::installation-linux-2.png[]
+
+Dosyaları çıkarttıktan sonra cevelop C++ IDE 'sini komut ekranında çalıştırabilirsiniz.
+
+komut satırına aşağıdaki kodu ekleyiniz.
+
+----
+./cevelop.sh
+----
+
+GCC 7.1 derleyicisini IDE otomatik olarak algıladığından kütüphaneleri eklenmiş şekilde gelecektir.
+
+**Yeni proje oluşturma için**
+
+
+image::linux-1.png[]
+
+
+Resimdeki gibi C/C++ projesini seçerek yeni proje oluşturabilirsiniz.
+
+Sonrasında derlemek için aşağıdaki seçenkelerden ilerleyiniz.
+
+image::linux-3.png[]
+
+image::linux-4.png[]
+
+image::linux-5.png[]
+
+Aşağıdaki gibi proje ismini girerek ilerleyebilirisiniz.
+
+image::linux-6.png[]
+
+Aşağıdaki gibi proje ismini girerek ilerleyebilirsiniz.
+
+image::linux-7.png[]
+
+
+
+
+
+
