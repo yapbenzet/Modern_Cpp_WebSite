@@ -1,0 +1,158 @@
+## Göstericiler
+
+Bildiğimiz üzere her değişken ramde belli bir alan kaplar. Bu alanın bir adresi vardır ve program çalıştırıldığında CPU tanımlanan değişkene ulaşmak için bu adrese gider. Bizim adreslerle uğraşmamıza gerek yoktur; çünkü derleyici bunu bizim için yapar.
+
+İhtiyaç duyduğumuz zamanlar da olmaktadır.
+
+=== Adres operatörü
+
+Adres operatörünün işi değişkenlerin adreslerini döndürmektir. Sembolü "&"dir. 
+
+[source,C++]
+----
+
+int x{5};
+
+cout << x << " " << &x << endl;
+----
+
+Programın çıktısı: 5 0x1234FF
+
+Program her bilgisayarda ve program her açıldığıda başka değer gösterecektir. Çünkü ramden alınan adresler belirsizdir. 
+
+=== Dereferans operatörü
+
+Dereferans operatörü bize belli bir adresteki değeri döndürür. 
+
+[source,C++]
+----
+#include <iostream>
+int main()
+{    
+    int x = 5;    
+    std::cout << x << '\n'; // x değişkeninin değeri yazdırılır.  
+    std::cout << &x << '\n'; // x değişkeninin bellekteki adresi yazdırılır.    
+    std::cout << *&x << '\n'; /// x değişkeinin adresindeki değer yazdırılır.    
+    
+    return 0;
+    
+}
+----
+
+=== Gösterici
+
+Gösterici bir değişkenin bellekteki adresini tutan bir değişken türüdür. 
+
+**Pointer tanımlama**
+
+Gösterici tanımlarken değişkenin başına * operatörü koyulmalıdır.
+
+[source,C++]
+----
+int *iPtr;
+double *dPtr;
+
+int* iPtr2; 
+int * iPtr3; 
+int *iPtr4, *iPtr5; 
+----
+
+Yukarıdaki tanımlama şekillerinin hepsi doğrudur. Ama birinci tanımlama şekli tercih edilir.
+
+[source,C++]
+----
+int* iPtr6, iPtr7; // iPtr6 bir göstericidir ama iPtr7 bir integer değişkendir.
+----
+
+**Göstericiye değer atama**
+
+Göstericiye atanan değer bir adres olmalıdır. Göstericilerle en çok yapılan şey, göstericiye bir değişkenin adresini atayıp kullanmaktır.
+
+Değişkenin adresini almak için adres operatörünü kullanabilirsiniz.
+
+[source,C++]
+----
+int value = 5;
+int *ptr = &value; // ptr'yi bir değişkenin adresiyle tanımlama
+----
+
+Gösterici ismini bir şeyleri gösterdiği için alır. Gösterici bir değişkeni gösteren demektir.
+
+Göstericinin tipi göstereceği değişken ile aynı olmalıdır.
+
+[source,c++]
+----
+int iValue = 5;
+double dValue = 7.0;
+int *iPtr = &iValue; // ok
+double *dPtr = &dValue; // ok
+iPtr = &dValue; // hatali -- int pointer double degiskeni gosteremez
+dPtr = &iValue; // hatali -- double pointer int degiskeni gosteremez
+----
+
+C{plus}{plus} gostericilere bir sabit deger atamanıza izin vermeyecektir. 
+
+----
+int *ptr = 5; //Hatali
+----
+[source,c++]
+----
+int *ptr = 0x01232FA //Hatali
+----
+
+**Pointerlerin tuttuğu adresin değerini gösterme**
+
+Dereferans edilmiş pointer tuttuğu adresin bulunduğu yerdeki veriyi gösterir. Örneğin:
+
+[source,C++]
+----
+int value = 5;
+std::cout << &value; // valuenin adresini yazar
+std::cout << value; // valuenin içeriğini yazar
+int *ptr = &value;
+std::cout << ptr; // ptrnin tuttuğu adresi yazar (valuenin adresi)
+std::cout << *ptr; // ptrnin tuttuğu adresin tuttuğu değeri yazar. (valuenin değeri)
+----
+
+Program çıktısı:
+00123ED3
+5
+00123ED3
+5
+
+
+*  ptr ile &value eşittir
+*  *ptr ile value eşittir
+
+Pointerlerin boyutu bilgisayarınızın mimarisine göre değişkenlik gösterir. 32 bit bilgisayarlarda 4 bayt, 64 bit bilgisayarlarda ise 8 bayt yer kaplayacaktır.
+
+Eğer pointerler bir değer göstermeyecekse nullptr anahtar kelimesine eşitlenmeleri gerekmektedir.
+
+[source,c++]
+----
+
+int *ptr(nulptr);
+
+int *ptr2 = nullptr;
+----
+
+Diziler bir göstericidir ve bulundurdukları ilk verinin adresini tutarlar. Örneğin:
+
+[source,c++]
+----
+#include <iostream> 
+int main()
+{    
+    int array[5] = { 9, 7, 5, 3, 1 };     
+    std::cout << "The array has address: " << array << '\n';  //dizinin adresi
+    std::cout << "Element 0 has address: " << &array[0] << '\n'; // ilk indexin adresi 
+    return 0;
+    
+}
+----
+Programın çıktısı:
+
+----
+The array has address: 0042AE34
+Element 0 has address: 0042AE34
+----
