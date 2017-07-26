@@ -1,0 +1,1019 @@
+=== Fonksiyon Şablonları (Function Templates)
+
+==== Fonksiyon Şablonu Nedir?
+
+C{plus}{plus}'da fonksiyon şablonları benzer fonksiyonlar tanımlamak için bir kalıp görevi görür. Fonksiyon şablonlarının ardındaki temel fikir kesin veri tipleri veya değişken parametreler kullanmadan fonksiyon oluşturmaktır. Bunun yerine şablon tipi parametreler denilen yer tutucu tipler ile fonksiyon tanımlanır.
+
+==== C{plus}{plus}'da Fonksiyon Şablonu Tanımlanması
+
+Eğer iki sayıdan büyük olanı döndüren bir fonksiyon yazmak isteseydik şu şekilde yapabilirdik: 
+
+[source, c++]
+----
+int max(int x, int y){
+    return (x > y) ? x : y;
+}
+----
+
+Bu fonksiyon integer değerler için gayet güzel çalışacaktır. Peki max() fonksiyonu double ile çalışması gerektiğinde ne olacak? Bunun için her veri tipi için ayrı fonksiyon overload etmemiz gerekir. Bunun yerine fonksiyon şablonu ile belirli tipleri yer tutucu tipler ile değiştireceğiz. Bu örnekte sadece bir tane şablon tipi parametresine ihtiyacımız var çünkü değiştirilmesi gerekn sadece bir veri tipimiz var (int).
+
+Yer tutucu tipi hemen hemen istediğiniz herhangi bir ismi alabilir. Fakat C{plus}{plus}'da şablon tiplerine T ismi koyulması alışılmış bir durumdur ("Type" kısaltması).
+
+Yer tutucu tipi kullanan yeni fonksiyon şu şekilde olacaktır:
+
+[source, c++]
+----
+template <typename T>// Şablon parametre tanımlaması
+T max(T x, T y){
+    return (x > y) ? x : y;
+}
+----
+
+Şimdi şablon parametre tanımlamasına biraz daha yakından bakalım. Öncelikle template anahtar kelimesiyle başlıyoruz \-- bu, derleyiciye sırada template parametreleri listesi olduğunu söyler. Parametrelerimizi <> aralığı içerisine koyuyoruz. Template tipi parametre oluşturmak için typename veya class anahtar kelimesi kullanılabilir. Bu bağlamda aralarında bir fark yoktur yani hangisini kullanacağınız size kalmıştır. class anahtar kelimesini kullandığınızda geçen tipin class olmak zorunda olması gibi bir durumun söz konusu olmadığını unutmayın. Son olarak tipin ismi koyulur (genellikle "T").
+
+Eğer template fonksiyon birden fazla template tipi parametre kullanıyorsa virgül ile ayrılırlar:
+
+[source, c++]
+----
+template <typename T1, typename T2>
+//template fonksiyon
+----
+
+Not: Template fonksiyonumuzdaki parametreleri ve dönüş tiplerini const referans yapmak daha iyi olacaktır çünkü T tipi bir sınıf tipi olabilir ve sınıfı değer ile göndermek pek de iyi bir fikir sayılmaz.
+
+[source, c++]
+----
+template <typename T>
+const T& max(const T& x, const T& y){
+    return (x > y) ? x : y;
+}
+----
+
+==== Fonksiyon Şablonlarının Kullanımı
+
+Template fonksiyonların kullanımı diğer fonksiyonlarla aynıdır. Aşağıdaki örnekte gösterilmektedir:
+
+[source, c++]
+----
+#include <iostream>
+
+using namespace std;
+
+template <typename T>
+const T& max(const T& x, const T& y){
+    return (x > y) ? x : y;
+}
+
+int main(){
+    int i = max(3,7); //7 döndürür
+    cout << i << endl;
+    
+    double d = max(6.34,18.523); //18.523 döndürür
+    cout << d << endl;
+    
+    char ch = max('a', '6'); // 'a' döndürür
+    cout << ch << endl;
+    
+    return 0;
+}
+----
+
+Çıktı:
+
+----
+7
+18.523
+a
+----
+
+max() fonksiyonunu çağıran bu fonksiyonların her birinin farklı tiplerde olduğunu unutmayın. Derleyici template tanımını fonksiyonun 3 farklı versiyonunu oluşturmak için kullanacaktır çünkü fonksiyonu 3 farklı tiple çağırdık.
+
+=== Template Fonksiyon Oluşumu
+
+Anlaşıldığı üzere C{plus}{plus} template fonksiyonları doğrudan derlemiyor. Bunun yerine, derleme sırasında eğer derleyici bir template fonksiyon çağırımıyla karşılaşmışsa template fonksiyonun kopyasını çıkarır ve template tip parametrelerini geçerli tip ile değiştirir.
+
+Bu süreç incelenmek istenirse öncelikle template fonksiyon oluşturulmalıdır:
+
+[source, c++]
+----
+template <typename T>
+const T& max(const T& x, const T& y){
+    return (x > y) ? x : y;
+}
+----
+
+Programı derlerken derleyici template fonksiyon çağırımı ile karşılaşır:
+
+[source, c++]
+----
+int i = max(3,7)//max(int,int) çağırılır
+----
+
+Derleyici max(int,int) fonksiyonunun çağırılması gerektiğini anlar. Template fonksiyonun bir kopyasını oluşturur ve int parametreleri kullanır:
+
+[source, c++]
+----
+const int& max(const int& x, const int& y){
+    return (x > y) ? x : y;
+}
+----
+
+Artık bu, makine diline derlenebilen normal bir fonksiyon oldu.
+
+Kodun ilerleyen kısımlarında max() fonksiyonu farklı bir tipi kullanarak çağırılırsa: 
+
+[source, c++]
+----
+double d = max(6.34, 18.523);//max(double, double) çağırılır
+----
+
+C{plus}{plus} otomatik olarak max(double,double) fonksiyonunu oluşturur,
+
+[source, c++]
+----
+const double& max(const double& x, const double& y){
+    return (x > y) ? x : y;
+}
+----
+
+ve derler.
+
+==== Operatörler, Fonksiyon Çağırımları ve Template Fonksiyonlar
+
+Template fonksiyonlar hem var olan tiplerle(char, int, ...) hem de sınıflarla birlikte çalışabilirler. Derleyici template oluşumunu derlerken normal bir fonksiyon gibi derler. Normal bir fonksiyonda kendi oluşturduğunuz her operatör veya değişken tipi tanımlanmış olmalıdır yoksa derleyici hatası alınacaktır.
+
+İlk olarak basit bir sınıf oluşturulur:
+
+[source, c++]
+----
+class Para{
+private:
+    int m_para;
+public:
+    Para(int para) : m_para(para){//Yapıcı Fonksiyon
+    }
+};
+----
+
+Şimdi, Para sınıfıyla template max() fonksiyonu çağırıldığında ne olduğunu görelim:
+
+[source, c++]
+----
+template <typename T>
+const T& max(const T& x, const T& y){
+    return (x > y) ? x : y;
+}
+
+class Para{
+private:
+    int m_para;
+public:
+    Para(int para) : m_para(para){//Yapıcı Fonksiyon
+    }
+};
+
+int main()
+{
+    Para besLira(5);
+    Para onLira(10);
+    
+    Para buyuk = max(besLira, onLira);
+    
+    return 0;
+}
+----
+
+C{plus}{plus} aşağıdaki gibi bir max() fonksiyonu oluşturacaktır:
+
+[source, c++]
+----
+const Para& max(const Para& x, const Para& y){
+    return (x > y) ? x : y;
+}
+----
+
+Daha sonra da bu fonksiyonu derlemeye çalışacaktır. Doğal olarak şekildeki gibi bir derleme hatası oluşacaktır:
+
+----
+C:\Users\faruk\CLionProjects\staj4\main.cpp: In instantiation of 'const T& max(const T&, const T&) [with T = Para]':
+C:\Users\faruk\CLionProjects\staj4\main.cpp:21:37:   required from here
+C:\Users\faruk\CLionProjects\staj4\main.cpp:5:15: error: no match for 'operator>' (operand types are 'const Para' and 'const Para')
+     return (x > y) ? x : y;
+            ~~~^~~~
+
+----
+
+Baştaki hata mesajı Para sınıfı için overload edilmiş > operatörünün olmadığını belirtiyor. Sonda ise oluşturulan fonksiyonun hatalı olduğunu gösteriyor.
+
+Bu problem max() fonksiyonunun kullanılmak istendiği sınıflar için > operatörünün overload edilmesiyle çözülebilir:
+
+[source, c++]
+----
+class Para{
+private:
+    int m_para;
+public:
+    Para(int para) : m_para(para){//Yapıcı Fonksiyon
+    }
+    
+    friend bool operator>(const Para &p1, const Para &p2){
+        return (p1.m_para > p2.m_para);
+    }
+};
+----
+
+Artık C{plus}{plus} Para sınıfının nesneleri için hangi değerin büyük olduğunu anlayabilecek. Sonuç olarak max() fonksiyonu iki Para tipi nesne ile çalışabilecek.
+
+Aşağıdaki template fonksiyon bir dizinin elemanlarının ortalamasını hesaplayacaktır:
+
+[source, c++]
+----
+template <class T>
+T ortalama(T* dizi, int uzunluk){
+    T toplam = 0;
+    for (int sayac = 0; sayac < uzunluk; ++sayac)
+        toplam += dizi[sayac];
+    
+    toplam /= uzunluk;
+    
+    return toplam;
+}
+----
+
+[source, c++]
+----
+#include <iostream>
+
+using namespace std;
+
+template <class T>
+T ortalama(T* dizi, int uzunluk){
+    T toplam = 0;
+    for (int sayac = 0; sayac < uzunluk; ++sayac)
+        toplam += dizi[sayac];
+    
+    toplam /= uzunluk;
+    
+    return toplam;
+}
+
+int main()
+{
+    int dizi1[] = {5, 3, 2, 1, 4};
+    cout << ortalama(dizi1, 5) << endl;
+    
+    double dizi2[] = {3.12, 5.48, 9.47, 6.88};
+    cout << ortalama(dizi2, 4) << endl;
+    
+    return 0;
+}
+----
+
+Çıktı:
+
+----
+3
+6.2375
+----
+
+Görüldüğü gibi var olan tiplerde gayet düzgün çalışıyor.
+
+Şimdi de Para sınıfı ile denediğimizde ne olacağını görelim: 
+
+[source, c++]
+----
+#include <iostream>
+
+using namespace std;
+
+class Para{
+private:
+    int m_para;
+public:
+    Para(int para) : m_para(para){//Yapıcı Fonksiyon
+    }
+    
+    friend bool operator>(const Para &p1, const Para &p2){
+        return (p1.m_para > p2.m_para);
+    }
+};
+
+template <class T>
+T ortalama(T* dizi, int uzunluk){
+    T toplam = 0;
+    for (int sayac = 0; sayac < uzunluk; ++sayac)
+        toplam += dizi[sayac];
+    
+    toplam /= uzunluk;
+    
+    return toplam;
+}
+
+int main()
+{
+
+    Para dizi3[] = {Para(5), Para(10), Para(15), Para(14)};
+    cout << ortalama(dizi3, 4) << endl;
+    
+    return 0;
+}
+----
+
+Derleyici tonlarca hata mesajı verecektir.
+
+average() fonksiyonunun Para nesnesi döndürdüğü unutulmamalıdır ve cout ve << operatörü ile bu nesneyi yazdırmak istiyoruz. Fakat Para sınıfı için herhangi bir << operatörü tanımlamadık:
+
+[source, c++]
+----
+class Para{
+private:
+    int m_para;
+public:
+    Para(int para) : m_para(para){//Yapıcı Fonksiyon
+    }
+    
+    friend bool operator>(const Para &p1, const Para &p2){
+        return (p1.m_para > p2.m_para);
+    }
+    
+    friend ostream& operator<< (ostream& out, const Para& para){
+        out << para.m_para << " lira";
+        return out;
+    }
+};
+----
+
+Tekrar derlendiğinde, başka bir hata çıkacaktır:
+
+----
+error: no match for 'operator+=' (operand types are 'Para' and 'Para')
+         toplam += dizi[sayac];
+         ~~~~~~~^~~~~~~~
+error: no match for 'operator/=' (operand types are 'Para' and 'int')
+     toplam /= uzunluk;
+     ~~~~~~~^~~~~~~~~~
+
+----
+
+Sınıf tanımlamasında görüldüğü gibi Para sınıfı template olarak çağırıldığında "toplam" değeri Para tipinde olacaktır fakat Para sınıfı için += ve /= operatörü tanımlı değil.
+
+[source, c++]
+----
+class Para{
+private:
+    int m_para;
+public:
+    Para(int para) : m_para(para){//Yapıcı Fonksiyon
+    }
+    
+    friend bool operator>(const Para &p1, const Para &p2){
+        return (p1.m_para > p2.m_para);
+    }
+    
+    friend ostream& operator<< (ostream& out, const Para& para){
+        out << para.m_para << " lira";
+        return out;
+    }
+    
+    void operator+=(Para para){
+        m_para += para.m_para;
+    }
+    
+    void operator/=(int x){
+        m_para /= x;
+    }
+};
+----
+
+Artık kod derlenip çalışacaktır, sonuç:
+
+----
+11 lira
+----
+
+== Template Sınıflar
+
+=== Template'lar ve Konteynır Sınıflar
+
+[source, c++]
+----
+#ifndef INTDIZI_H
+#define INTDIZI_H
+
+#include <assert.h>//assert() için
+
+class IntDizi
+{
+private:
+    int m_uzunluk;
+    int* m_veri;
+    
+public:
+    IntDizi(){
+        m_uzunluk = 0;
+        m_veri = nullptr;
+    }
+    
+    IntDizi(int uzunluk){
+        assert(uzunluk > 0);
+        m_veri = new int[uzunluk];
+        m_uzunluk = uzunluk;
+    }
+    
+    ~IntDizi(){
+        delete[] m_veri;
+    }
+    
+    void Sil(){
+        delete[] m_veri;
+        m_veri = nullptr;
+        m_uzunluk = 0;
+    }
+    
+    int& operator[](int index){
+        assert(index >=0 && index < m_uzunluk);
+        return m_veri[index];
+    }
+    
+    int getUzunluk() const {return m_uzunluk;}
+};
+#endif
+----
+
+Bu sınıf integer dizileri oluşturmak için kolay bir yol sağlar fakat aynısı double dizi için geçerli değildir. Geleneksel programlama metotlarına göre bunun için tamamen yeni bir sınıf oluşturmamız gerekirdi.
+
+Template sınıf oluşturmak template fonksiyon oluşturmaya benzer:
+
+[source, c++]
+----
+#ifndef DIZI_H
+#define DIZI_H
+
+#include <assert.h>//assert() için
+
+template <class T>
+class Dizi
+{
+private:
+    int m_uzunluk;
+    T* m_veri;
+    
+public:
+    Dizi(){
+        m_uzunluk = 0;
+        m_veri = nullptr;
+    }
+    
+    Dizi(int uzunluk){
+        assert(uzunluk > 0);
+        m_veri = new T[uzunluk];
+        m_uzunluk = uzunluk;
+    }
+    
+    ~Dizi(){
+        delete[] m_veri;
+    }
+    
+    void Sil(){
+        delete[] m_veri;
+        m_veri = nullptr;
+        m_uzunluk = 0;
+    }
+    
+    T& operator[](int index){
+        assert(index >=0 && index < m_uzunluk);
+        return m_veri[index];
+    }
+    
+    int getUzunluk();
+};
+
+template <typename T>
+int Dizi<T>::getUzunluk() { return m_uzunluk; }
+
+#endif
+----
+
+Yukarıdaki template dizi sınıfı kullanılarak hazırlanmış basit bir örnek:
+
+[source, c++]
+----
+#include <iostream>
+#include "Dizi.h"
+
+using namespace std;
+
+int main()
+{
+    Dizi<int> intDizi(12);
+    Dizi<double> doubleDizi(12);
+    
+    for(int sayac = 0; sayac < intDizi.getUzunluk(); ++sayac){
+        intDizi[sayac] = sayac;
+        doubleDizi[sayac] = sayac + 0.5;
+    }
+    
+    for(int sayac = intDizi.getUzunluk()-1; sayac >= 0; --sayac)
+        cout << intDizi[sayac] << "\t" << doubleDizi[sayac] << endl;
+
+    return 0;
+}
+----
+
+Çıktı: 
+
+----
+11     11.5
+10     10.5
+9       9.5
+8       8.5
+7       7.5
+6       6.5
+5       5.5
+4       4.5
+3       3.5
+2       2.5
+1       1.5
+0       0.5
+----
+
+Template sınıflar, template fonksiyonlarla aynı şekilde oluşturulurlar \-- derleyici istek üzerine kullanıcının ihtiyacı olan veri tipinin kullanıldığı bir kopya oluşturur ve bu kopyayı derler. Eğer template sınıfı hiç kullanılmazsa derleyici onu hiç derlemeyecektir.
+
+Template sınıflar konteynır sınıf oluşturmak için idealdir çünkü geniş çeşitlikteki veri tipleriyle çalışan konteynırlar tercih edilir ve template'lar kod tekrarlamadan bunu yapmayı sağlar. Buna rağmen söz dizimi biraz çirkindir ve verebileceği hata mesajları korkunç olabilir, template sınıflar C{plus}{plus}'ın en iyi ve kullanışlı özelliklerinden biridir.
+
+==== Template Sınıfların Ayrı Sayfalarda Oluşturulması
+
+Template olmayan sınıflarda header ve kaynak kod olmak üzere 2 dosyadan oluşur. Fakat template'larda bu çalışmaz.
+
+**Dizi.h**
+
+[source, c++]
+----
+#ifndef DIZI_H
+#define DIZI_H
+
+#include <assert.h>//assert() için
+
+template <class T>
+class Dizi
+{
+private:
+    int m_uzunluk;
+    T* m_veri;
+    
+public:
+    Dizi(){
+        m_uzunluk = 0;
+        m_veri = nullptr;
+    }
+    
+    Dizi(int uzunluk){
+        assert(uzunluk > 0);
+        m_veri = new T[uzunluk];
+        m_uzunluk = uzunluk;
+    }
+    
+    ~Dizi(){
+        delete[] m_veri;
+    }
+    
+    void Sil(){
+        delete[] m_veri;
+        m_veri = nullptr;
+        m_uzunluk = 0;
+    }
+    
+    T& operator[](int index){
+        assert(index >=0 && index < m_uzunluk);
+        return m_veri[index];
+    }
+    
+    int getUzunluk();
+};
+
+#endif
+----
+
+**Dizi.cpp**
+
+[source, c++]
+----
+#include "Array.h"
+
+template <typename T>
+int Array<T>::getLength() {return m_length;}
+----
+
+Bu oluşturma şekli linker(bağlayıcı) hatası verecektir.
+
+Bu sorunun çözümü 3. bir dosya oluşturmaktır. Template sınıf tanımı header dosyada yapılır. Template sınıfın üye fonksiyonları kaynak kod dosyasında yazılır. Daha sonra 3. bir dosya eklenir ve istenilen sınıf tipleri koyulur:
+
+**templates.cpp**
+[source, c++]
+----
+#include "Dizi.h"
+#include "Dizi.cpp"
+
+template class Dizi<int>;
+template class Dizi<double>;
+//Diğer template'lar...
+----
+
+Template class komutu derleyiciye template sınıf oluşturmasını söyler.
+
+== Template İfade Parametreleri
+
+Template tip parametreleri tip bakımından bağımsız olan fonksiyon ve sınıflar oluşturmak için kullanılır. Fakat, kullanılabilen tek template parametresi bu değildir. Template sınıflar ifade parametresi denilen template parametresini de kullanabilir.
+
+=== İfade Parametreleri
+
+Template ifade parametreleri bir tipin yerini tutmaktan ziyade bir değerini değiştirir. İfade parametreleri aşağıdakilerden biri olabilir:
+
+* Enumeration veya integral tipinde bir değer
+* Sınıf nesnesi işaretçisi veya referansı
+* Fonksiyon işaretçisi veya referansı
+* Sınıf üye fonksiyon işaretçisi veya referansı
+
+Aşağıdaki örnekte, hem tip hem de ifade parametresi kullanan bir statik dizi oluşturulur. Tip parametresi statik dizinin veri tipini kontrol eder, ve ifade parametreleri dizinin ne kadar büyük olacağını belirler.
+
+[source, c++]
+----
+#include <iostream>
+
+using namespace std;
+
+template <class T, int boyut>//boyut ifade parametresidir
+class StatikDizi
+{
+private:
+    //İfade parametresi dizinin boyutunu belirliyor
+    T m_dizi[boyut];
+    
+public:
+    T* getDizi();
+    
+    T& operator[](int index){
+        return m_dizi[index];
+    }
+};
+
+template <class T, int boyut>
+T* StatikDizi<T,boyut>::getDizi(){
+    return m_dizi;
+}
+
+int main()
+{
+    //12 integerlık yere sahip integer dizi oluşturulur
+    StatikDizi<int, 12> intDizi;
+    
+    //Sırayla doldurulur ve tersten yazdırılır
+    for(int sayac = 0; sayac < 12; ++sayac)
+        intDizi[sayac] = sayac;
+    
+    for(int sayac = 11; sayac >= 0; --sayac)
+        cout << intDizi[sayac] << " ";
+    
+    cout << endl;
+    
+    //4 double'lık yere sahip double dizi oluşturulur
+    StatikDizi<double, 4> doubleDizi;
+    
+    for(int sayac = 0; sayac < 4; ++sayac)
+        doubleDizi[sayac] = 4.4 + 0.1*sayac;
+        
+    for(int sayac = 0; sayac < 4; ++sayac)
+        cout << doubleDizi[sayac] << " ";
+    
+    return 0;
+}
+----
+
+Çıktı:
+
+----
+11 10 9 8 7 6 5 4 3 2 1 0
+4.4 4.5 4.6 4.7
+----
+
+=== Fonksiyon Template Özelleştirme
+
+Verilen tip için template bir fonksiyon oluştururken, derleyici template fonksiyonun bir kopyasını çıkartır ve template tip parametrelerini istenilen tiplerle değiştirir. Bu, özel bir fonksiyonun oluşturulan her tip için aynı uygulamaya sahip olması anlamına gelmektedir. Genellikle böyle olması istenir, bazen de belirli bir veri tipi için template fonksiyonu farklı implemente etmek gereken durumlar oluşabilir.
+
+[source, c++]
+----
+template <class T>
+class Depo
+{
+private:
+    T m_deger;
+public:
+    Depo(T deger){
+        m_deger = deger;
+    }
+    
+    ~Depo(){}
+    
+    void yazdir(){
+        std::cout << m_deger << std::endl;
+    }
+};
+----
+
+Yukarıdaki kod çoğu veri tipi için düzgün çalışacaktır:
+
+[source, c++]
+----
+int main()
+{
+    Depo<int> iDeger(5);
+    Depo<double> dDeger(6.7);
+    
+    iDeger.yazdir();
+    dDeger.yazdir();
+    
+    return 0;
+}
+----
+
+Çıktı:
+
+----
+5
+6.7
+----
+
+Eğer sadece double değerleri bilimsel notasyonla yazdırmak istenirse fonksiyon template özelleştirme kullanılabilir. Oluşturulması gayet basittir: özelleştirilen fonksiyon tanımlanır (üye fonksiyonsa sınıf tanımlamasının dışında yapılır), template tipleri istenilen tiplerle değiştirilir.
+
+[source, c++]
+----
+template <>
+void Depo<double>::yazdir(){
+    std::cout << std::scientific << m_deger << std::endl;
+}
+----
+
+Derleyici Depo<double>::yazdir() fonksiyonunu oluşturacağı zaman zaten bu fonksiyonun oluşturulduğunu görecek ve bir kopya oluşturmak yerine bu fonksiyonu kullanacaktır.
+
+template <> derleyiciye bunun bir template fonksiyon olduğunu fakat herhangi bir template parametre bulundurmadığını belirtir.
+
+Çıktı:
+
+----
+5
+6.700000e+000
+----
+
+Şimdi, template özelleştirmenin kullanışlı olabileceği bir örneğe bakalım. Template Depo sınıfını char* veri tipiyle kullandığımızda ne olduğunu görelim:
+
+[source, c++]
+----
+int main()
+{
+    //Dinamik olarak geçici bir string için yer ayrılır
+    char* string = new char[40];
+    
+    std::cout << "Isim: ";
+    std::cin >> string;
+    
+    //string depolanır
+    Depo<char*> deger(string);
+    
+    //geçici string silinir
+    delete[] string;
+    
+    //değer yazdırılır
+    deger.yazdir();
+}
+----
+
+Görünen o ki girilen değeri yazdırmak yerine deger.print() farklı şeyler yazdırıyor. Depo char* tipi için oluşturulduğunda Storage<char*> yapıcı fonksiyonu şöyle gözükür:
+
+[source, c++]
+----
+template <>
+Depo<char*>::Depo(char* deger){
+    m_deger = deger;
+}
+----
+
+Diğer bir deyimle sadece işaretçi ataması yapılır. Sonuç olarak m_deger string olarak aynı hafıza alanına işaret eder. main() içerisinde string silindiğinde m_deger'in işaret ettiği değeri silinmiş olunur. Bu yüzden yazdırılmaya çalışıldığında alakasız bir çıktı alınır.
+
+Bu sorun template özelleştirme ile çözülebilir. İşaretçi ataması yerine yapıcı fonksiyona girilen stringin kopyası oluşturtulur. 
+
+[source, c++]
+----
+template <>
+Depo<char*>::Depo(char* deger){
+    int uzunluk = 0;
+    while (deger[uzunluk] != 0)
+        ++uzunluk;
+    ++uzunluk;
+    
+    m_deger = new char[uzunluk];
+    
+    for(int sayac = 0; sayac < uzunluk; ++sayac)
+        m_deger[sayac] = deger[sayac];
+}
+----
+
+Artık Depo<char*> tipinde bir değişken için yer alınırken varsayılan yerine bu yapıcı fonksiyon kullanılacak. Sonuç olarak m_deger stringin bir kopyasını alacak yani string silindiğinde m_deger etkilenmeyecektir.
+
+Yalnız Depo<char*> tipi için hafıza sızıntısı oluşacaktır çünkü m_deger silinmeyecektir. Bu da Depo<char*> yıkıcı fonksiyonunun özelleştirilmesiyle çözülebilir:
+
+[source, c++]
+----
+template <>
+Depo<char*>::~Depo(){
+    delete[] m_deger;
+}
+----
+
+=== Sınıf Template Özelleştirme
+
+Fonksiyon template özelleştirmesi ile belirli veri tipleri için farklı özelliklere sahip fonksiyonlar oluşturmak mümkündü. Anlaşılacağı üzere aynı zamanda bir sınıfı özelleştirmek de mümkündür.
+
+Girilen değişkenin bool olup olmadığını gösteren bir sınıf oluşturulmak istenirse:
+
+[source, c++]
+----
+template <class T>
+class isBool{
+public:
+    isBool(T deger){
+        cout << deger << " bool degildir" << endl;
+    }
+};
+----
+
+Sınıf template olduğu için her tür ile çalışacaktır:
+
+[source, c++]
+----
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    isBool(5);
+    isBool(15.3);
+    isBool('a');
+    isBool(true);
+    isBool(false);
+    
+    return 0;
+}
+----
+
+Çıktı:
+
+----
+5 bool degildir
+15.3 bool degildir
+a bool degildir
+1 bool degildir
+0 bool degildir
+----
+
+Oluşturulan sınıf tamamen fonksiyonel olmasına rağmen bool değer girildiği durumda da bool değildir yazdıracaktır. Bunu engellemek için sınıf template özelleştirme kullanılabilir. Yapıcı fonksiyon da özelleştirilebilirdi ancak anlatılmak istenen konu sınıf template'larda özelleştirme olduğu için bu şekilde yapılacaktır:
+
+[source,c++]
+----
+template<>
+class isBool<bool>{
+public:
+    isBool(bool deger){
+        cout << deger << " bool'dur" << endl;
+    }
+};
+----
+
+Görüldüğü gibi bool tipinde oluşturulan isBool sınıfı için template özelleştirmesi yapıldı ve sınıf, bool tipinde oluşturulduğu zaman yapıcı fonksiyonu bool'dur yazdıracaktır.
+
+Çıktı:
+
+----
+5 bool degildir
+15.3 bool degildir
+a bool degildir
+1 bool'dur
+0 bool'dur
+----
+
+=== Kısmi Template Özelleştirme
+
+Kısmi template özelleştirme, template özelleştirmenin özel bir şeklidir. Programcıya tüm template argümanlar yerine belirli argümanları değiştirme imkanı sağlar.
+
+==== Örnek
+
+İki template parametresine sahip bir "deneme" template sınıfının olduğunu var sayalım:
+
+[source, c++]
+----
+template <typename T1, typename T2>
+class deneme{};
+----
+
+Aşağıdaki örnek sınıfın integer ve string ile tam (full) template özelleştirilmesini göstermektedir:
+
+[source, c++]
+----
+template <>
+class deneme<int, std::string> {};
+----
+
+Bu örnek ise tek bir özelleştirilmiş parametre içerir:
+
+[source, c++]
+----
+template <typename T1>
+class deneme<T1, std::string> {};
+----
+
+Sonraki örnekte türetilmiş bir sınıfın kısmi template özelleştirmesi yapabildiği gösterilmektedir, herhangi bir template parametre özelleştirilebilir, hangisinin özelleştirileceği kullanıcıya bağlıdır:
+
+[source, c++]
+----
+template <typename T2>
+class turetilmisSinif : public  deneme<int, T2> {};
+----
+
+
+== STL
+
+=== Konteynırlar
+
+==== Sıralı Konteynırlar
+
+Sıralı konteynırlar elemanlarının sırasını tutan konteynır sınıflardır. Sıralı konteynırların tanımlayıcı özelliği elemanları istenilen konuma göre ekleyebilmektir. Sıralı konteynırlar için en yaygın örnek dizi(array)'dir: eğer diziye 4 adet eleman eklenirse, elemanlar eklenme sırasıyla aynı sıralanacaktır.
+
+STL kütüphanesi 6 sıralı konteynır içerir: std::vector, std::deque, std::array, std::list, std::forward_list, and std::basic_string.
+
+==== Vector
+
+Vektörler bir eleman eklendiğinde veya silindiğinde boyutunu otomatik olarak ayarlayan dinamik dizilerdir. Vektör elemanları sıralı olarak konumlanırlar böylece iteratör kullanarak erişilebilir ve üzerinde dolaşılabilir. Vektörlerde veri sona eklenir. 
+
+[source,java]
+----
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+
+    vector<int> vec;
+
+    for(int i = 0; i < 5; ++i)
+        vec.push_back(i);
+
+    for(vector::iterator itr = vec.begin(); itr != vec.end(); ++itr)//auto kullanmadan iteratör tanımlaması
+        cout << *itr << " ";
+
+    cout << endl;
+
+    for(vector::reverse_iterator itr = vec.rbegin(); itr != vec.rend(); ++itr)//auto kullanmadan reverse iteratör tanımlaması
+        cout << *itr << " ";//reverse iteratör vektörün sonundan başlayıp ilk elemana doğru ilerler
+    // rbegin() ve rend() sadece reverse iteratörle kullanılır : rbegin() son elemanı, rend() ise ilk elemanı gösterir
+
+    cout << endl;
+
+    for(auto itr = vec.begin(); itr != vec.end(); ++itr)//auto ile iteratör tanımlaması
+        cout << *itr << " ";
+
+    cout << endl;
+
+    for(auto itr = vec.rbegin(); itr != vec.rend(); ++itr)//auto ile reverse iteratör tanımlaması
+        cout << *itr << " ";//görüldüğü gibi rbegin() ve rend() kullanımından auto deyimiyle derleyici
+                            // bunun reverse iteratör olduğunu anladı
+
+    cout << endl;
+    
+    return 0;
+}
+----
+
+[source,java]
+----
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+    vector vec;
+    
+    for(int i = 0; i < 5; ++i)
+        vec.push_back(i);
+    
+    cout << "Boyut: " << vec.size() << endl;//vec.size() vektördeki eleman sayısını döndürür
+    cout << "Kapasite: " << vec.capacity() << endl;//vec.capacity() vektör için ayrılan yer miktarını gösterir
+    cout << "Max boyut: " << vec.max_size() << endl;//vec.max_size() vektörün alabileceği maksimum eleman sayısını döndürür
+    
+    return 0;
+}
+----
+

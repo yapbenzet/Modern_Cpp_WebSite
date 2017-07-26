@@ -1,0 +1,307 @@
+
+== Akıllı Pointerlar
+
+[source,c++]
+----
+void Fonksiyon()
+{   
+    BirSinif *ptr = new BirSinif; 
+ 
+    
+    delete ptr;
+}
+----
+
+Yukarıdaki fonksiyonda bir sınıf için pointer tanımlanmış ve bu pointera yer ayırma işlemi yapılmış. İşlem bittiğinde de bellek işletim sistemine geri verilmiş. Yukarıda hiçbir sorun yok gibi gözüküyor. Bellek sıkıntısı sorunu da yok. Sorun yokmuş gibi gözükse de yeri geldiğinde belleğin iade edilmesi unutulabilir. Örneğin:
+
+[source,c++]
+----
+void Fonksiyon()
+{
+    BirSinif *ptr = new BirSinif;
+    
+    int x;
+    cin >> x;
+    
+    if(x == 0)
+        return;
+        
+    delete ptr;
+}
+----
+
+Burada görüldüğü üzere kullanıcı eğer sıfır girerse ayrılan yer iade edilmeyecek ve bellek sızıntısına sebep olacak. 
+
+Bunun için akıllı pointerları kullanabiliriz. Akıllı pointerlar ile delete işlemine de gerek kalmayacaktır. Akıllı pointerlar da dinamik olarak yer ayırma yaparlar. Ama birer nesne oldukları için kapsam bittiği zaman otomatik olarak yıkıcı fonksiyonları çağırılır. Böylece ramden alınan yer otomatik olarak teslim edilmiş olur. 
+
+C{plus}{plus}11 ile dört farklı akıllı pointerımız var. unique_ptr, shared_ptr, weak_ptr ve auto_ptr. Auto_ptr kullanılmamalı. Zaten C{plus}{plus}17 ile birlikte dilden silindi.
+
+=== unique_ptr
+
+unique_ptr C{plus}{plus} ile birlikte auto_ptr yerine getirilmiş bir sınıftır. Çoklu öğeler tarafından paylaşılmayacak tüm dinamik yer ayrılmış nesneler için unique_ptr kullanılmalıdır. unique_ptr içerisindeki nesne tamamen unique_ptr'aittir. Paylaşılmaz. unique_ptr <memory> başlığında bulunur. Basit bir unique_ptr örneği:
+
+[source,c++]
+----
+#include <iostream>
+#include <memory>
+
+class stuff
+{
+public:
+    stuff() { std::cout << "nesne olusturuldu" << std::endl; }
+    ~stuff() { std::cout << "nesne yok edildi" << std::endl; }
+}
+
+int main()
+{
+    std::unique_ptr<stuff> stu ( new stuff );
+    
+    return 0;
+}
+----
+
+Program çıktısı:
+
+----
+nesne olusturuldu
+nesne yok edildi
+----
+
+
+C{plus}{plus}14 ile gelen std::make_unique fonksiyonunu kullanarak unique_ptr oluşturabilirsiniz. Kullanması oldukça kolaydır.
+
+[soource,c++]
+----
+class stuff;
+
+int main()
+{
+    
+    auto ptr = std::make_unique<stuff>();
+    
+}
+----
+
+Fonksiyonlardan unique_ptr döndürebilirsiniz. 
+
+[source,c++]
+----
+
+std::unique_ptr<stuff> createUnique()
+{
+    return std::make_unique<stuff>();
+}
+----
+
+Fonksiyonlara unique_ptr gönderebilirsiniz.
+
+[source,c++]
+----
+#include <memory> // for std::unique_ptr
+#include <iostream> 
+
+class Kaynak
+{
+public:	
+    Resource() 
+    { 
+        std::cout << "Kaynak alindi\n"; 
+        
+    }	
+    
+    ~Resource() 
+    { 
+        std::cout << "Kaynak yok edildi\n"; 
+        
+    } 	
+    
+    friend std::ostream& operator<<(std::ostream& out, const Resource &res)	{		
+        out << "Bu bir kaynaktir\n";		
+        
+        return out;	
+        
+    }
+    
+}; 
+
+void useResource(const std::unique_ptr<Kaynak> &res)
+{     
+    if (res)          
+        std::cout << *res;
+    
+} 
+
+int main()
+{    
+
+    auto ptr = std::make_unique<Kaynak>();     
+    
+    useResource(ptr);     
+    
+    std::cout << "Program bitiyor\n";    
+    return 0;
+    
+    
+} // Kaynak burada yok edilir.
+----
+Direkt fonksiyonlara gönderebiliriz ve orada kullanabiliriz. 
+
+Unique_ptr'leri kullanmamız için (*) ve (\->) operatörleri aşırı yüklenmiştir. Bu sayede direkt içeriğe erişebiliriz.
+
+Eğe fonksiyonun, tüm verinin sahipliğini almasını istiyorsanız std::move() ile fonksiyona gönderebilirsiniz.
+
+[source,c++]
+----
+#include <memory> // for std::unique_ptr
+#include <iostream> 
+
+class Kaynak
+{
+public:	
+    Resource() 
+    { 
+        std::cout << "Kaynak alindi\n"; 
+        
+    }	
+    
+    ~Resource() 
+    { 
+        std::cout << "Kaynak yok edildi\n"; 
+        
+    } 	
+    
+    friend std::ostream& operator<<(std::ostream& out, const Resource &res)	{		
+        out << "Bu bir kaynaktir\n";		
+        
+        return out;	
+        
+    }
+    
+}; 
+
+void useResource(const std::unique_ptr<Kaynak> &res)
+{     
+    if (res)          
+        std::cout << *res;
+    
+} // Kaynak burada yok edilir.
+
+int main()
+{    
+
+    auto ptr = std::make_unique<Kaynak>();     
+    
+    useResource(std::move(ptr));     
+    
+    std::cout << "Program bitiyor\n";    
+    return 0;
+    
+    
+} 
+----
+
+**unique_ptr'nin yanlış kullanımları**
+
+İlk olarak iki farklı unique_ptr'nin aynı pointera sahip olması yanlış bir kullanımdır.
+
+İkinci hatalı kullanım ise unique_ptr'ye gönderilen pointerın sonradan silinmesidir.
+
+----
+stuff *ptr = new stuff;
+
+std::unique_ptr<stuff> u1(ptr);
+std::unique_ptr<stuff> u2(ptr);
+
+stuff *ptr2 = new stuff;
+
+std::unique_ptr<stuff> u3(ptr2);
+
+delete ptr2;
+----
+
+=== shared_ptr
+
+shared_ptr'nin verisi, unique_ptr'nin aksine bir çok shared_ptr tarafından erişilebilirdir.Birden fazla share_ptr aynı veriye sahip olabilir. shared_ptr kaç tane shared_ptr'nin veriye sahip olduğu bilgisini tutar. Sonuncu shared_ptr'de kapsam dışına çıktığında ya da yıkıcısı çağrıldığında bellekten ayrılan yer işletim sistemine iade edilir. shared_ptr de <memory> başlığında bulunur.
+
+[source,c++]
+----
+#include <iostream>
+#include <memory>
+
+class stuff
+{
+public:
+    stuff() { std::cout << "nesne olusturuldu" << std::endl; }
+    ~stuff() { std::cout << "nesne yok edildi" << std::endl; }
+}
+
+int main()
+{
+    std::shared_ptr<stuff> stu ( new stuff );
+    
+    {
+    std::shared_ptr<stuff> stu2 ( stu );
+    
+    //Kopyalama islemi yapiliyor. Copy initialization
+    std::cout << "bir shared_ptr yok edildi\n"
+        
+    } //stu2 kapsam disi ama veri yok edilmedi.
+    
+    std::cout << "baska bir shared_ptr yok edildi\n.";
+    return 0;
+}//stu kapsam disi ve veri yok edildi.
+----
+Program çıktısı:
+
+----
+nesne olusturuldu
+bir shared_ptr yok edildi
+baska bir shared_ptr yok edildi
+nesne yok edildi
+----
+
+İlk shared_ptr yok edildiğinde tuttuğu veri yok edilmedi çünkü hala bir shared_ptr o veriye sahipti. İkinci shared_ptr yok edildiğinde ise veriyi tutan başka bir shared_ptr kalmadığı için veri yok edildi.
+
+Burada önemli olan birinci shared_ptrden sonraki tüm shared_ptrler direct initialization ile başlatılmalı. Aşağıdaki örnek bunun sebebini açıklıyor:
+
+[source,c++]
+----
+#include <iostream>
+#include <memory>
+
+class stuff
+{
+public:
+    stuff() { std::cout << "nesne olusturuldu" << std::endl; }
+    ~stuff() { std::cout << "nesne yok edildi" << std::endl; }
+}
+
+int main()
+{
+    stuff *ptr = new stuff;
+
+    std::shared_ptr<stuff> stu ( ptr );
+    
+    {
+    std::shared_ptr<stuff> stu2 ( ptr );
+    
+    std::cout << "bir shared_ptr yok edildi\n"
+        
+    } //stu2 kapsam disi ama veri yok edilmedi.
+    
+    std::cout << "baska bir shared_ptr yok edildi\n.";
+    return 0;
+}//stu kapsam disi ve veri yok edildi.
+----
+
+Programın çıktısı:
+
+----
+nesne ousturuldu
+birinci shared_ptr yok edildi
+nesne yok edildi
+iknci shared_ptr yok edildi
+nesne yok edildi
+----
+
+Bu tanımlanmamış davranıştır ve büyük ihtimalle program hata alıp kapanacaktır. Bundan kaçınmak için direct initialization kullanın.
