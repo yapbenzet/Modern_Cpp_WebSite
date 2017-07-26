@@ -1,0 +1,3 @@
+C:/Users/ozden/CLionProjects/fonksiyon_prototip/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/ozden/CLionProjects/fonksiyon_prototip/cmake-build-debug/CMakeFiles/fonksiyon_prototip.dir
+C:/Users/ozden/CLionProjects/fonksiyon_prototip/cmake-build-debug/CMakeFiles/edit_cache.dir

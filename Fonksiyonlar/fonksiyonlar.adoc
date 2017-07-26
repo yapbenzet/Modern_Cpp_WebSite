@@ -1,0 +1,321 @@
+== Fonksiyonlar ve Nesneler
+
+=== Fonksiyonlar
+
+Fonksiyonlar belli bir işi yapan ve tekrar tekrar kullanılabilen işlemler topluluklarıdır. Fonksiyonları, programı anlamlı parçalara bölmek için ya da aynı kodun program içerisinde tekrar tekrar yazılmasını önlemek için kullanabiliriz. Fonksiyonlar main fonksiyonu içerisinde ya da diğer fonksiyonlar içerisinde çağrılabilir.
+
+Fonksiyonlar değer döndürmek zorunda olmamakla birlikte genellikle değer döndürürler. Örneğin her programda olan ve programları başlatan main() fonksiyonu geriye programcı değiştirmez ise 0 döndürür.
+
+Programcı yazdığı fonksiyonun dönüş değerini belirlemek zorundadır.Dönüş değeri olmayan fonksiyon yazılamaz. Eğer fonksiyon değer döndürmeyecekse fonksiyonun dönüş tipi void olmalıdır.
+
+==== Fonksiyon Tanımlama
+
+Bir fonksiyon;
+
+----
+donus_turu fonksiyon_ismi(Parametreler)
+{
+    Fonksiyonun yapacağı işlem
+}
+----
+Bir fonksiyon kabaca yukarıdaki gibi tanımlanabilir.
+
+**Dönüş Türü:** Fonksiyonların bir dönüş değeri olabilir tanımlamada kullanılan dönüş değeri, değerin veri türüdür.Bazı fonksiyonlar istenen işlemleri bir değer döndürmeden gerçekleştirir. 
+
+**Fonksiyon ismi:** Her fonksiyonun programda kullanılmak üzere bir ismi olmak zorundadır. Fonksiyon ismi, fonksiyon tanımlarken belirtilmelidir.Okunabilir bir program için fonksiyon adı fonksiyounu işlevini de yansıtması tercih edilir.
+
+**Parametreler:** Her fonksiyon parametre almak zorunda değildir. İşlevine göre farklılık gösterir. Aldığı parametre belirtilirken değişken tanımlamada olduğu gibi önce parametrenin veri tipi daha sonra da ismi bildirilir. Her parametreye kendi veri türü belirtilmedilir.
+
+**Fonksiyon Gövdesi:** Burada fonksiyonun yapacağı işlemler yazılır.
+
+
+*Örnek Tanımlamalar:*
+
+int func1(int x, int y) bu fonksiyonun çağrıldığı yerde kendisine iki değer gönderilmesi gerekiyor  ,
+
+int func1() -> Dışarıdan herhangi bir parametre almayan ama değer döndüren fonksiyon  
+
+void func1() -> Değer döndürmeyen fonksiyon
+
+**Fonksiyon Prototipleri**
+
+Fonksiyonlar main fonksiyonundan önce tanımlanmalıdırlar. Derleyici kodları satır satır okuduğu için; main fonksiyonu içinde kullanılan fonksiyon daha önce tanımlanmış olmalıdır. Tüm fonksiyonlar mainden önce tanımlandığı zaman bu büyük sorunlara sebep olabilmektedir. Kod büyüdükçe kodun içinde hareket etmek zorlaşacaktır. Bunun için fonksiyon prototipleri kullanılabilir.
+
+Fonksiyon prototipleri kısaca fonksiyonun gözdesiz halidir. Örnek olarak aşağıdak kodu verebiliriz:
+
+[source,C++]
+----
+#include <iostream>
+
+void printSomething(int x);
+
+int main()
+{
+    printSomething(5);
+    return 0;
+}
+
+void printsomething(int x)
+{
+    std::cout << x << std::endl;
+}
+----
+
+Prototipini tanımladığınız fonksiyonun gövdesini tanımlamayı unutmamalısınız.
+
+==== Fonksiyonların Çağrılması
+
+Bir fonksiyon programda kullanılmadan önce mutlaka protitipi veya gövdesiyle birlikte tanımlanmalıdır. Tanımlanmayan fonksiyon programda kullanılamaz.
+
+
+**Fonksiyonların Bir Değerle Çağrılması**
+[source,C++]
+----
+//swap fonksiyonu x ve y değişkenlerinin yerini değiştirir
+void swap(int x, int y) {
+   int temp;
+
+   temp = x; /* save the value of x */
+   x = y;    /* put y into x */
+   y = temp; /* put x into y */
+   return;
+}
+----
+
+Yukarıdaki fonksiyon aldığı iki parametreye göre x ve y değişkenlerinin yerini değiştirir fakat bu fonksiyonun yaptığı yer değiştirme işlemi fonksiyon blokları içerisinde geçerlidir. Çünkü tanımlanan değişkenler ve aldığı parametreler fonksiyonun skop alanı içerisinde kalmaktadır. 
+
+Örneğin;
+[source,C++]
+----
+#include <iostream>
+
+//Fonksiyon Prototip tanımlaması
+void swap(int x,int y);
+int main()
+{
+    int a=100;
+    int b=200;
+    
+    std::cout<<"A degiskeninin ilk degeri: "<<a<<std::endl;
+    std::cout<<"B degiskeninin ilk degeri: "<<b<<std::endl;
+    
+    swap(a,b);//swap fonksiyonunun çağrılması
+    
+    std::cout<<"A degiskeninin son degeri: "<<a<<std::endl;
+    std::cout<<"B degiskeninin son degeri: "<<b<<std::endl;
+}
+----
+
+
+----
+Program çıktısı:
+
+A degiskeninin ilk degeri: 100;
+B degiskeninin ilk degeri: 200;
+A degiskeninin son degeri: 100;
+B degiskeninin son degeri: 200;
+
+----
+Programda da görüldüğü üzere yapılan yer değişikliği işlemi fonksiyon içerisinde geçerlidir. Değişkenler ve parametreler lokal olarak kullanıldığı için program çıktısnda fonksiyon çağrılmadan ve fonksiyon çağrıldıktan sonraki değerler aynı verilmiştir.
+
+
+**Fonksiyonların Pointerla Çağrılması** 
+
+Yukarıdaki örnekte fonksiyone gönderilen parametrelerin yer değiştirmesini denemiştik fakat değişkenler lokal olarak tanımlı olduğu için fonksiyon öncesinde ve sonrasındaki değerlerde değişkenlik olmamıştı. Pointer kullanarak aynı fonksiyonun çalışması şu şekildedir:
+
+[source,C++]
+----
+void swap(int *a,int *b)
+{
+    int tmp;
+    tmp=*a;
+    *a=*b;
+    *b=tmp;
+}
+int main()
+{
+    int a=100;
+    int b=200;
+    
+    std::cout<<"A degiskeninin ilk degeri: "<<a<<std::endl;
+    std::cout<<"B degiskeninin ilk degeri: "<<b<<std::endl;
+    
+    swap(&a,&b);//swap fonksiyonunun çağrılması
+    /* pointer kullandığımız için swap fonksiyonunu çağırırken kullanılan
+     değişkenlerin referans değerleri gönderilir.*/
+    
+    std::cout<<"A degiskeninin son degeri: "<<a<<std::endl;
+    std::cout<<"B degiskeninin son degeri: "<<b<<std::endl;
+}
+
+
+Program çıktısı:
+
+A degiskeninin ilk degeri: 100;
+B degiskeninin ilk degeri: 200;
+A degiskeninin son degeri: 200;
+B degiskeninin son degeri: 100;
+
+----
+Görüldüğü gibi pointer kullanarak gönderilen parametrelerin yerini değiştirmiş olduk. Yer değişikliği main fonksiyonu içerisinde de geçerli olmuştur.
+Pointer gönderilerek kullanılan fonksiyonlarda gelen bağımsız parametreler etkilenmektedir.
+
+**Fonksiyonu Referans Göndererek Çağırma**
+
+Yukarıdaki örnekte yaptığımız fonksiyonu bir de parametre olarak bir referans aldığında deneyelim. 
+
+
+[source,C++]
+----
+void swap(int &x, int &y) {
+   int temp;
+   temp = x;
+   x = y;   
+   y = temp;
+   return;
+}
+----
+Fonksiyona parametre olarak x ve y referansları gönderilerek iki değişkenin değerlerini yer değiştirmesi işlemi yapılıyor.
+[source,C++]
+----
+void swap(int &x, int &y) {
+   int temp;
+   temp = x;
+   x = y;   
+   y = temp;
+   return;
+}
+
+int main()
+{
+    int a=100;
+    int b=200;
+    
+    std::cout<<"A degiskeninin ilk degeri: "<<a<<std::endl;
+    std::cout<<"B degiskeninin ilk degeri: "<<b<<std::endl;
+    
+    swap(a,b);
+    
+    std::cout<<"A degiskeninin son degeri: "<<a<<std::endl;
+    std::cout<<"B degiskeninin son degeri: "<<b<<std::endl;
+}
+
+
+Program çıktısı:
+
+A degiskeninin ilk degeri: 100;
+B degiskeninin ilk degeri: 200;
+A degiskeninin son degeri: 200;
+B degiskeninin son degeri: 100;
+
+----
+
+Referans gönderilerek kullanılan fonksiyonlarda gelen bağımsız parametreler etkilenmektedir.
+
+
+==== Fonksiyondan değer, referans ve adres olarak değer döndürme
+
+Değer döndürme en basit döndürme yöntemidir. Kısaca şöyledir.
+
+----
+
+int function()
+{
+    return integer;
+}
+----
+
+Örnek olarak:
+
+[source,C++]
+----
+int doubleValue(int x)
+{    
+    int value = x * 2;    
+    return value; // A copy of value will be returned here
+    
+} // value goes out of scope here
+----
+
+**Adres olarak döndürme**
+
+Adres olarak göndermede return değeri bir pointerdir. Örnek olarak:
+
+[source,C++]
+----
+int* doubleValue(int x)
+{    
+    int value = x * 2;   
+    return &value; // return value by address here
+    
+} // value destroyed here
+----
+
+Bu örnekte de görüldüğü gibi yokedilen bir değişkenin adresini kullanamayacağımız için bu kullanımdan kaçınmamız gerekir. Adress ile gönderme en çok dinamik olarak yer ayırma yapıldığı zaman işe yarar. Örneğin:
+
+[source,C++]
+----
+int* allocateArray(int size)
+{    
+    return new int[size];
+    
+} 
+int main()
+{
+    int *array = allocateArray(25);     // do stuff with array     
+    delete[] array;    
+    return 0;
+    
+}
+----
+
+Yukarıdaki kodda fonksiyon içerisinde dinamik yer ayırma yaptık. Bu yüzden değişkenler kapsamın bitmesiyle yok edilmedi.
+
+**Referans ile döndürme**
+
+Bu döndürme stili en çok fonksiyona gönderdiğimiz referansları dönüş olarak döndüreceğimizde işe yararlar.
+
+Aşağıdaki kod hatalı bir kullanım stilidir.
+
+[source,C++]
+----
+int& doubleValue(int x)
+{    
+    int value = x * 2;    
+    return value; // return a reference to value here
+    
+} // value is destroyed here
+----
+
+Çünkü kapsam bittiğinde referansını döndürdüğümüz değişken yok edildi.
+
+Aşağıdaki kod bu döndürme stili için çok kullanışlıdır.
+
+[source,C++]
+----
+#include <array>
+#include <iostream>  
+
+// Returns a reference to the index element of array
+int& getElement(std::array &array, int index)
+{   
+    // we know that array[index] will not be destroyed when we return to the caller (since the caller passed in the array in the first place!)    // so it's okay to return it by reference  
+    
+    return array[index];
+    
+} 
+int main()
+{    
+    std::array array;     // Set the element of array with index 10 to the value 5   getElement(array, 10) = 5;	    
+    std::cout << array[10] << '\n';     
+    return 0;
+    
+}
+----
+
+==== Inline fonksiyonlar
+
+Normal fonksiyonlar ramde ayrı bir bölgede farklı bir programmış gibi tutulur ve çağırıldıkları zaman ramin o bölgesinden çekilirler. Bu bir miktar performans azalmasına sebep olabilir. inline fonksiyonlar ise çağırıldıkları her yere kopyalanırlar. Böylece performans kaybı yaşatmazlar. Ama çok büyük fonksiyonları inline olarak tanımlamak sıkıntılı olabilir.
+
+Derleyiciler genellike hangi fonksiyonun inline olması gerektiğine karar verebilirler. Bu yüzden inline anahtar kelimesini kullanmak neredeyse gereksizdir.
+
