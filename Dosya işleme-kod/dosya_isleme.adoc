@@ -1,0 +1,266 @@
+Standart C ++ kitaplığı, akış operatörleri >> ve << kullanarak dosyaları okumak ve yazmak için izin veren üç akış tabanlı sınıfı tanımlar. Bu sınıflar <fstream> başlık dosyasında tanımlanmıştır.
+
+* C++17 ile <filesystem> kütüphanesi gelmiştir.
+
+* <filesystem> kütüphanesi, yollar, normal dosyalar ve dizinler gibi dosya sistemleri ve bileşenleri üzerindeki işlemleri gerçekleştirmek için olanaklar sağlar.
+
+* _<filesystem>_ başlangıçta <boost.filesystem> olarak geliştirildi , ISO / IEC TS 18822: 2015 teknik spesifikasyonu olarak yayınlandı ve son olarak C{plus}{plus} 17'den itibaren ISO C{plus}{plus} ile birleşti. Geliştirme uygulaması şu an C ++ 17 kütüphanesine göre daha fazla derleyici ve platformda mevcuttur.Hiyerarşik bir dosya sistemi uygulamaya erişilemiyorsa veya gerekli yetenekleri sağlamazsa, dosya sistemi kitaplığı olanakları kullanılamayabilir. Altta yatan dosya sistemi tarafından desteklenmiyorsa, bazı özellikler kullanılamayabilir (örneğin, FAT dosya sisteminin hardlink'leri, softlink'leri ve diğer özellikleri yoktur). Bu durumlarda hatalar bildirilmelidir.
+
+_<filesystem>_ kütüphanesinde tanımlı olan sınıf yapıları ve kullanımları:
+
+|====
+|**path** |
+Tür yolunun nesneleri bir dosya sistemindeki yolları temsil eder. Yolların yalnızca sözdizimsel yönleri ele alınır: yol adı mevcut olmayan bir yolu veya mevcut dosya sistemi veya OS üzerinde bulunmasına izin verilmeyen bir yolu temsil edebilir.
+|**filesystem_error**|  
+Std::filesystem::filesystem_error sınıfı, dosya sistemi kitaplığındaki işlevlerin aşırı yüklenmesiyle başarısızlıkla sonuçlanan bir istisna nesnesini tanımlar.
+|**directory_entry**|  
+Bir dizin girdisini temsil eder. Nesne bir yolu bir üye olarak depolar ve dizin yinelemesi sırasında ilave dosya öznitelikleri (sabit bağlantı sayısı, durum, sembolik bağ durumu dosya boyutu ve son yazma süresi) de saklayabilir.
+|**directory_iterator**|  
+Directory_iterator, bir dizinin directory_entry öğeleri üzerinde yinelenen bir InputIterator'tır (ancak alt dizinleri ziyaret etmez). Yineleme sırası belirtilmemiş, ancak her dizin girişi yalnızca bir kez ziyaret edilmiştir. Nokta ve nokta-nokta özel yol adları atlanır.
+|**recursive_directory_iterator**|  
+Recursive_directory_iterator, bir dizinin directory_entry öğeleri üzerinde ve yineleyerek tüm alt dizinlerin girdileri üzerinde yinelenen bir InputIterator'tır. Yineleme sırası belirtilmemiş, ancak her dizin girişi yalnızca bir kez ziyaret edilmiştir.
+|**file_status**|  
+Bir dosyanın türü ve izinleri hakkında bilgi depolar.
+|space_info|Dosya sistemi bilgisini alana göre belirtir
+|file_type|Bir yolun ifade ettiği bir dosya veya dizinin türünü belirtir.
+|**filesystem::perms**| Bu tür dosya erişim izinlerini temsil eder. Perms BitmaskType gereksinimlerini karşılar (bitwise işleç operatörü &, operator \|, operator ^, operator ~, operator & =, operator \| = ve operator ^ = bu tür için tanımlanır).
+|**perm_options**| Bu tür, işlev izinlerinin () davranışını denetleyen kullanılabilir seçenekleri temsil eder.
+Perm_options BitmaskType'ın gereksinimlerini karşılar (bu, bitli işleç operatörü &, işleci, işleç ^, işleci, işleci ve =, işleci = ve işleci ^ = bu tür için tanımlanmış demektir.)
+|**copy_options**|Bu tür, copy () ve copy file () işlevinin seçenekleri temsil eder.
+|directory_options|Bu tür, directory_iterator ve recursive_directory_iterator'ın davranışını denetleyen kullanılabilir seçenekleri temsil eder.
+Directory_options BitmaskType'ın gereksinimlerini karşılar (bitwise operatörler operatörü &, operator \|, operator ^, operator ~, operator & =, operator \| = ve operator ^ = bu tür için tanımlanır.)
+|**file_time_type**| Dosya zamanını temsil eder. Önemsiz saat, TrivialClock'ı karşılayan ve dosya sistemi tarafından sunulan dosya zamanı değerlerinin çözünürlüğünü ve aralığını temsil etmek için yeterli olan, uygulama tarafından tanımlanan bir türe sahiptir.
+|====
+
+
+**Dosya Akışları**
+
+<fstream> kütüphane başlığı, akış sınıf şablonu olan basic ifstream(dosya girdisi girişi için), basic_ofstream(dosya çıktı için) ve basic_fstream(dosya girdisi ve dosya çıktısı için) tanımlar içerir. 
+
+*   fstream (Okuma ve Yazma)
+*   ifstream (Okuma)
+*   ofstream (Yazma)
+
+Örneğin;
+
+[source,C++]
+
+----
+
+#include <fstream>  
+    void openCloseFilesExplicitly()  
+    {  
+        std::ofstream ofile;  
+        std::ifstream ifile; 
+        std::fstream  iofile;   işlemi için
+
+         ofile.open("file1.dat"); //Yazma işlemi için //file1 dosyasını açar      
+        ifile.open("file2.dat");  //Okuma işlemi için //file2 dosyasını açar    
+        iofile.open("file3.dat");//Hem yazma hem de //okuma işlemi için file3 dosyasını açar
+
+        ofile.close();  
+        ifile.close();  
+        iofile.close();  
+    }  
+----
+
+Yukarıdaki kodda ifstream,fstream ve ofstream dosyaları oluşturulup, açma ve kapama işlemleri yapılmıştır.
+
+Alternatif olarak dosya işlemlerinde de yapıcı ve yıkıcı fonksiyonları kullanabailirsiniz örneğin;
+
+
+[source,C++]
+----
+#include <fstream>
+
+ void openCloseFilesImplicitly()  
+    {  
+        // Declare file stream objects (files opened implicitly by constructors).  
+        std::ofstream ofile("file1.dat");  
+        std::ifstream ifile("file2.dat");  
+        std::fstream  iofile("file3.dat");  
+
+        // Use the files...  
+
+    }   // Files closed implicitly by destructors.
+----
+
+==== Dosya Açma Modları
+
+----
+open (filename, mode);
+----
+
+|====
+| ``ios::in`` | Giriş işlemleri için dosya açmada kullanılır.
+| ``ios::out`` | Çıkış işlemleri için dosya açmada kullanılır. 
+| ``ios::binary`` | İkili modda açmak için.
+| ``ios::ate`` | Dosyanın sonundaki başlangıç konumunu ayarlayın. Ayarlanmazsa, başlangıç konumu dosyanın başlangıcıdır.
+| ``ios::app`` | Tüm çıktı işlemleri, içeriği dosyanın geçerli içeriğine ekleyerek dosyanın sonunda gerçekleştirilir.
+| ``ios::trunc`` | Dosya çıktı işlemleri için açılmışsa ve zaten mevcutsa, önceki içeriği silinir ve yenisi ile değiştirilir.
+|====
+
+Tüm bu parametreler, bitwise OR ( |) operatörü kullanılarak birleştirilebilir . Örneğin, dosyayı example.binveri eklemek için ikili modda dosyayı açmak istersek, üye işleve aşağıdaki çağrı yaparak bunu yapabiliriz open:
+
+
+[source,C++]
+
+----
+ofstream myfile;
+myfile.open ("example.bin", ios::out | ios::app | ios::binary);
+----
+
+
+**Text dosyalarını okuma ve yazma**
+
+Std::ifstream sınıfı std::istream'den miras alır; bu, >> operatörünü bir dosyadan veri okumak için kullanabileceğiniz anlamına gelir. Benzer şekilde, std::ofstream sınıfı std::ostream'den miras alır; bu, bir dosyadan veri okumak için << operatörünü kullanabileceğiniz anlamına gelir.
+
+
+>> ve << operatörlerine ek olarak, std::istream ve std::ostream sınıflarında tanımlanan diğer üyeleri de kullanabilirsiniz. Aynı şekilde, bir dosya akış nesnesinden bir metnin tamamını okumak için std::getline() gibi yöntemleri kullanabilirsiniz.
+
+Aşağıdaki kod örneği, bir dosyaya birkaç satırlık metnin nasıl yazıldığını gösterir. Çıktı modunda örtülü olarak dosyayı açan bir std::ofstream nesnesi oluşturduk. Daha sonra, dosyaya metin yazmak için std::ostream'den devralınan << operatörünü kullanırız.
+
+[source,C++]
+----
+ std::ofstream ofile("file1.txt");  
+    if (ofile.is_open())  
+    {  
+        ofile << "1.satir" << std::endl;  
+        ofile << "2.satir" << std::endl;  
+        ofile << "3.satir" << std::endl;  
+        ofile.close();  
+
+        std::cout << "Dosyaya yazma islemi bitti." << std::endl;  
+    }  
+    else  
+    {  
+        std::cerr << "file1.txt dosyasi acilamiyor. << std::endl;  
+    }
+----
+
+Yukarıdaki kod dosyaya yama işlemi yapmaktadır. 
+Dosyadan okumak için;
+
+[source,C++]
+----
+std::ifstream ifile("file1.txt");  
+    if (ifile.is_open())  
+    {  
+        std::string line;  
+        while (std::getline(ifile, line))  
+        {  
+            std::cout << line << std::endl;  
+        }  
+
+        ifile.close();          
+
+        std::cout << "Finished reading text from file1.txt." << std::endl;  
+    }  
+    else  
+    {  
+        std::cerr << "Couldn't open file1.txt for reading." << std::endl;  
+    }
+----
+
+
+**Formatlı Metin Dosyalarını Okuma ve Yazma**
+
+Dosya akış nesnelerini, konsoldaki biçimlendirilmiş metin verilerini okuyup yazabileceğiniz gibi, >> ve << operatörlerini kullanarak bir dosyada biçimlendirilmiş metin verilerini okumak ve yazmak için kullanabilirsiniz. Örneğin, bir kişinin adını (dizesini), yaş (bir int) ve yüksekliği (bir çift) çıkartmak isteyebilirsiniz.
+
+
+
+* << operatörünü kullanarak veri yazarken, değerlerin birbirlerinden ayrıldığından emin olmanız gerekir, örneğin değerler arasında bir boşluk çıkması. 
+
+* >> operatörünü kullanarak veri okurken, dosyadaki belirteçlerin sırasını bilmelisiniz. Örneğin, bir sonraki gösterge bir double ise, bunu bir double değişkende okumanız gerekir. Değeri yanlış türdeki değişkene okumayı denerseniz bir hata meydana gelir.
+
+Aşağıdaki kodda gösterilmiştir;
+
+[source,C++]
+----
+ std::ofstream ofile("metindosyasi.txt");  
+    if (ofile.is_open())  
+    {  
+        ofile << "John" << " " << 42 << " " << 1.67 << std::endl;  
+        ofile << "Jane" << " " << 41 << " " << 1.54 << std::endl;  
+        ofile << "Bill" << " " << 35 << " " << 1.82;  
+
+        ofile.close();  
+    }  
+    else  
+    {  
+        std::cerr
+     << "metindosyasi.txt dosyasi acilamamaktadir. " << std::endl;  
+    }
+---- 
+
+Dosya Çıktısı:
+
+John 42 1.67  
+
+Jane 41 1.54
+
+Bill 35 1.82
+
+**Binary Dosya okuma ve yazma işlemi**
+
+
+Dosya akış nesnelerini bir dosyada ikili veri okumak ve yazmak için kullanabilirsiniz. İkili dosyalar genellikle metin dosyalarından daha küçüktür ve okumak ve yazmak için daha verimli olabilirler. Bu özellikler, saklamak için büyük miktarda veri varsa özellikle faydalıdır. İkili verileri bir dosyaya okumak veya yazmak için şu adımları izleyin:
+
+* Dosyayı ikili modda açın. Bunu yapmak için, open () yönteminde veya dosya akışı oluşturucusunda std::ios::binary modunu belirtin. 
+
+* İkili verileri sırasıyla okumak veya yazmak için read () veya write () yöntemini çağırın. Bu yöntemlerin her ikisi de iki parametre alır.
+
+* Değişkenin okuma veya yazma adresi, bir (char *) işaretçisi olarak ifade edilir. 
+
+* Okunacak veya yazılacak değerin bayt cinsinden boyutu. Bu değeri elde etmek için C ++ sizeof operatörünü kullanabilirsiniz.
+
+
+Aşağıdaki kod örneğinde; sıcaklık istatistiklerini bir dosyaya ikili biçimde okur ve yazarız. Özellikle, dosya, her ayın belirli bir yeri için minimum ve maksimum sıcaklıkları yıl içinde depolar. Sıcaklıkları iki katına çıkaracağız, böylece dosya iki katına çıkacak. Dosya boyutu toplam 192 bayt olacak şekilde, 8 bayt boyutunda double olur.
+
+----
+ class temp  
+{  
+        public:  
+        double minimum, maximum;  
+
+        // Constructor (yapıcı fonksiyon) 
+        temp(double min = 0.0, double max = 0.0)  
+            : minimum(min), maximum(max)  
+        {}  
+        //Dosyaya yazmak için
+        void write(std::ostream & os)  
+        {  
+            os.write((char*)&minimum, sizeof(double)); 
+            os.write((char*)&maximum, sizeof(double)); 
+        }
+        //Dosyadan okumak için
+        void read(std::istream & is)  
+        {  
+            is.read((char*)&minimum, sizeof(double));  
+            is.read((char*)&maximum, sizeof(double));  
+        }  
+};
+std::ofstream ofile("temp.bin", std::ios_base::binary);  
+    if (ofile.is_open())  
+    {  
+        temp(-2.5, 7.5).write(ofile);  
+        temp(0, 9.9).write(ofile);  
+        temp(2.5, 11.0).write(ofile);  
+        temp(5.5, 14.5).write(ofile);  
+        temp(7.0, 17.7).write(ofile);  
+        temp(10.5, 23.7).write(ofile);  
+        temp(11.7, 29.5).write(ofile);  
+        temp(7.6, 22.9).write(ofile);  
+        temp(7.2, 21.5).write(ofile);  
+        temp(2.0, 16.0).write(ofile);  
+        temp(-4.7, 12.5).write(ofile);  
+        temp(-1.9, 8.5).write(ofile);  
+        ofile.close();  
+    }  
+    else  
+    {  
+        std::cerr << "Dosya acilamadi." << std::endl;  
+    }   
+----
+
+
