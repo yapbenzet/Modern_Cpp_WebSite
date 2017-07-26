@@ -1,0 +1,324 @@
+= Scope(kapsam)
+
+*Bir sınıfta, tüm üye değişkenler ve metotlar sınıfın metotları tarafından kullanılabilir. Bir sınıfın üyelerinin de private ve public gibi erişim değiştiricilerine sahip olabileceğini ancak görünürlüğünü sınıfın dışından belirlediğini unutmayın. Sınıf içinde tüm public üyeleri ve private üyeler sınıf içinde işlev görür.Bir sınıf üyelerine erişirken, sınıf adını ya da nokta işleci (.) ya da ok üyesi seçim operatörü (->) ve üye adını (değişken veya işlev) takip eder. Bir üye metot içinde bildirilen tüm değişkenler, C ++'daki diğer metot uygulamalarının yaptığı gibi, bu metodun yerelidir.Sınıf scopu(kapsamı), sınıf düzeyinde metotların ve değişkenlerin, aynı adın metotları veya değişkenleri ile çakışmayacak şekilde oluşturulmasına izin verir. Aşağıda gösterilenler gibi iki farklı sınıf dosyası bulundurursak, uygulama, hangi sınıfların örnek adını temel alarak hangi metodu çağıracağını bilir.*
+
+----
+01 using namespace std;  
+02  
+03       int main()  {
+04   
+05  
+06         insan kisi;  
+07         hayvan kopek; 
+08           
+10         kisi.MerhabaDe();
+11         kopek.MerhabaDe();
+12         return 0;  
+}
+----
+
+*Köpek ve Kişi diye iki sınıfa sahibiz ve Köpeğin MerhabaDe () metodunun "havhav" ve Kişinin MerhabaDe () metodunun "Merhaba" yazdığını varsayalım. kisi.MerhabaDe () 'y çağırdığınızda derleyici, insan sınıfının bir örneği olan kişi nesnesiyle ilişkili olduğu için MerhabaDe metodunun hangi kısma çağrılacağını bilir. Bu nedenle insan sınıfına ait MerhabaDe () işlevi yürütüldü.*
+
+[source,java]
+----
+**insan.h**  
+
+#include <string>  
+
+class insan  {  
+
+    private:  
+    string isim;  
+    string soyisim;  
+    int ayas;  
+
+    public:  
+    insan(); 
+    insan(string fisim,string fsoyisim);  
+    insan(string fisim,string fsoyisim, int yas);  
+    ~insan();  
+    void MerhabaDe();  
+};
+----
+[source,java]
+----
+**insan.cpp**  
+
+    #include "insan.h"  
+    #include <iostream>
+    using namespace std;
+
+    insan::insan()  
+    {  
+
+    }  
+
+    insan::insan(string fisim,string fsoyisim)  
+    {  
+        isim = fisim;  
+        soyisim = fsoysim;  
+    }  
+
+    insan::insan(string fisim, string fsoyisim, int yas)  
+    {  
+        isim = fisim;  
+        soyisim = fsoyisim;  
+
+        this->yas = yas;  
+    }  
+
+    insan::~insan()  
+    {  
+    }  
+
+    void insan::MerhabaDe() {  
+        cout << "Hello" << endl;  
+    }
+----   
+*
+insan.h ve insan.cpp dosyalarına baktığımızda üç private üye değişkenimiz, üç public kurucu ve MerhabaDe () adlı bir ortak metod bulunduğunu fark ettik. Bir sınıftaki üye değişkenlerin kapsamını göstermek için aşağıdaki main.cpp dosyasını da oluşturduk.*
+
+[source,java]
+----
+#include <iostream>  
+#include "Person.h"  
+
+01 using namespace std;  
+02  
+03 int main()  
+04 {  
+05  
+06 // varsayılan yapıcıyı kullanarak bir insan örneği oluştur
+07 insan *bir = new insan();  
+08  
+09 // iki parametreli yapıcıyı kullanarak bir insan örneği oluştur  
+10 insan *iki = new insan("ali", "keskin");  
+11  
+12 // üç parametreli yapıcıyı kullanarak bir insan örneği oluştur  
+13 insan *uc = new insan("mehmet", "yavuz", 15);  
+14  
+15 insan p;  
+16   
+17 insan &p1 = p;  
+18  
+19 p.MerhabaDe();  
+20  
+21 // pointer yöntemiyle fonksiyon çağırmak  
+22 bir->MerhabaDe();  
+23  
+24 // referans yöntemi ile üye fonksiyonu çağırmak  
+25 p1.MErhabaDe();  
+26  
+27 return 0;  
+} 
+----    
+*insan sınıfını kullanan bu kodda, insan sınıfının üyelerine, örnek nesneler kullanarak erişmenin farklı yollarını görüyoruz.*
+
+*Satır 07'de, bir işaretçi ve new anahtar sözcük kullanarak bir adı verilen yeni bir insan nesnesi için belleği dinamik olarak ayırıyoruz. Aynı şeyi, 10 ve 13. satırlarda bulunan iki diğer pointerler ile yaparız. Farklılıklar, her biri için farklı kurucular çağırmamızdır. bir varsayılan kurucu kullanır, uc ise 3 argüman kurucusunu kullanırken iki 2 argüman yapıcıyı kullanır. Kurucular, sınıf dosyası içerisinde ilan edildiği gibi sınıf kapsamına(scope) da sahiptirler.*
+
+*15. satırda, işaretçi veya new anahtar kelime kullanmadan p adlı yeni bir insan nesnesi oluşturduk. Nesneleri bildirme şeklimiz, bu kod örneğinde gösterildiği gibi, üye metotları nasıl çağırdığımızı veya public üye değişkenlere nasıl erişeceğimizi belirlemek için önemlidir. Satır 17'de p olarak adlandırdığımız insan nesnesine bir referans olan yeni bir referans değişkeni bildiriyoruz. MerhabaDe () üye metodunu 19'uncu satırda nokta işleci ile çağırdık ve işe yaradı. Ayrıca 25. satırda MerhabaDe fonksiyonunu nokta operatörünü kullanarak cagırırız ve p1'i p'ye bir referans olarak ayarladığımız için de işe yarar.*
+
+*Satır 22'de dikkat edin, MerhabaDe () işlevini bir olarak adlandırılan dinamik olarak ayrılmış insan nesnesinden çağırmak için MerhabaDe () metoduna erişmek için üye seçim operatörünü (->) kullanmak zorunda kaldık.İşte tam bu nokta, pointerler ile referansın değişkene ait üye fonsiyonları çağırmasındaki farklılıktır.*
+
+= Kapsülleme
+
+  
+*Kapsüllenme terimini düşündüğümüzde, onu kullandığımız bağlam üzerinde net olunmalıdır. Kapsülleme, veri ve metotları tek bir pakete dahil etmeye izin veren programlama dili yönüdür diyebiliriz. Bu tanımda dahil etme, tüm verileri (üye değişkenleri) ve bu verilere etki eden metotları (üye metot) alıp bir sınıf dosyası tanımına dahil etmek anlamına gelir.*
+
+*İkinci tanım veri gizleme veya veri kısıtlaması olarak düşünülür. Bu tanımın açıklanmasına yardımcı olmak için bir örnek olarak, Önceki başlıklarda kullanılan insan sınıfımızın durumunu göz önünde bulundurun. insan sınıfına ait bir nesnesinin isim, soyisim veya yaş üyesi değişkenlerini doğrudan ayarlayamayacağından emin olmak isteyebiliriz. Örnek kodumuzda, bu üye değişkenlerin private olduğuna karar verdik, bu da doğrudan erişmenin mümkün olmadığı anlamına geliyor. Geçerli kod örneğinde, bu değişkenlerin değerlerini ayarlamanın tek yolu kurucuyu kullanmaktır.*
+
+*En iyi uygulama, sınıfın kullanıcılarının bu değerleri ancak dolaylı olarak değiştirmelerine olanak tanıyan public metotlar sağlamaktır. Yani, değerleri public bir metot kullanarak değiştirebilirler. Bu metodun içinde, geliştirici olarak, kullanıcıdan iletilen verilerin nasıl işleneceğini denetleyebilirsiniz. Örneğin, yaş değişkeninin, amaçlanan yaş için geçerli bir yaş olduğundan emin olmak için geçirilen verilerin doğruluğunu doğrulamak isteyebilirsiniz. Başka bir deyimle, kullanıcı yaş için negatif bir değer veya karakter değeri geçmeye çalışırsa, public metodunuz bu örnekleri kontrol edebilir ve durumu uygun bir şekilde ele alabilir. Kullanıcıya bir hata mesajı gönderebilirsiniz veya boşlukları düzeltebilirsiniz.*
+
+*İkinci tanım perspektifinden kapsüllemenin önemli kısmı, sınıfınızın kullanıcılarının değerleri nasıl ayarladığınıza veya bilgiyi doğrulamanıza ilişkin bir anlayış içermediğidir. Bu, kontak anahtarını çevirip başlatmak için içten yanmalı motorun kesinlikle hiçbir şekilde bilinmesine gerek duyulmadığının bir göstergesidir. Kapsüllenmeyi insan sınıfımızda uygulamak için, üye değişkenler için değerlerin alınmasını ve ayarlanmasını kolaylaştırmak için aşağıdaki kodu insan sınıfına ekleyebiliriz.*
+
+*insan.h*
+[source,java]
+----
+#ifndef INSAN_H_INCLUDED
+#define INSAN_H_INCLUDED
+#include <string>
+using namespace std;
+class insan  {
+private:
+    string isim;
+    string soyisim;
+    int yas;
+public:
+    int sayac;
+    insan();
+    insan(string isim,string soyisim);
+    insan(string isim,string soyisim, int yas);
+    ~insan();
+    void Setisim(string isim);
+    string Getisim();
+    void Setsoyisim(string soyisim);
+    string Getsoyisim();
+    void Setyas(int yas);
+    int Getyas();
+    void MerhabaDe();
+};
+
+#endif // INSAN_H_INCLUDED
+
+----
+*insan.cpp*
+[source,java]
+----
+#include "insan.h"
+#include  <iostream>
+using namespace std;
+
+insan::insan()  {
+
+}
+insan::insan(string fisim,string fsoyisim)
+{
+    isim = fisim;
+    soyisim = fsoyisim;
+}
+insan::insan(string fisim,string fsoyisim, int yas)
+{
+    isim = fisim;
+    soyisim = fsoyisim;
+    this->yas = yas;
+}
+insan::~insan()
+{
+}
+void insan::Setisim(string fisim)
+{
+    isim = fisim;
+}
+string insan::Getisim()
+{
+    return isim;
+}
+void insan::Setsoyisim(string fsoyisim)
+{
+    soyisim = fsoyisim;
+}
+string insan::Getsoyisim()
+{
+    return soyisim;
+}
+void insan::Setyas(int yas)
+{
+    if (yas > 0)
+    {
+        this->yas = yas;
+    }
+    else
+    {
+        cout << "Lutfen gecerli bir deger girin" <<endl;
+    }
+}
+int insan::Getyas()
+{
+    return yas;
+}
+void insan::MerhabaDe()
+{
+    cout << "Merhaba" << endl;
+}
+
+----
+*main.cpp*
+[source,java]
+----
+
+#include <iostream>
+#include "insan.h"
+
+using namespace std;
+
+int main()
+{
+    insan p;
+    p.Setisim("Mehmet");
+    cout << p.Getisim() << endl;
+    p.Setyas(-5);
+    // isim değişkeni private olduğu için bu komut çalışmaz
+    p.isim = "Mehmet";
+    return 0;
+}
+
+----
+  
+*Yenilenmiş kodumuzda, üye değişkenleri ayarlamak ve almak için bazı metotlar ekledik. Kurucuların dışında bu değerlerin belirlenmesinin tek yolu bu ve şimdi bu değerleri program kodumuzda bulmamız halinde döndürecek fonksiyonlara sahibiz.Örnek test program kodumuzda, p adlı bir insan değişkeni bildiririz. Daha sonra nokta işaretini Setisim () metodunu çağırmak ve ayrıca konsol penceresine değeri çıktılamak için Getisim () metodunu çağırmak için kullandık. Setisim (), isim üye değişkenini metod çağrısına geçirilen değere ayarlamak dışında özel bir şey yapmaz.Ardından p.Setyas () metodunu çağırdık ve -5 değeriyle geçtik. Bu elbette geçersiz bir yaş değeridir. Setyas () metodumuzda, iletilen değerin 0'dan büyük olup olmadığını kontrol eden basit mantık vardır. Öyleyse, atama yapılır ancak değilse, uygulamanın kullanıcısına bir mesaj gönderilir. Bunun kapsülleme özelliği, kullanıcının Setyas () 'da hangi doğrulama kodunu yerleştirdiğimiz hakkında hiçbir fikrinin olmadığını, yaşı nasıl kontrol ettiğimizi, yaşı ayarlamayı veya mesajı çıktığını bilmiyor olması çok basittir. Sadece işlev çağrısının sonuçlarını görürler.Son olarak, kodun son bölümünde p nesnesinin isim üye değişkenini doğrudan denemeye çalışıyoruz. Bu, program kodunu derlemeye çalıştığınızda derleyici hatası oluşturacaktır. Derleyicinize bağlı olarak hata mesajı farklı olabilir.*
+
+
+== isim uzayı (namespace)
+
+
+*Sınıf kapsamı, sınıf dosyalarıyla C ++'da çalışmanın önemli bir yönünü kapsamıştır, ancak kapsamın göz önüne alındığı tek yer değildir. C ++, birçok sınıf ve metoddan oluşan standart şablon kitaplığı (STL) sağlar. Bir yazılım geliştiricisi olarak mesleğinizin bir noktasında, bir yazılım projesinde STL'deki veya diğer kodlarla çakışan isimler içeren sınıflar oluşturacağınızı düşünebilirsiniz. C ++, çakışan bu sorunları çözmek için ad alanlarını kullanır.Ad alanı, başkalarıyla çakışmaları önlemek için sınıflarınızı, değişkenlerinizi veya diğer tanımlayıcıları yerleştirebileceğiniz bir "kapsam konteyneri" dir. Belirsizliği azaltmak veya çarpışmaları isimlendirmek istediğinizde tanımlayıcıdan önce ad alanı tanımlayıcıyı kullanın. Şimdiye dek std : : cout ile bu derste kullanılan örnek kodda bunun bir örneğini gördünüz. Cout işlevi std ad alanında bulunur. : : kapsam çözümleme işleci olup std ad alanındaki cout işlevine erişmenize izin verir.Kodunuzun cout adında bir işlev içerdiğini keşfedilen bir örnekte, ad alanlarını kullanmadığınız sürece kodunuz std : : cout ve cout işlevinin kullanılması gerektiğinde adlandırma çarpmalarına ve belirsizliğe neden olabilir. Örneğin, myNS gibi kodunuz için bir ad alanı oluşturabilirsiniz. Bu durumda, kodunuzda her iki cout işlevini de kullanmanız gerekiyorsa, std : : cout ve sürümünüzü myNS : : cout kullanarak C ++ sürümünü çağıracağınızdan. Bu şekilde, hangi fonksiyona çağırdığınız konusunda herhangi bir belirsizlik yoktur.*
+
+*C +++++ ayrıca, sınıfların bir ad alanında olduğunda harekete geçirmek zorunda olduğunuz kod miktarını azaltmaya yardımcı olmak için using ifadesinin kullanılmasına izin verir. Örneğin, aşağıdaki ifadeyi C +++++++++++ dosyanızın en üstüne koyabilirsiniz:*
+[source,java]
+----
+using namespace std;
+----
+
+*Bunu yaparak, basitçe cout << "Hello"; Isim alanını ve kapsam çözümleme operatörünü yazmak yerine kodunuzda, bazı tuş vuruşlarını tasarruf etmenizi sağlar. Bununla birlikte, kodda belirsizlik şansı varsa ifadeyi kullanarak başvuramayacağınızı unutmayın. Örneğin, aşağıdaki kodu kullanamazsınız:*
+[source,java]
+----
+ using namespace std;  
+    using namespace myNS;  
+
+    int main()  {  
+    cout << "cout un std versiyonu"; 
+    
+    cout << "cout un myNS versiyonu";  
+}
+----
+
+*Derleyicinin, bu iki satırı hangi cout'un arayacağını bilmesinin hiçbir yolu yoktur. Bununla birlikte, teorik olarak aşağıdaki gibi kod yazabilirsiniz:*
+[source,java]
+----
+using namespace std;  
+int main()  {  
+cout << "std version of cout";  
+
+ myNS::cout << "myNS version of cout";  
+}
+----
+*Kendi ad alanınızı, anahtar kelime ad alanını ve ardından seçilen ad kullanarak tanımlayabilir ve kodunuzu kıvırcık parantez içine ekleyebilirsiniz. Kodunuzda tanımlayıcıların daha fazla ayrılmasını sağlamayı seçerseniz iç içe ad alanlarını oluşturma seçeneğiniz de vardır. Yuvanızdaki her ad alanının yazmanız gereken daha fazla kod oluşturduğunu unutmayın. Bir kod örneği bunu göstermektedir.*
+[source,java]
+namespace Microsoft  
+    {  
+        namespace Geometri  
+        {  
+            const double PI = 3.14159;  
+            double Alan(double yarıcap)  
+            {  
+                return PI*(r*r);  
+            }  
+        }  
+    }
+    
+* *örnek*
+[source,java]
+----
+    using namespace Microsoft;  
+
+    int main()  
+    {  
+
+        double yarıcap = 12.5;  
+
+        double alan = Geometri::Alan(yarıcap);  
+    }  
+----
+* *örnek*
+[source,java]
+----
+    int main()  
+    {  
+
+        double yarıcap = 12.5;  
+
+        double alan = Microsoft::Geometri::Alan(yarıcap);  
+    }
+----
+
+  
+*Kodu isim yerlerine odaklayabilmek ve basitleştirmek için sınıfları ve erişim değiştiricilerini ihmal ettik. İlk kod bölümünde Microsoft adında bir ad alanı ve Geometri adı verilen iç içe geçmiş bir ad alanı oluşturduk. Geometri içinde, PI'yi temsil eden bir sabitimiz ve bir yarıçap verildiğinde bir daire alanını hesaplayacak bir işleve sahipiz. İkinci ve üçüncü kod kesimleri, kodda bu ad alanını ve işlevini nasıl kullanacağımızı gösterir.*

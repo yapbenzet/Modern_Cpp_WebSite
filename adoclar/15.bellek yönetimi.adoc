@@ -1,0 +1,61 @@
+= C++ ta Bellek Yönetimi
+
+== Bellek Ayırma
+
+*Bir uygulamanın çalışma zamanı boyunca belleğin tahsisi gereklidir.Çalışma zamanında yeni oluşturulmuş nesneler için bellek ayırmada,pointerlerden yararlanılır.Bu bellekteki nesnelerimize erişmenin tek yoludur.
+
+----
+int main()
+{
+
+    int *p=new int;
+    cout<<p<<endl;
+    *p=3.2;
+    cout<<*p<<endl;
+    p++;
+    cout<<p;
+    return 0;
+}
+----
+
+*Bu kodda new işlecini görüyoruz.new anahtar kelimesi bellekten(heap/yığıt) bir int boyutu kadar(4 bayt) alan ayırır ve ayırdığı alanın adresini p işaretçisine atar.Daha sonra dereferans yöntemi ile p'nin bellekte gösterdiği alana 3 değerini yazdık.*
+
+*Çıktı :*
+----
+C:\Users\mehmetcane\CLionProjects\untitled\cmake-build-debug\untitled.exe
+0x7110e8   // new ile ayrılan alanın başlangıç adresi
+3          // bellek alanının içindeki değer
+0x7110ec   // bitiş adresi
+Process finished with exit code 0
+----
+*Görüldüğü gibi 'new int' kod parçası bellekten 4 baytlık alan tahsis etti.*
+
+== Ayrılan Belleği Serbest Bırakma
+
+*Pointer ile bellek ayırma konusundaki yapmamız gereken son nokta,ayırdığımız belleği sisteme geri iade etmektir.Heap(yığıt)'te oluşturulan alanlar geri iade edilmedği sürece silinemezler.Böylece diğer uygulamalar bellek adresine erişemezler.
+
+----
+int main()
+{
+
+    int *p=new int;
+    *p=3;
+    cout<<*p<<endl;
+    delete p;
+
+    cout<<*p<<endl;
+
+    return 0;
+
+}
+----
+*Ekran Çıktısı :*
+----
+C:\Users\mehmetcane\CLionProjects\untitled\cmake-build-debug\untitled.exe
+3
+7827448
+
+Process finished with exit code 0
+----
+
+*Görüldüğü üzre delete anahtar kelimesi p işaretçisinin bellekte gösterdiği alanı serberst bırakır.işaretçi hala aynı yeri gösteriyor olabilir fakar o bellek alanı artık boştur.*

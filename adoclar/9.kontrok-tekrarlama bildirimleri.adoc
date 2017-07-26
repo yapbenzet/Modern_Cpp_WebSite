@@ -1,0 +1,69 @@
+= Kontrol-Tekrarlama Bildirimleri
+
+*C ++, yineleme mantığını uygulamak için kullanabileceğiniz, döngüler olarak bilinen bir dizi standart yapı sağlar ve for,while,do döngülerini destekler.*
+
+== for döngüsü
+
+----
+for (int i = 0 ; i < 10; i++)   
+{  
+    // Kod çalışır.  
+}
+----
+
+*For döngüsü 3 parçadan oluşur.*
+
+. *Değişkenin başlangıç durumu :Burda i değişkenimizi 0 dan başlattık.*
+. *Kontrol yapısı : Değişken atanan başlangıç değerinde başladığı zaman program bu kısmı kontrol eder.Bu örnekte eğer i deişkeni 10 dan küçük ise kod bloğunun içerisini çalıştırır.Kapatıcı paranteze geldikten sonra iterator denilen kısım çalışmaya başlar.*
+. *İterator : Bu kısım çalıştığı zaman kodda yazılana göre i değişkenini bir arttırır.Daha sonra 2 numaralı yere yani kontrol yapısına geri döner,eğer kontrol sağlanıyorsa kodu çalıştırıp tekrar i değişkeni arttırılır.Bu döngü kontrol sağlanmayana kadar devam eder.Döngü bittikten sonra çalışmaya kapatıcı parantezden sonra devam eder.*
+
+== while döngüsü
+
+*while döngüsü sadece belirli bir koşul geçerli iken kendisine bağlı kod bloğunu çalıştırmaya devam eder.*
+
+----
+int main(){
+    int a;
+    cin>>a;
+    while(a==5) {
+        cout << "5 e bastiniz";
+        cin >> a;
+    }
+        return 0;
+    }
+----
+*Eğer kullanıcı a değişkenine 5 değerini girerse döngü çalışmaya başlar.Küme parantezleri çalışır.Önce ekrana " 5 e bastiniz " yazdırır.Sonra tekrar kullanıcıdan a değerini ister ve tekrar while döngüsünü kontrol eder.5 girilmez ise döngü çalıştırılmadan atlanır.*
+
+== do while
+
+*while deyiminin önemli bir özelliği, test koşulunun döngünün başlangıcında olmasıdır. Bunun anlamı, ilk anda koşulun yanlış olması halinde, while gövdesinin hiçbir zaman çalıştırılmayacağıdır. Ancak gövdeyi hiç olmazsa bir kere çalıştırmamız gereken durumlar vardır. Bu durumlar çok yaygın olmasa da gerektiği zaman  do...while deyimini kullanmalıyız.*
+
+*do...while döngü yapısının yazılışı şu şekildedir:*
+
+----
+do{
+    deyim1;
+    deyim2;
+    ....
+    deyim n;
+}while(ifade);
+----
+
+*do...while__ ve while döngüleri arasındaki tek fark, test koşulunun (ifadenin) do while döngüsünde, döngünün sonunda yer almasıdır. Bunun anlamı, programın döngüyü hiç olmazsa bir kez çalıştırmasıdır (ilk kez). Sonra, ifadenin değerine bağlı olarak, ifade doğru ise tekrar do'ya dönülerek döngü sürebilir veya ifade yanlış ise bir sonraki deyimle devam edilebilir.*
+
+----
+int sayac = 1;
+do {
+ cout<<sayac;
+ sayac++;
+} while (sayac < 11);
+----
+*Bu kodda ekrana önce 1 değeri yazdırılır sonra değişken bir arttırılır ve döngü kontrol edilir.değişken 11 e eşit olana kadar ekrana değişkenin değerini yazar.Ekran çıktısı 12345678910 olacaktır.*
+
+
+
+
+
+
+
+

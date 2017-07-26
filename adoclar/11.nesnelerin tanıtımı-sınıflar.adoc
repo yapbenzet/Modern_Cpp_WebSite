@@ -1,0 +1,211 @@
+= Nesnelerin Tanıtımı(Sınıflar)
+
+*Nesneye yönelik programlamada nesneler sınıflardan oluşturulur.Sınıflar,
+kendilerinden oluşturulacak nesneler için prototip'dir.Yani nesne oluşturulurken
+sinifina ait tüm özellikleri kapsar.Dolayısıyla nesnede olmasını istedigimiz bütün özellikleri sinifta tanımlamalıyız.Sınıflar struct'ların genişletilmiş halidir. Struct'lar gibi veri elemanları içerebilirler fakat farklı olarak fonksiyon da içerebilirler.Struct ve sınıf arasında ise şimdilik sadece bir fark var.
+Structlarda her şey varsayılan olarak publicdir. Classlarda ise her şey var sayılan olarak private'dır.*
+
+----
+
+class sekil{
+public:
+    int boy,
+    int en;
+};
+----
+*Yukarıdaki basit sınıf tanımlamasına göre buradan oluşturlacak nesne int degerlerinde boy ve en değişkenlerine sahip olacaktır.public deyimi özelliklerin sınıfın elemanları tarafından erişilebilir olduğunu belirtmek için kullanılır. Bunun yanısıra private ve protected deyimleri de kullanılabilir ancak bu konuya daha sonra geleceğiz.*
+
+== üye fonksiyonlar
+
+Üye fonksiyonlar, diğer değişkenler gibi bir sınıf içerisinde tanımlanan ya da sadece prototipi olan sınıf elemanlarıdır. Bulunduğu sınıfa ait olan her nesne için işlem yapabilir ve o nesne için tüm elemanlara erişim hakkı vardır. Üye fonksiyonların hepsi inline fonksiyonlardır ve bu programın hızını arttırmayı sağlar.
+
+Sınıf elemanına doğrudan erişim yerine üye fonksiyonla erişmeyi deneyelim: 
+
+[source,c++]
+----
+using namespace std;
+
+class Zaman{
+public:
+    int saat;
+    int dakika;
+    int saniye;
+    int saniyeBazindaZaman(){
+        return saat*3600 + dakika*60 + saniye;
+    }
+};
+
+int main () {
+    Zaman zaman1;
+
+    zaman1.saat=7;
+    zaman1.dakika=13;
+    zaman1.saniye=51;
+
+    Zaman zaman2;
+
+    zaman2.saat=3;
+    zaman2.dakika=46;
+    zaman2.saniye=11;
+
+    cout << "zaman1 nesnesinin saniye bazindaki degeri: " << zaman1.saniyeBazindaZaman() << endl;
+
+    cout << "zaman2 nesnesinin saniye bazindaki degeri: " << zaman2.saniyeBazindaZaman() << endl;
+
+    return 0;
+}
+----
+
+Örnekte görüldüğü gibi diğer değişkenler gibi bir fonksiyonu da sınıf içerisinde tanımlayıp "." operatörüyle bu sınıfın nesnelerinden erişebiliyoruz. 
+
+Not: Fonksiyonların sınıf dışında tanımlanması da mümkündür. Bunun için kapsam alanı çözünürlüğü operatörü "::" kullanılmalıdır ve prototipi sınıfın içerisinde tanımlanmış olmalıdır. Şu şekilde gösterilebilir: 
+
+[source,c++]
+----
+class Zaman{
+public:
+    int saat;
+    int dakika;
+    int saniye;
+    int saniyeBazindaZaman();
+};
+
+int Zaman::saniyeBazindaZaman(){
+    return saat*3600 + dakika*60 + saniye;
+}
+
+----
+
+Yukarıda bahsedilen özellikleri kullanarak nesnenin özelliklerini değiştirip okutabilecek (set - get) fonksiyonları yazılabilir: 
+
+[source,java]
+----
+using namespace std;
+
+class Zaman{
+public:
+    int saat;
+    int dakika;
+    int saniye;
+    int saniyeBazindaZaman();
+    void setSaat(int s);
+    void setDakika(int d);
+    void setSaniye(int sn);
+};
+
+int Zaman::saniyeBazindaZaman(){
+    return saat*3600 + dakika*60 + saniye;
+}
+
+void Zaman::setSaat(int s){
+    saat = s;
+}
+
+void Zaman::setDakika(int d){
+    dakika = d;
+}
+
+void Zaman::setSaniye(int sn){
+    saniye = sn;
+}
+
+int main () {
+    Zaman zaman1;
+
+    zaman1.setSaat(7);
+    zaman1.setDakika(13);
+    zaman1.setSaniye(51);
+
+    Zaman zaman2;
+
+    zaman2.setSaat(3);
+    zaman2.setDakika(46);
+    zaman2.setSaniye(11);
+
+    cout << "zaman1 nesnesinin saniye bazindaki degeri: " << zaman1.saniyeBazindaZaman() << endl;
+
+    cout << "zaman2 nesnesinin saniye bazindaki degeri: " << zaman2.saniyeBazindaZaman() << endl;
+
+    return 0;
+}
+----
+
+Çıktı:
+
+----
+zaman1 nesnesinin saniye bazindaki degeri: 26031
+zaman2 nesnesinin saniye bazindaki degeri: 13571
+----
+
+== Kurucu Fonksiyon
+
+*Kurucu fonksiyon,siniftan bir nesne üretildiği anda çalışacak fonksiyondur.Nesnenin ilk halini olmasını istediğimiz şekilde kurucu fonksiyona kodlayabiliriz.Kurucu fonksiyon sınıfın ismi ile aynı olmalıdır.*
+
+----
+
+class sekil{
+public:
+    int boy,
+    int en;
+    sekil(){           //kurucu fonksiyon
+        boy=15;
+    }
+};
+----
+*Yukarıdaki örnekte sekil sinifindan bir nesne olusturuldugunda boy degiskenine 15 değeri otomatik olarak atanır.en değişenine hiç bir şey atanmaz.*
+
+== Nesne Oluşturma
+
+*Nesne oluşturmak için,ait olmasını istedigimiz sınıfın ismini belirmeliyiz.
+----
+sekil a;
+----
+*Burada sekil sinifimizdan a isminde bir nesne oluşturmuş olduk.Sekil sinifimizda yazdığımız gibi a isimli nesne boy ve en değişkenlerine sahiptir.Ve nesneyi ürettigimiz gibi kurucu fonksiyonumuzda calismis oldu,boy degiskenine 15 degerini atadı.main fonksiyonu içinde en değişkeninide kendimiz atayabiliriz.
+Bir nesnenin değişkenlerine ulaşmak için (nesnenin ismi . erişmek istediğimiz değişken) şeklinde yapı kullanırız.
+
+----
+main(){
+    sekil a;
+    a.en=13;
+    cout<<a.boy<<"  "<<a.en;
+    
+    return 0;
+}
+----
+*özetle :*
+
+*şekil sinifi tanimladik.sinftan bir nesne oluşturduk,kurucu fonksiyonumuz otomatik olarak boy değişkenine 15 değerini atadı.sonrasında bizde main fonksiyonu içinde nesnemizin en değişkenine erişip 13 değerini atadık.
+ekran ciktisi :15 13 şeklinde olacaktır.*
+
+*ilk degerleri kendimiz atamak istiyorsak kurucu fonksiyona normal fonksiyonlardaki gibi parametre atayabilriz.*
+
+----
+
+class sekil{
+public:
+    int boy,
+    int en;
+    sekil(int boy,int en){ //kurucu fonksiyon
+        this->boy=boy;
+        this->en=en;
+    }
+};
+----
+
+*Kurucu fonksiyonun içindeki boy ve en değişkenleri sınıf değişkenleri değildir.
+Bunlara erişmek için this kelimesini kullandık.this: ait oldugun sınıfın değişkenlerine eriş demektir.*
+
+----
+
+int main(){
+    
+    sekil a(20,22);
+    cout<<a.boy<<"  "<<a.en;
+    
+    
+    return 0;
+}
+----
+*Burada parametreli bir nesne oluşturduk.Kurucu fonksiyona 20 ve 22 değerlerini yolladık,fonksiyonun kendi boy ve en değişkenleri 20 ve 22 değerlerine sahip olmuş oldu.daha sonra bu değerleri sinifa ait boy ve en değişkenlerine atadık.Dolayısıyla nesnemiz boy ve en değişkenleri 20 ve 22 değerlerine sahip bir şekilde üretilmiş oldu.*
+*ekran ciktisi : 20 22*
+

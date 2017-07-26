@@ -1,0 +1,364 @@
+= Dosya Akışları (File Streams)
+
+Standart C ++ kütüphanesi, akış operatörleri >> ve << kullanarak dosyaları okumak ve yazmak için izin veren üç akış tabanlı sınıfı tanımlar. Bu sınıflar <fstream> başlık dosyasında tanımlanmıştır:
+
+- std :: ifstream, std :: istream'den kalıtım alır ve >> işleci kullanılarak bir dosyadan veri okumanıza izin verir.
+
+- std :: ofstream std :: ostream'den kalıtım alır ve << operatörünü kullanarak bir dosyaya veri yazmanıza izin verir.
+
+- std :: fstream, std :: istream'den ve std :: ostream'den miras alır ve >> ve << operatörlerini kullanarak bir dosyaya / dosyadan veri okuma ve yazma imkanı verir.
+  
+Tüm dosya akış nesneleri, bir dosya adı alanını bir parametre olarak alır ve belirtilen dosyayı açan bir open () yöntemine sahiptir. Benzer şekilde, bittiğinde dosyayı kapatan bir close () yöntemi vardır. Aşağıdaki örneği düşünün:
+[source,java]
+----
+#include <fstream>  
+    …  
+
+    void dogrudanDosyaAcKapa()  
+    {  
+        // Dosya akış nesnelerini bildirir (dosyalar henüz açılmadı).  
+        std::ofstream odosya;  
+        std::ifstream idosya;  
+        std::fstream  iodosya;  
+
+        // Dosyaları açar.  
+        odosya.open("dosya1.dat");    // yazmak için dosya1.dat açar.  
+        idosya.open("dosya2.dat");    // okumak için dosya2.dat açar.  
+        iodosya.open("dosya3.dat");   // okuma/yazma için dosya3.dat açar.  
+
+        // Dosyaları kullan...  
+
+        // Dosyaları kapat.  
+        odosya.close();  
+        idosya.close();  
+        iodosya.close();  
+    }
+----
+
+Alternatif olarak, dosyayı açmak / kapatmak için dosya akışı nesnesinin yapıcılarına ve imha edicilerine güvenebilirsiniz. Özellikle, dosya adını kurucuya geçirirseniz, dosya hemen açılır. Benzer şekilde, yıkıcı çağrıldığında dosya hala açıksa,yıkıcı dosyayı kapatacaktır. Aşağıdaki örneği düşünün:
+[source,java]
+----
+#include <fstream>  
+    …  
+
+    void dolayliDosyaAcKapa()  
+    {  
+        // Dosya akış nesnelerini bildiri (dosyalar dolaylı olarak yapıcı tarafından açıldı).  
+        std::ofstream odosya("dosya1.dat");  
+        std::ifstream idosya("dosya2.dat");  
+        std::fstream  iodosya("dosya3.dat");  
+
+        // Dosyaları kullan....  
+
+    }   // Yıkıcı çağırılıp dosyalar kapatılır.
+----
+
+== Dosya Açma Modları
+
+Dosya akışı kurucuda bir dosya adı belirterek veya open () yöntemini açıkça çağırarak bir dosyayı açtığınızda isteğe bağlı olarak bir mod parametresi belirtebilirsiniz. Mod, aşağıdaki bit bayraklarının bir birleşimidir:
+
+  
+- std :: ios_base :: in
+- Dosyanın giriş işlemleri için açılacağını belirtir. Std :: ifstream nesneleri için varsayılan mod budur.
+- std :: ios_base :: out
+- Çıktı işlemleri için açılacağı dosyayı belirtir. Std :: ofstream nesneleri için varsayılan mod budur.
+- std :: ios_base :: binary
+
+Dosyanın ikili modda açıldığını, diğer bir deyişle, okunduğunda veya yazıldığında değerleri hiçbir biçimlendirmeye tabi tutulmayacağını belirtir. Örneğin, çift değer 3.14, 8 baytlık çift değer olarak yazılır. Varsayılan değer, metin modu olup değerleri okunduğunda veya yazıldığında metin olarak biçimlendirilir. Örneğin, çift değer 3.14 dört karakter '3', '.', '1' ve '4' olarak yazılır.
+
+- std :: ios_base :: ate
+
+Okuma / yazma işlemleri için başlangıç ​​konumunun dosyanın sonunda olduğunu belirtir. Okuma / yazma işlemleri için varsayılan başlangıç ​​konumu dosyanın başlangıcındadır.
+
+- std :: ios_base :: app
+
+Tüm çıktı işlemlerinin dosyanın sonunda oluşacağını, böylece dosyadaki mevcut içeriğin korunacağını belirtir.
+
+- std :: ios_base :: trunc
+
+Çıktı işlemleri için mevcut bir dosyayı açarsanız, bu bayrak varolan içeriğin silinmesine ve uygulamanızda yazdığınız yeni içeriğin yerine geçmesine neden olur.
+
+Bitli OR operatörünü (|) kullanarak bu bayrakları bir araya getirebilirsiniz. Örneğin, aşağıdaki kod parçacığı, dosyanın sonuna yeni içerik eklemek üzere bir çıktı dosyasını ikili modda açmanın iki yolunu gösterir:
+[source,java]
+----
+std::ofstream ofile1;  
+ofile1.open("file1.dat", std::ios_base::binary | std::ios_base::app);  
+
+std::ofstream ofile2("file2.dat", std::ios_base::binary | std::ios_base::app);
+----
+
+  
+Std : : ofstream nesneleri için std  : : ios_base : : out bit bayrağını belirtmeniz gerekmediğini unutmayın (veya std : : ios_base : : bit bayrağı std : : ifstream nesneleri için), çünkü bu modlar varsayılmıştır Bu tür dosya akışı nesneleri için.
+Std : : fstream nesneleri için varsayılan mod std : : ios_base : : in | std  : : ios_base : : out. Bununla birlikte, bir modu açıkça belirterseniz, belirttiğiniz mod varsayılanın üzerine yazacaktır; Std : : ios_base : : in ve std : : ios_base : : out bit bayraklarının uygulanmasını isterseniz bunları açıkça eski haline getirmelisiniz. Aşağıdaki örneği düşünün:
+
+[source,java]
+----
+// Varsayılan dosya modu app, i.e. std::ios_base::in | std::ios_base::out.    
+    fstream iodosya1("iodosya1.dat");     
+
+    //Dosya modu sadece binary.    
+    std::fstream iofile2("iofile2.dat", std::ios_base::binary);  
+
+    // Dosya modu sadece binary , in(girdi) ve out(çıktı)    
+    std::fstream iofile3("iofile3.dat", std::ios_base::binary | std::ios_base::in | std::ios_base::out);  
+
+    Eğer bir dosya açtıktan sonra, is_open() metodunu çağırabilirsiniz. Bu metot dosyanın doğru bir şekilde açılıp açılmadığı bilgisini verir. 
+    if (somefile.is_open())  
+    {  
+        // Dosyalar açıldı ,kullanabilirsin 
+
+        // Dosyaları kapat.  
+        somefile.close();  
+    }  
+    else  
+    {  
+        std::cerr << "Dosya açılamadı" << std::endl;  
+    }  
+----
+
+= Metin dosyalarına okuma yazma
+
+
+
+Std : : ifstream sınıfı std : : istream'den miras alır; bu, >> operatörünü bir dosyadan veri okumak için kullanabileceğiniz anlamına gelir. Benzer şekilde, std : : ofstream sınıfı std : : ostream'den miras alır; bu, bir dosyaya veri yazmak için << operatörünü kullanabileceğiniz anlamına gelir.
+
+>> ve << operatörlerine ek olarak, std : : istream ve std : : ostream sınıflarında tanımlanan diğer üyeleri de kullanabilirsiniz. Aynı şekilde, bir dosya akış nesnesinden bir metnin tamamını okumak için std : : getline () gibi yöntemleri kullanabilirsiniz.
+
+Aşağıdaki kod örneği, bir dosyaya birkaç satırlık metnin nasıl yazıldığını gösterir. Çıktı modunda örtülü olarak dosyayı açan bir std : : ofstream nesnesi oluşturduk. Daha sonra, dosyaya metin yazmak için std : : ostream'den devralınan << operatörünü kullanırız. Kod parçasının sonunda, dosyayı diğer uygulamaların erişebileceği şekilde kapatırız (veya daha sonra uygulamanızda farklı bir modda yeniden açtığımızda):
+
+
+== Dosyaya yazma(ofstream)
+[source,java]
+----
+std::ofstream ofile("file1.txt");  
+    if (ofile.is_open())  
+    {  
+        ofile << "1. satir" << std::endl;  
+        ofile << "2. satir" << std::endl;  
+        ofile << "3. satir" << std::endl;  
+        ofile.close();  
+
+        std::cout << "file1.txt dosyasına yazma işlemi bitti" << std::endl;  
+    }  
+    else  
+    {  
+        std::cerr << "yazma işlemi için file1.txt açılamadı" << std::endl;  
+    }
+    ----
+[source,java]
+----
+Yukarıdaki kodu çalıştırırsanız, aşağıdaki içeriği file1.txt'ye yazacaktır:
+
+1.satir
+2.satir
+3.satir
+
+== Dosyadan Okuma(ifstream)
+
+Aşağıdaki kod örneği file1.txt içeriğini okumayı gösterir. Dosyayı varsayılan olarak giriş modunda açan bir std : : ifstream nesnesi oluşturduk. Daha sonra bir döngü kurduk ve bir kerede bir metin satırının tamamını okumak için her döngü yinelemesinde std : : getline () öğesini çağırdık. Std : : getline (), dosyanın sonunda, döngüyü sonlandıran false değerini döndürür:
+
+[source,java]
+----
+ std::ifstream ifile("file1.txt");  
+    if (ifile.is_open())  
+    {  
+        std::string line;  
+        while (std::getline(ifile, line))  
+        {  
+            std::cout << line << std::endl;  
+        }  
+
+        ifile.close();          
+
+        std::cout << "file1.txt den veri okuma bitti" << std::endl;  
+    }  
+    else  
+    {  
+        std::cerr << "file1.txt açılamadı" << std::endl;  
+    }
+----
+
+Dosya akış nesnelerini, konsoldaki biçimlendirilmiş metin verilerini okuyup yazabileceğiniz gibi, >> ve << operatörlerini kullanarak bir dosyada biçimlendirilmiş metin verilerini okumak ve yazmak için kullanabilirsiniz. Örneğin, bir kişinin adını (string), yaş (bir int) ve boy (bir double) çıkartmak isteyebilirsiniz.
+Aşağıdaki hususlara dikkat edin:
+
+- << işleci'ni kullanarak veri yazarken, değerlerin birbirinden ayrıldığından emin olmanız gerekir, ör. Değerler arasında bir boşluk çıkarak.
+- >> operatörünü kullanarak veri okurken, dosyadaki belirteçlerin sırasını bilmelisiniz. Örneğin, bir sonraki gösterge bir double ise, bunu bir double değişkende okumanız gerekir. Değeri yanlış türdeki değişkene okumayı denerseniz bir hata meydana gelir.
+
+Birkaç kayıt yazmak istiyorsanız, tipik yaklaşım her kaydın sonunda bir satırsonu karakteri yazmaktır. Verileri tekrar okuduğunuzda, kayıtların üzerinde yinelenmesi için bir döngü kullanın; Std : : istream sınıfı (ve dolayısıyla std : : ifstream sınıfı) dosyanın sonuna ne zaman ulaştığınızı bildiren bir eof () işlevine sahiptir.
+
+Aşağıdaki kod örneği, birkaç satır biçimlendirilmiş metin verisinin bir dosyaya nasıl yazıldığını gösterir. Her satırda kişinin adı, yaşı ve boy bulunur. Bir kaydın nerede sonlandırıldığını ve bir sonraki kayıdın nerede başlayacağını belirtmek için her kayıttan sonra yeni satır karakteri çıkarırız. Nihai kayıttan sonra satırsonu karakteri çıktılamadığımızı unutmayın; Bunun nedeni, dosyada başka veri olmadığına işaret etmek için bitiş sonu işaretçisinin son kayıttan hemen sonra görünmesini istememizdir:
+[source,java]
+----
+std::ofstream ofile("peopleFile.txt");  
+    if (ofile.is_open())  
+    {  
+        ofile << "John" << " " << 42 << " " << 1.67 << std::endl;  
+        ofile << "Jane" << " " << 41 << " " << 1.54 << std::endl;  
+        ofile << "Bill" << " " << 35 << " " << 1.82;  
+
+        ofile.close();  
+
+        std::cout << "dosyaya yazma işlemi bitti." << std::endl;  
+    }  
+    else  
+    {  
+        std::cerr << "dosya açılamadı" << std::endl;  
+    }
+----    
+
+= Binary Dosyalara Okuma Yazma
+
+
+Dosya akış nesnelerini ikili verileri bir dosyada okumak ve yazmak için kullanabilirsiniz. İkili dosyalar genellikle metin dosyalarından daha küçüktür ve okumak ve yazmak için daha verimli olabilirler. Bu özellikler, saklamak için büyük miktarda veri varsa özellikle faydalıdır.
+Bir dosyaya ikili veri okumak veya yazmak için aşağıdaki adımları izleyin:
+
+  
+- Dosyayı ikili modda açın. Bunu yapmak için, open () yönteminde veya dosya akışı oluşturucusunda std :: ios :: binary modunu belirtin.
+- İkili verileri sırasıyla okumak veya yazmak için read () veya write () yöntemini çağırın. Bu yöntemlerin her ikisi de iki parametre alır:
+- Değişkenin okuma veya yazma adresi, bir (char *) işaretçisi olarak ifade edilir.
+- Okunacak veya yazılacak değerin bayt cinsinden boyutu. Bu değeri elde etmek için C ++ sizeof operatörünü kullanabilirsiniz.
+
+
+Tam bir örnek görelim. Bu örnekte, sıcaklık istatistiklerini bir dosyaya ikili biçimde okur ve yazarız. Özellikle, dosya, her ayın belirli bir yeri için minimum ve maksimum sıcaklıkları yıl içinde depolar. Sıcaklıkları iki katına çıkaracağız, böylece dosya iki katına çıkacak. Dosya boyutu toplam 192 bayt olacak şekilde, 8 bayt boyutunda double olur.
+
+Kolaylık olması için, bir ay boyunca minimum ve maksimum sıcaklık istatistiklerini tutacak bir sınıfı tanımlayacağız. İşte koddan sonra bir açıklama getiren tam sınıf tanımı:
+[source,java]
+----
+class sicaklikDegerleri  
+    {  
+        public:  
+        
+        double min, max;  
+
+        sicaklikDegerleri(double fmin = 0.0, double fmax = 0.0):min(fmin),max(fmax){
+        }  
+        
+        void write(std::ostream & os)  
+        {  
+            os.write((char*)&minimum, sizeof(double));  
+            os.write((char*)&maximum, sizeof(double));  
+        }  
+
+        void read(std::istream & is)  
+        {  
+            is.read((char*)&minimum, sizeof(double));  
+            is.read((char*)&maximum, sizeof(double));  
+        }  
+    };
+----
+Aşağıdaki hususlara dikkat edin:
+
+- Sınıf iki adet double veri üyesi içeriyor. Bu veri üyelerini, örnekte kolaylık sağlamak için public olarak tanımladık.
+- Kurucu, veri üyelerini belirtilen değerlere, veya istemci kodunda herhangi bir değer sağlanmazsa, 0.0 değerine başlatır.
+- write () metodu, bir dosyaya bir sicaklikDegerleri nesnesi yazma görevini kapsar. Böyle bir yöntemi uygulamak gerekli değildir, ancak bunu yaparak istemci kodunu basitleştirir. Yöntem, bir std :: ofstream nesnesini bir parametre olarak alır ve dosyaya minimum ve maksimum sıcaklık yazmak için write () yöntemini iki kez çağırır. Her görüşmede iki parametre geçer:
+    - Yazılacak değişkenin adresi, bir (char *) işaretçisine dönüştürülür.
+    - Boyut operatörü aracılığıyla elde edilen değişkenin bayt cinsinden boyutu.
+- read () yöntemi, bir dosyadan bir sicaklikDegerleri nesnesinin okunması görevini kapsar. Metot, bir std :: ifstream nesnesini bir parametre olarak alır ve dosyadan bir double değer okumak için read () yöntemini iki kez çağırır. sicaklikDegerleri nesnesinde min ve max değerleri ayarlamak için değerleri kullanırız.
+
+  
+Kolaylık sağlamak için, >> ve << operatörlerini, sicaklikDegerleri nesnelerini bir akışa metin biçiminde okumak ve yazmak için de tanımlıyoruz. Bu operatörleri sicaklikDegerleri nesnelerini konsoldan girmek ve çıkartmak için kullanabilirsiniz:
+[source,java]
+----
+std::istream& operator >> (std::istream& is, tempStat & ts)  
+    {  
+        is >> ts.min >> ts.max;  
+        return is;  
+    }  
+
+    std::ostream& operator << (std::ostream & os, const tempStat & ts)  
+    {  
+        os << ts.min << "," << ts.max << std::endl;  
+        return os;  
+    }
+----
+
+  
+Şimdi istemci koduna bakalım. Aşağıdaki kod, sabit kodlanmış minimum / maksimum sıcaklıkları içeren 12 sicaklikDegerleri nesnesi oluşturur ve sicaklikDegerleri sınıfındaki write () yardımcı yöntemi kullanılarak, tüm nesneleri ikili biçimde bir dosyaya yazar:
+[source,java]
+----
+ std::ofstream ofile("sicaklikDegerleri.bin", std::ios_base::binary);  
+    if (ofile.is_open())  
+    {  
+        sicaklikDegerleri(-2.5, 7.5).write(ofile);  
+        sicaklikDegerleri(0, 9.9).write(ofile);  
+        sicaklikDegerleri(2.5, 11.0).write(ofile);  
+        sicaklikDegerleri(5.5, 14.5).write(ofile);  
+        sicaklikDegerleri(7.0, 17.7).write(ofile);  
+        sicaklikDegerleri(10.5, 23.7).write(ofile);  
+        sicaklikDegerleri(11.7, 29.5).write(ofile);  
+        sicaklikDegerleri(7.6, 22.9).write(ofile);  
+        sicaklikDegerleri(7.2, 21.5).write(ofile);  
+        sicaklikDegerleri(2.0, 16.0).write(ofile);  
+        sicaklikDegerleri(-4.7, 12.5).write(ofile);  
+        sicaklikDegerleri(-1.9, 8.5).write(ofile);  
+        ofile.close();  
+
+        std::cout << "Veriler yazıldı." << std::endl;  
+    }  
+    else  
+    {  
+        std::cerr << "Dosya açılamadı." << std::endl;  
+    }
+----
+
+
+Aşağıdaki kod, sicaklikDegerleri nesnelerini dosyadan okur. Dosyayı ikili biçimde açıp dosyanın sonu belirene kadar dosyayı tekrar gözden geçiriyoruz. Her seferinde döngüde, eğer std : : ifstream () nesnesinde gcount () diyoruz diye ek bir test var. Bu, en son read () çağrısında okunan bayt sayısını belirler; Bayt sayısı sıfırsa, dosyanın sonuna ulaştığımızı gösterir; bu durumda döngüden derhal kopabiliriz:
+[source,java]
+----
+std::ifstream ifile("sicaklikDegerleri.bin", std::ios_base::binary);  
+    if (ifile.is_open())  
+    {  
+        while (!ifile.eof())  
+        {  
+            sicaklikDegerleri ts;  
+            ts.read(ifile);  
+
+            if (ifile.gcount() == 0)   
+            {  
+                break;  // Okuncak byte kalmamış ise.  
+            }  
+
+            std::cout << "Sicaklik degerlerini oku: " << ts << std::endl;  
+        }  
+        ifile.close();  
+
+        std::cout << "Veri yazma bitti." << std::endl;  
+    }  
+    else  
+    {  
+        std::cerr << "Dosya açılamadı" << std::endl;  
+    }
+----
+
+== Bir akışta konum alma ve ayarlama
+
+C ++ akış nesneleri akıştaki geçerli okuma / yazma konumunu takip eder:
+
+- istream ve ifstream nesneleri geçerli "get" konumunu takip eder. Geçerli get konumunu, tellg () yöntemini çağırarak elde edebilirsiniz ve seekg () yöntemini çağırarak geçerli get konumunu değiştirebilirsiniz.
+- Ostream ve nesneler mevcut "put" konumunu takip eder. Mevcut put konumunu, tellp () yöntemini çağırarak elde edebilirsiniz ve seekp () yöntemini çağırarak geçerli put konumunu değiştirebilirsiniz.
+- iostream ve fstream nesneleri, hem geçerli 'get' hem de "put" konumlarını takip eder. Mevcut get ve put konumlarını, tellg () ve tellp () yöntemlerini çağırarak elde edebilirsiniz ve seekg () ve seekp () yöntemlerini çağırarak geçerli get ve put konumlarını değiştirebilirsiniz.
+
+Tellg () ve tellp () yöntemleri bir std : : streampos değeri döndürür:
+
+Std : : streampos tellg ();
+Std : : streampos tellp ();
+
+Seekg () ve seekp () yöntemleri aşırı yüklenmiştir. Bu yöntemlerin ilk sürümü, akışın başlangıcından itibaren arama konumunu belirten bir std : : streampos parametresi alır:
+
+Std : : istream & seekg (std : : streampos pos);
+Std : : ostream & seekp (std : : streampos pos);
+
+Seekg () ve seekp () yöntemlerinin ikinci sürümü iki parametre alır:
+
+- Bağıl ofset belirten bir std :: streamoff parametresi.
+- Ofset yönünü belirten bir std :: ios_base :: seekdir parametresi (izin verilen değerler std :: ios_base :: beg, std :: ios_base :: cur ve std :: ios_base :: end'dir):
+
+Std : : istream & seekg (std : : streamoff kapalı, std : : ios_base : : seekdir yolu);
+Std : : ostream & seekp (std : : streamoff kapalı, std : : ios_base : : seekdir yolu);
+
+Bu gösteri, bir dosyadaki konumun nasıl elde edileceğini ve ayarlanacağını gösterir. Örnek, yılda 12 ay boyunca sıcaklık istatistiklerini içeren bir dosyaya dayanıyor. Uygulama, kullanıcının belirli bir ayın sıcaklık istatistiklerini değiştirmesine izin verir. Bu efekti elde etmek için, kod, dosyadaki koyma konumunu ayarlamak için seekp () kullanır ve daha sonra dosyadaki o konumdaki verilerin üzerine yazar. Kod ayrıca, anlatım amacıyla kullanıcıya put konumunun ne olduğunu söylemek için tellp () kullanır.
+
+
+
+
+

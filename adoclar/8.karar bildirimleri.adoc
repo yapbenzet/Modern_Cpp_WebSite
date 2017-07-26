@@ -1,0 +1,70 @@
+= Karar Bildirimleri
+
+== if Bildirimleri
+
+*C++ ta if parantezi içineki koşul doğru ise if ile ilişkili kod bloğu çalıştırılır.
+Eğer yanlış ise ve if'e bağlı kod bloğu varsa bloğu kapatan araçdan sonra kod işlenmeye devam eder.İf'ten sonra tek bir satır var ise sadece o satır atlanır.
+
+----
+int main(){
+    char x='a';
+    if(x=='a' || x=='A'){
+        cout<<"dogru";
+    }
+    return 0;
+}
+----
+*Bu örnekte if bloğunun içinde x in a ya veya A ya eşit olup olmadığı kontrol edilir.Eğer iki durumdan birisi doğru ise(a veya A olması durumları) program if bloğunun içine girip oradan çalıştırmaya devam edecek ve ekrana 'dogru' yazdıracaktır.if yapısına bağlı olarak else yapısıda kullanılabilir.Else if'in yanlış olduğu zaman çalıştırılır.*
+
+----
+int main(){
+    char x;
+    cin>>x;
+    if(x=='a'){
+        cout<<"x eşit a";
+    }
+    else if(x=='b'){
+        cout<<"x eşit b";
+    }
+    else{
+        return 0;
+    }
+}
+----
+*Bu kodda klavyeden girilen x değeri a ya eşit ise ekrana 'x eşit a',b ye eşit ise 'x eşit b',hiçbirine eşit değil ie else bloğundan çalışmaya devam eder ve return ifadesiyle programı sonlandırır.*
+
+== Switch ifadeleri
+
+*'else if' ifadesi çok fazla ise daha altarnatif bir yöntem olan switch yapısı kullanılabilir.*
+
+----
+
+int main(){
+   int a;
+   cin>>a;
+   switch(a){
+       case 13:
+       cout<<"a eşit 13";
+       break;
+       case 25:
+       cout<<"a eşit 25";
+       break;
+       case 111:
+       cout<<"a eşit 111";
+       break;
+       default:
+       break;
+   }
+    return 0;
+}
+----
+
+*Eğer klavyeden girilen a değeri 13 25 11 sayılarından biri ise ona bağlı kod satırı çalıştırılır.Bu sayılardan farklı ise default kısmı çalışır.Eğer break ifadesi kullanılmaz ise program berak görene kadar başladığı yerden itibaren çalıştırmaya devam eder,case ifadelerinin doğruluğu ile ilgilenmeden hepsini çalıştırır.*
+
+
+
+
+
+
+
+

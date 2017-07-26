@@ -1,0 +1,129 @@
+= Karmaşık Veri Türleri
+
+== Diziler
+
+*Dizi,birden fazla veriyi , aynı tipten olmak koşulu ile içinde barındırabilen bir yapıdır.Diziler bir boyutlu veya çok boyutlu olabilir.Diziler şu özelliklere sahiptir,
+
+. Dizinin her öğesi bir değer içerir.
+. Dizinin ilk öğesinin indeks değeri 0 dır.
+. Dizinin boyutu,içerebileceği öğe sayıdır.
+
+*Bir dizi tanımlarken,içereceği veri türü,ismi ve boyutu ile tanımlanır.
+Boyut sayısı dizi isminden hemen sonra köşeli parantez içinde yazılır.Köşeli parantez değişkenin bir dizi olduğunu belirtir.*
+
+----
+int diziismi [10];
+----
+*Bu örnekte 10 int türünde eleman tutabilen dizi tanımlamıştır.Dizi tanımlamanın başka bir yoluda başlangıç değerlerini atayarak tanımlamadır.Değerler tırtıklı parantez içinde virgüllerle ayrılarak tanımlanır.Boyut sayısını belirmezsek bile dizi kaç boyutlu olacağını anlayabilir.*
+----
+int diziismi [] = {100,200,300,400,500};
+----
+*Burda başlangıç değerleri 100-500 olan 5 elemanlı bir dizi tanımladık.Dizinin istediğimiz öğesine erişmek için indeks değerini bilmemiz yeterlidir.İlk eleman 0 indeksinde bulunur.N elemanlı bir dizinin sonuncu elemanının indeks değeri N-1 olur.*
+----
+int main(){
+    
+    int a[]={10,20,30,40,50};
+    cout<<a[0];
+    cout<<a[4];
+    
+    return 0;
+}
+----
+*Bu kodda dizinin 0 ve 4 indeksli değerlerine ulaşıp ekrana yazdırdık.0 indeksinde 10 elemanı ve 4 indeksindede 50 elemanı bulunmaktadır.Ekran cıktısı :10 50 olur.C++ ta dizinin boyutunun dışında bir değere erişilebilir,derleyici hata vermez fakat,oradaki bellek alanı diziye ait değildir ve içinde hangi veri olduğu bilinmemektedir.*
+
+== Karakter Dizileri(Dizeler)
+
+*String,bir nevi her elemanı karakterlerden oluşan bir dizidir.Ancak derleyiciye dizinin ne zaman sonlandığını '\0' karakteri ile belirtilmesi lazımdır.Aksi halde derleyici bunu dir dizi karakter dizisi olarak görmez.*
+
+----
+int main(){
+
+    char a[6]={'h','e','l','l','o','\0'};
+    char b[5]={'h','e','l','l','o'};
+    cout<<a<<endl;
+    cout<<b;
+
+    return 0;
+}
+----
+*Bu kodda a dizisi ekrana doğru bastılıcakken,b dizisi tanımlanırken sonlandırma karakteri '\0' kullanılmadığı için ekrana doğru şekilde bastırılamıyacaktır.Karakter dizisi tanımlamanın daha kolay bir yoluda sting anahtar kelimesidir.Sadece dizinin ismi ve içereceği verinin girilmesi gereklidir.Boyutunu ve sonlandırma karakterini derleyici kendisi ayarlar.*
+----
+string dizi="mehmetcan";
+----
+*gibi.Yalnız bu yapıyı kullanmak için string dosyasının eklenmesi gerekmektedir.Aksi halde std::string şeklinde kullanılması gerekmektedir.Programın en başına ' using namespade std; ' yazmak std isim uzayındaki bütün dosyaları kodunuzda kullanmayı sağlayacaktır.*
+
+== Structures(Yapılar)
+
+*Struct ile kendimize ait veri türünü geliştirebiliriz denilebilir.Diziler sadece aynı türden verileri tutabilen yapılar idi.Structlar ise içerisinde birden farklı veri türünü kapsayabilen bir veri türüdür.Örneğin insan isminde bir veri türü tanımladık.İçerisinde insana ait olan isim,boy,kilo değişkenlerini saklayabiliriz.
+Burada isim bir string,boy ve kilo değerleri ise int tipinde değişkenlerdir.
+Bir struct aşşağıdaki gibi tanımlanır.*
+
+----
+struct insan{
+    int boy;
+    int kilo;
+    string isim;
+};
+----
+*Görüldüğü gibi insan yapımızın ilk iki değeri int sayı,son değeri ise bir karakter dizisi tutacaktır.Aşşağıda değişkene değer atamanın iki farklı yolu gösterilmiştir.*
+
+----
+int main(){
+
+    insan ben={154,44,"mehmet"};
+    insan sen;
+    sen.boy=167;
+    sen.kilo=66;
+    sen.isim="ahmet";
+    cout<<"ben : "<<ben.boy<<"+"<<ben.kilo<<"+"<<ben.isim<<endl;
+    cout<<"sen : "<<sen.boy<<"+"<<sen.kilo<<"+"<<sen.isim<<endl;
+
+    return 0;
+}
+----
+
+== Unions
+
+*Union tanımlanması struct ile oldukça benzerdir.Farkları union tipinden bir değişkenin kendi içinden veri tiplerinden sadece birine atama yapabilmesidir.
+
+----
+union birlik
+{
+    int a;
+    long b;
+    double c;
+};
+
+int main(){
+    birlik x;
+    x.a = 3;
+    cout <<x.a << endl;
+    x.c = 4.5;
+    cout << x.c << endl;
+    cout << x.a<< endl;
+    
+    return 0;
+}
+
+----
+*Bu örnekte önce x değişkeninin a değerine 3 ü atayıp ekrana yazdırıyoruz.Daha sonra c değerine 4.5 değerini atayıp ekrana yazdırdık.Bundan sonraki satır unionun nasıl çalıştığını gösteriyor.C değerine 4.5 atadığızdan itibaren a değişkeninin içindeki 3 değeri 0'a dönüşür.union tek seferde tek bir değişkene değer atayabilir.Ekran çıktısı: 3 4.5 0 olur.*
+
+== Enumarations(Numaralandırma)
+
+*Enum(Enumaration) tanımlamaları programlama dillerinde belirli değerlere karşılık gelen sabit değerlerin temsili için kullanılırlar, haftanın günleri, yönler vs gibi. Geliştiriciye sağladığı faydalar ise kod okunabilirliğini arttırması, muhtemel değer kümesinin daraltılması ve tip güvenliğini sağlaması dolayısıyla hata payını en aza indirmesi.Geliştirme yaparken bazen program akışını yönlendiren belirli durumlar oluşur, biz de bu durumları saptar, sayısal değerler ile ilişkilendirip kodu şekillendiririz.*
+
+----
+int main(){
+    enum hafta {pazartesi=1,sali,carsamba,persembe,cuma,cumartes,pazar};
+    hafta songun=pazar;
+    cout<<songun;
+
+    return 0;
+}
+----
+*Burada haftayı 7 gün olarak ayarladık ve pazartesiyi 1 den başlattık.Ve songun değişkenine pazar kelimesini atadık.Ekrana bastırılınca pazarın 7. gun olduğunu gösterecektir.*
+
+
+
+
+

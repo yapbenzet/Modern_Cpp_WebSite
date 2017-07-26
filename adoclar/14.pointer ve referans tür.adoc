@@ -1,0 +1,171 @@
+= Pointers(işaretçiler)
+
+*Kodda bir değişken belirtildiğinde,bu değişkene ait verileri işlemek için derleyiciye bilgi parçaları verilir.Verinin türü (char,int,long..) bu değişken için ne kadar bellek alanı ayrılacağını belirler.Verinin bellekteki yerini bilmeden,değişken ismi veriye erişmek için yeterli olur.*
+
+----
+int num=3;
+----
+
+*Burada num isminde bir int değişken tanımladık.num aslında bellekte bir alana referans verir.Belleğin bu konumu num ile kimlik kazanır.Bir işaretçi C++ ta basitçe bir verinin bellek adresini tutan bir değişkendir.Tanımlaması şöyledir.*
+
+----
+int main() {
+    int num {3};
+    int * ptr;
+    ptr=&num;
+    cout<<ptr;
+}
+----
+
+*Burada int* * *ptr adlı değişkenin bir işaretçi olduğunu bildirir.İşaretçinin veri tipi,adresini tutacağı verinin tipi ile aynı olmalıdır.num verisinin adresi ptr işaretçisinin içine atanmıştır.Bu kod çalıştırılığında num değişkenin refere ettiği adresi,başka bir deyişle num değişkeninin adresi ekrana yazdırılır.Eğer pointerin gösterdiği adresin içindeki veriye erişmek istiyorsak ters referans yöntemini kullanırız.Aşşağıdaki kod bu yöntemi örnekler.*
+
+----
+cout<<*ptr;
+----
+= Referans Türlerin Tanıtımı
+= Referans Tür
+
+*C++ referanslar olarak bilinen bir tür içerir.Bir referans tür yalnızda diğer bir türün takma adıdır.Program,başka bir değişkene yapılan referansı belirtmek için & operatörünü kullanır.Bu adres operatörü ile aynıdır.Adres operatörü bir değişkenin adresini temsil eder.Referanslar programcıya daha kolay bir kullanım sunuyor. Kullanıdığımız referanslar sadece notasyonel bir hile, arka planda çalışan aslında pointerlardır.*
+
+*Referans tür tanımlarken önce değişkenin veya başvurulacak verinin türünü belirtiriz.Ardından & karakteri ve tür adımızı kullanırız.*
+----
+int a;
+int &x=a;
+----
+*Burada int değeri referans gösterilecek değişkenin türünü belirtir.Referans olarak a değerini göstereceğimiz için,referans türümüzün(x'in) türüde int olmalıdır.*
+----
+int main(){
+    int ali;
+    // int &mehmet;  <1>
+    int &mehmet=ali;  <2>
+    mehmet=15;
+    cout<<ali<<endl;
+    cout<<mehmet;
+    return 0;
+}
+----
+*<1> numarada yazım hatası vardır.Referans verilirken ilk değeri vermek gerekir.<2> numarada mehmet aliyi refere etmektedir.Artık programda mehmet,ali yerine geçmektedir.Mehmete 15 değerini atadığımızda,aslında ali değerinede 15 değerini atamış oluruz.Ekran çıktısı : 15 15 olacaktır.*
+
+
+----
+}
+int main() {
+    int ali;
+    int kemal;
+    int &mehmet=ali;
+    mehmet=15;
+    cout<<ali;
+    cout<<mehmet<<endl;
+    mehmet=kemal;
+    mehmet=15;
+    cout<<ali<<endl;
+    cout<<kemal<<endl;
+
+    cout<<&mehmet<<endl;
+    cout<<&ali<<endl;
+    cout<<&kemal;
+
+    return 0;
+}
+----
+
+*Önemli bir noktada,bir referans tür atandıktan sonra,program boyunca başka bir değişkene atanamaz.Bu kodda mehmet önce aliyi refere etmektedir.Daha sonra kemal ile değiştirlmeye çalışılmıştır.*
+
+----
+C:\Users\mehmetcane\CLionProjects\mehmetproje\cmake-build-debug\mehmetproje.exe
+1515
+15
+80
+0x62fe98  // mehmetin adresi
+0x62fe98  // alinin adresi
+0x62fe94  // kemalin adresi
+Process finished with exit code 0
+----
+
+*Görüldüğü gibi kemal değişkenini refere edemedik.Derleyici atamak istediğimiz 15 değeri yerine rastgele bir sayı üretti.Bu kod referans türün ve refere ettiği değişkenin bellek adreslerinin aynı olduğunuda gösterir.*
+
+= Fonksiyon Parametresi Olarak Referanslar
+
+*Referanslar,fonksiyonlar ile birlikte yaygın olarak kullanılır.Bir fonksiyon çağırılırken C++ daki varsayılan mekanizma argümanların değerlerini kopyalaıp fonksiyon parametresine atamasıdır.Bu yalnızca değerin kopyalanmasıdır.*
+
+----
+void f(int num1)
+    {
+        cout <<"fonksiyon cagirildi"<< endl;
+        cout << "num1 in degeri" << num1 << endl;
+
+        num1++;
+
+        cout << "num1 in yeni degeri :" << num1 << endl;
+    }
+ int main()
+    {
+
+        int num = 3;
+        cout << "numun degeri" << num << endl;
+
+        f(num);
+
+        cout << "num : " << num << endl;
+
+        return 0;
+    }
+----
+*Ekran Çıktısı :*
+----
+C:\Users\mehmetcane\CLionProjects\untitled\cmake-build-debug\untitled.exe
+numun degeri3
+fonksiyon cagirildi
+num1 in degeri3
+num1 in yeni degeri :4
+num : 3
+
+Process finished with exit code 0
+----
+
+*Önce main fonksiyonunda num adlı değişken tanımladık ve değerini 3 atadık ve num değerini ekranda bastırdık.Daha sonra f fonksiyonunu çağırıp argüman olarak num değerini yani 3 sayısını gönderdik.f fonksiyonu num1 adlı parametreye 3 değerini aldı.
+Ekrana fonksiyon çağırıldı yazdı ve kendi içindeki num1 adlı değişkenin değerini yani 3 sayısını ekrana yazdırdı.Sonra num1'i bir arttırıp yeni değerini yazdırdı (4).Tekrar main fonksiyonuna döndüğünde ise num değerinin değişmediği görüldü. değişkenin.Değer kopyalama ,yalnızca num içinde tutulan bir değerin koypasını geçtiğimizi ve num1 in numu refere etmediğini gösteriyor.Bu nedenle f fonksiyonu içindeki tüm değişiklikler yalnızca yerel bir değişken olan num1 i etkiler.num değerinin değişmesini isteseydik,parametre olarak referans almamız gerekirdi.*
+
+----
+void f(int &num1)
+{
+    cout <<"fonksiyon cagirildi"<< endl;
+    cout << "num1 in degeri " << num1 << endl;
+
+    num1++;
+
+    cout << "num1 in yeni degeri :" << num1 << endl;
+}
+int main()
+{
+
+    int num = 3;
+    cout << "numun degeri :" << num << endl;
+
+    f(num);
+
+    cout << "num : " << num << endl;
+
+    return 0;
+}
+----
+
+*Ekran çıktısı :*
+
+----
+C:\Users\mehmetcane\CLionProjects\untitled\cmake-build-debug\untitled.exe
+numun degeri :3
+fonksiyon cagirildi
+num1 in degeri3
+num1 in yeni degeri :4
+num : 4
+
+Process finished with exit code 0
+----
+
+*Fonksiyon parametre olarak referans aldığı için bellekteki num değerine doğrudan erişebildi.*
+
+
+
+
+

@@ -1,0 +1,90 @@
+= C++ ta Veri Tipleri
+
+== Sayisal Veri
+
+|====
+| Tip Adı | Bayt | Takma Ad | Aralık
+| int | 4 | signed | –2,147,483,648 ila 2,147,483,647
+| unsigned int | 4 | unsigned | 0 ila 4,294,967,295
+| __int8 | 1 | char | -128 ila 127
+| unsigned __int8 | 1 | unsigned char | 0 ila 255
+| __int16 | 2 | short, short int, signed short int | –32,768 ila 32,767
+| unsigned __int16 | 2 | unsigned short, unsigned short int | 0 ila 65,535
+| __int32 | 4 | signed, signed int, int | –2,147,483,648 ila 2,147,483,647
+| unsigned __int32 | 4 | unsigned, unsigned int | 0 ila 4,294,967,295
+| __int64 | 8 | long long, signed long long | –9,223,372,036,854,775,808 ila 9,223,372,036,854,775,807
+| unsigned __int64 | 8 | unsigned long long | 0 ila 18,446,744,073,709,551,615
+| short | 2 | short int, signed short int | -32,768 ila 32,767
+| unsigned short | 2 | unsigned short int | 0 ila 65,535
+| long | 4 | long int, signed long int | –2,147,483,648 ila 2,147,483,647
+| unsigned long | 4 | unsigned long int | 0 ila 4,294,967,295
+| long long | 8 | none | –9,223,372,036,854,775,808 ila 9,223,372,036,854,775,807
+| unsigned long long | 8 | none | 0 ila 18,446,744,073,709,551,615
+| float | 4 | none | 3.4E +/- 38 (7 basamak)
+| double | 8 | none | 1.7E +/- 308 (15 basamak)
+| long double | 8 | none | 1.7E +/- 308 (15 basamak)
+|====
+
+
+----
+int main(){
+
+    unsigned int a= 4294967295;
+    cout<<a<<endl;
+    a= 4294967296;
+    cout<<a<<endl;
+
+    return 0;
+}
+
+----
+*Yukarıdaki örnekte işaretsiz int değişkeni maksimum alabileceği deri alıp ekrana bastırmıştır.Max değerin bir fazlasını göstermek istersek başa dönüp 0 ı gösterecektir.*
+
+
+== Karakter Verileri
+
+*Karakter verileri sayısal olmayan verileri temsil etmek için kullanılır.Karakterlerde aslında ASCII adı altında sayısal bilgiler olarak temsil edilir.*
+
+
+|====
+| Tip İsmi | Bayt | Takma Ad | Aralık
+| signed char | 1 | none | -128 ila 127
+| unsigned char | 1 | none | 0 ila 255
+| wchar_t, char16_t, ve char32_t | 2 veya 4 | __wchar_t | 0 ila 65,535 (wchar_t & char16_t), 0 ila 4,294,967,295 (char32_t)
+|====
+
+== Diğer Veri Tipleri
+
+*bool ve enum veri tipleri:*
+
+|====
+| Tip Adı | Bayt | Takma Ad | Aralık
+| bool | 1 | none | true or false
+| enum | varies | none | dependant on the enclosed data types
+|====
+
+==== boolean
+*Boolean veri tipi uygulamadaki doğru ve yanlış değerleri temsil etmek için kullanılır.*
+
+----
+int main(){
+
+    bool a;
+    int x;
+    cin>>x;
+    a=x>=10;
+    cout<<a<<endl;
+
+    return 0;
+}
+----
+
+*Yukarıdaki kodda bize 0 veya 1 döndürücek a değişkenini tanımladık.Eğer klavyeden girilen x değeri 10'dan büyük veya eşitse 1,küçük ise 0 değerini döndürür.Ve cout ile ekrana yazdırır.*
+
+==== enum
+
+*Değişkenlerin alabileceği değerlerin sabit (belli) olduğu durumlarda programı daha okunabilir hale getirmek için kullanılır. Programda birçok değişkene tek tek sayısal değer vermek yerine "**enum**" kullanılabilir.*
+
+
+
+

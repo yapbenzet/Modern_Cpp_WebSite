@@ -1,0 +1,103 @@
+= C++ fonksiyonların tanıtılması
+
+*Fonksiyonlar, bir uygulamanın davranışını gizli işlev parçaları halinde parçalamanıza izin veren bir programlama dili bileşenidir, dolayısıyla isim fonksiyonudur. Bir işlev, bilgisayarın o işleve ait talimatları yerine getirmesini isterseniz, esasen bir isim verdikten sonra uygulamanızdaki diğer konumlardan çağrı yapan bir C + + kodu bloğudur.*
+
+*Bir fonksiyonu tanımlayarak oluşturursunuz. İşlev tanımı, bir dönüş türü, bir işlev adı, gelen bağımsız değişkenleri kabul etmek için parametreler ve nihayet bu işlevin bir parçası olarak yürütecek olan kodu içeren bir gövde içerebilir. Fonksiyonlar, geri arayan kişiye bir değer döndürebilir veya döndürmeyebilir ve fonksiyona aktarılan argümanları kabul edebilir ya da kabul etmeyebilir.*
+
+*Döndürdüğü_değer_tipi fonksiyonun_ismi (parametre_listesi)* 
+
+*şeklinde tanımlanır.*
+
+----
+int f(int a){ <7>
+    a=2;       <4>
+    return a;  <5>
+}
+
+*görüldüğü üzre fonksiyon 4 parçadan oluşur.
+int <1>
+f <2>
+(int a) <3>
+{             
+    .....
+    ...
+    ..
+    .
+}
+
+int main(){
+    a=15
+    cout<<f(a)<<endl;  <6>
+    cout<<a;
+    
+    
+    return 0;
+}
+----
+== Dönüş Değeri 
+
+*Fonksiyonlar isimleri ile çağılıp,kodlarını çalıştırıp bitirdiği zaman çağırıldıkları kod satırına geri dönerler ve bellekten silinirler.işte bu dönme esnasında yanlarında bir değer getirirler.bu değerin tipi yukarıdaki örnekte <1> numaralı yerdeki integerdir.yani şekilde 6 numaralı alandaki f(a) yerine getirdiği int değerini bırakır.*
+
+== Parametre  
+*Fonksiyonlar çağırılmadan bellekte yer kaplamazlar.Şayet çağırıldıkları zaman bellekte geçici bir alan ayrılıp orayı kullanırlar.Aldıkları parametreler ve yaptığı her iş için kendine özel bellek alanını kullanır.Adres almadığı sürece main değişkenlerine hiçbir müdahelede bulunamaz.Yani main içindeki a değişkeni ile f isimli fonksiyon içindeki a değişkeni bellekte farklı alanlarda bulunur.main de bir fonksiyondur ve kodlar derlenmeye main içinden başlar.*
+
+*Yukarıdaki kod parçasını inceleyecek olursak; öncelikle main fonksiyonu içinde a değişkeni oluşturulur ve içerisine 15 değeri atanır.Daha sonra cout fonksiyonu cagirilir.cout fonksiyonu ekrana karakter bastırır.Bastıracağı karakter 6 numaradaki f fonksiyonunun dönüş değeridir.Şimdi f fonksiyonu çağırıldı ve kendne özel bellek alanında a değişkeni <7> oluşturdu.Ve içine <6> numaradaki maine özel a değişkeninin değerini kopyaladı.Şimdi hem f fonksiyonun içindeki a değeri 15,hemde main fonksiyonunun içindeki a değeri 15 olmuş oldu.Daha sonra fonksiyon küme parantezleri içine girip kodlarını çalıştırmaya başlayacaktır.Yapacağı iş <4> numaradaki a değerine 2 değerini atamak.Burdak a değeri f fonksiyonunun içindeki a değeridir.Dolayısıyla oradaki 15 değerini silip 2 değerini yazacaktır.Bu satır bittikten sonra sıradaki <5> numaralı satıra geçer ve a değerini yani içindeki 2 değerini,çağırıldığı <6> numaralı yere döndürür,ve bellekten parametreleri ile silinir.Kodun son hali* 
+
+*cout<<2; şekline gelir.Dikkat edilmesi gereken konu main fonksiyonu içindeki a değeri hala 15 tir.*
+*Ekran çıktısı :* *2*
+                *15*
+
+== inline fonksiyonlar
+
+*C++,fonksiyon çağrılarının getireceği yükü azaltmak için satıriçi fonksiyonları sunar.inline belirtecini fonksiyonunun tanımlanmasındaki geri dönüş tipinin önüne yerleştirmek,derleyiciye,o fonksiyonun bir kopyasını ,fonksiyon çağrısından kaçınmak üzere fonksiyonun kullanıldığı yerde yaratmasını tavsiye eder.Buradaki tercih fonksiyona yapılan çağrıda kontrolü fonksiyonun tek bir kopyasına geçirmek yerine ,fonksiyonun kodunun birçok kopyasını programın içine yerleştirmek ve dolayısıyla programı daha fazla yer kaplar hale getirmektir.Derleyici,inline belirtecini ihmal edebilir.*
+
+*Küpün hacmini hesaplayan program :*
+
+----
+inline double kup(const double s){
+    return s*s*s;
+}
+
+int main(){
+    double kenar;
+    for(int k=1;k<4;k++){
+        cout<<"kupun bir kenarini giriniz:";
+        cin>>kenar;
+        cout<<"kenari "<< kenar <<" olan kupun hacmi:" << kup(kenar) << endl;
+    }
+    return 0;
+}
+----
+*NOTLAR:*
+
+. *İnline fonksiyonunda yapılacak herhangi bir değişiklik,fonksiyonu kullanan her programın yeniden derlenmesini gerektirir.Bu,bazı program geliştirme ve bakım durumlarında gözle görülür ölçüde etkili olur.*
+
+. *inline belirteci,sadece küçük ve sık kullanılan fonksiyonlar için kullanılmalıdır.*
+
+. *inline fonksiyonları kullanmak,çalışma zamanını azaltabilir fakat programın boyutunu artırabilir.*
+
+== Scope
+
+----
+//global ve yerel değişken önceliği
+int k=0; // global k
+int main()
+{
+    int k;  //yerel k
+    for (k=0;k<10;++k)
+    {
+        cout<< "Yerel Degisken = "<<k<<"  ";
+        cout<< "Global Degisken = "<< ::k <<endl;
+    }
+    cout<<endl;
+    ::k++;
+    cout<<"\n Donguden Sonra"<<endl;
+    cout<< "Yerel Degisken = "<<k;
+    cout<< "---Global Degisken = "<< ::k <<endl;
+    return 0;
+}
+----
+
+*C++ da kod yazarken global olarak tanımlanan bir değişkenle, yeler olarak tanımlanmış değişkenler aynı adlara sahip olabilirler. Bu şekilde kullanımlarda yerel olan değişken önceliğe sahiptir. Örneğin bir global k=2 tanmlayalım birde mainde k=3 tanımlayalım mainde yazdırdığımız da 3 değeri yazdırılacaktır veya işlem yapacaktır.*
+*Eğer biz yerel k yerine global k ya ulaşmak istiyor isek yaşam alanı belirtme (scope resolution) operatörü (::) yani kapsam (scope) operatörü kullanılmalıdır.*
+*For içerisindeki k ile ilgili işlem yerel k yı etkilemektedir. Daha sonra ::k++; kodu yazıldığında yerel değişken yerine global k işleme alınmıştır.*

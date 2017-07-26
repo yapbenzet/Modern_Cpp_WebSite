@@ -1,0 +1,89 @@
+= Stringlerde Akışlar
+
+
+Standart C ++ kütüphanesi, >> ve << akış operatörlerini kullanarak  ve bir dizeden veri okumaya ve yazmaya izin veren bir std : : stringstream sınıfını tanımlar. Std : : stringstream sınıfı, <sstream> başlık dosyasında tanımlanmıştır. Std : : stringstream, std : : iostream öğesinden kalıtılır, bu nedenle bu sınıfın tüm özelliklerini devralır.
+
+Aşağıdaki örnek, << operatörünü kullanarak bir std : : stringstream nesnesine biçimlendirilmiş verilerin nasıl yazılacağını göstermektedir. Kod pasajı bir kişinin adını, yaşını ve maaşını bir std : : stringstream nesnesine yazar. Bilgileri konsolda görüntülerken yaptığınız gibi alanlar arasına bir boşluk karakteri eklediğimizin farkına varın:
+[source,java]
+----
+#include <sstream>// stringstream için.  
+    …  
+
+    std::stringstream stream;  
+    stream << "Jane" << " " << 42 << " " << 15000 << std::endl; 
+----
+
+  
+Aşağıdaki örnek, >> işleci kullanılarak bir std : : stringstream nesnesinden biçimlendirilmiş verilerin nasıl okunacağını gösterir. Kod pasajı, daha önce oluşturduğumuz std : : stringstream nesnesindeki kişinin adını, yaşını ve maaşını okur:
+[source,java]
+----
+#include <sstream>// stringstream için.  
+        #include <string> // string kütüphanesi.  
+        #include <iostream>     
+        …  
+
+        std::string name;  
+        int age;  
+        double salary;  
+        stream >> name >> age >> salary;  
+
+        std::cout  
+        << "Name: " << name << std::endl  
+        << "Age: " << age << std::endl  
+        << "Salary:" << salary << std::endl;
+----
+
+== String Akışının İçeriğini Ayarlama ve Alma
+
+
+Bir std : : stringstream nesnesinin içeriğini str () yöntemini çağırarak ayarlayabilir veya alabilirsiniz. Bu yöntemin iki aşırı yüklü sürümü vardır:
+[source,java]
+----
+void str(const string & s);  // Bir string akışı içeriğini ayarlayın
+
+std::string str() const;    // string akışı için içerik alın
+----
+  
+Aşağıdaki kod parçası, bir dizge akışının içeriğini nasıl ayarlayacağınızı ve alacağınızı gösterir:
+
+[source,java]
+----
+ // stringstream nesnesi oluştur.  
+        std::stringstream stream;  
+
+        // string akışının içeriğini ayarla.  
+        stream.str("Jane 42 15000");  
+
+        // string akışının içeriğini getir  
+        std::cout << "dizi akışının içeriği: " << stream.str() << std::endl;  
+        
+        std::string name;  
+        int age;  
+        double salary;  
+        stream >> name >> age >> salary;  
+
+        std::cout  
+            << "Name: " << name << std::endl  
+            << "Age: " << age << std::endl  
+            << "Salary:" << salary << std::endl;
+----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

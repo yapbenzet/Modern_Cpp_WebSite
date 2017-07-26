@@ -1,0 +1,199 @@
+== Kalıtım
+
+Yeni sınıflar "miras" adı verilen bir mekanizma kullanılarak mevcut sınıflardan türetilebilir.Kendisinden türetilen sınıflara "taban sınıfları" denir ve türetilmiş sınıflar alt sınıflar olarak da bilinir. Aşağıda bir örnek verilmiştir:
+[source,java]
+class Vehicle  {   
+private:  
+    string Make;  
+    string Color;  
+       ...  
+};   
+
+class Car: Vehicle  
+{   
+     // vehicle sınıfının tüm üyeleri 
+     // car sınıfına ait özel üyeler  
+};
+
+
+Bu örnekte Vehicle temel sınıf, Car ise türetilmiş sınıf. Araba, Make ve Color özelliklerini otomatik olarak devralır ve ayrıca kendi Arac özelliklerini ve yöntemlerini kullanmakta serbesttir.
+
+== Kalıtım Türleri
+
+
+C ++, kalıtım, kamu, özel ve korumanın üç farklı biçimini desteklemektedir. 
+
+. Public kalıtım, türetilmiş bir sınıfın,kalıtıtım aldığı sınıfın tüm üyelerine sahip olur(private,protected,public), ancak yalnızca temel sınıfın genel üyelerine doğrudan erişebilir. Temel sınıfın tüm üyeleri türetilmiş sınıftaki erişebilirliklerini koruyacaklardır. Bir örnek görelim.
+[source,java]
+----
+class Person  
+    {  
+
+    private:  
+        std::string firstName;  
+        std::string lastName;  
+
+        int age;  
+
+    public:  
+        Person();  
+
+        Person(std::string fName, std::string lName);  
+
+        Person(std::string fName, std::string lName, int age);  
+
+        ~Person();  
+
+        void SayHello();  
+    };
+class Student :  public Person  
+    {  
+    public:  
+        Student();  
+        ~Student();  
+    };
+    
+     Student::Student()  {  
+    }  
+
+    Student::~Student()  {  
+    }  
+    
+    // Bu satır bir derleyici hatasına neden olur
+
+    firstName = "Tom";
+    
+int main()  
+    {  
+
+        Student student1;  
+
+        //burası hata verir  
+        student1.firstName = "Tom";  
+
+        // burada sıkıntı yok  
+        student1.SayHello();  
+
+        return 0;  
+    }
+----
+
+  
+Bu örnekte bir person sınıfı var.  student sınıfının Öğrenci, ardından iki nokta üst üste ve daha sonra da public person olduğunu unutmayın. Bu, Öğrencinin public miras kullanan ,personun taban sınıfı olduğunu gösterir. Ayrıca, student sınıfının bir varsayılan kurucu ve bir yıkıcı içerdiğini unutmayın. Bunlar, Kişi sınıfının yapıcısı ve yıkıcıdan ayrıdır.
+
+
+Main.cpp dosyasında student1 adlı bir Öğrenci nesnesi ilan ediyoruz. Daha sonra firstName değişkenini bir değere ayarlamaya çalışıyoruz. Öğrenci firstName üye değişkeni Person'den devralmış olmasına rağmen bu kod satırı bir derleyici hatası oluşturacaktır. Bunun nedeni, public miras kuralı ve firstName üye değişkeninin Kişi sınıfından özel olarak bildirilmiş olmasıdır. Bu değişkenlere nasıl erişebileceğimizi kısaca anlatacağız. Ancak, SayHello () işlevinin public olduğu için, student1.SayHello () işlev çağrısının işe yarayacağına dikkat edin. Ayrıca, Student  sınıfında firstName değişkenini doğrudan denemeye çalışırız ancak derleyici de bu satıra karşı bir hata atacaktır.
+
+Belirtildiği gibi, C ++'da üç tür kalıtım vardır: public, protected, private. Bu bölüm farklılıkları açıklıyor:
+
+public:
+
+. public üyeleri türetilmiş sınıftada publictir ve doğrudan üye işlevleri ve üye olmayan işlevler tarafından erişilebilir.        
+
+. protected üyeleri türetilmiş sınıfta protectedtir ve doğrudan üyelerin işlevleriyle erişilebilir.
+
+. Private üyeler türetilmiş sınıfta gizlidir ve üye işlevler tarafından public veya protected üye işlevlerle erişilebilir.
+
+protected:
+
+. public üyeleri türetilmiş sınıfta korunan üyeler haline gelir ve doğrudan üyelerin işlevleriyle erişilebilir
+
+. Korunan üyeler türetilmiş sınıfta korunan üyeler haline gelir ve doğrudan üyelerin işlevleriyle erişilebilir
+
+. Özel üyeler türetilmiş sınıfta gizlidir ve üye işlevler tarafından public veya protected üye işlevlerle erişilebilir
+
+private:
+
+. public üyeleri türetilmiş sınıfta özel hale gelir ve doğrudan üye işlevleri tarafından erişilebilir
+
+. protected üyeler türetilmiş sınıfta özelleşirler ve doğrudan üye işlevler tarafından erişilebilirler
+
+
+. Özel üyeler türetilmiş sınıfta gizlidir ve üye işlevler tarafından public veya protected üye işlevlerle erişilebilir
+
+Türetilmiş sınıfınızdan temel sınıf kurucusunu çağırarak temel sınıf üyelerini başlatabilirsiniz. Türetilmiş sınıftaki üye değişkenlerin, türetilmiş sınıfta erişilmeden veya kullanılmadan önce başlatılmasını sağlamak için temel sınıf yapıcısına çağrı yapmanız önerilir. Türetilmiş sınıfınızdan temel sınıf kurucusunu çağırmanın yolu burada gösterilmiştir.
+[source,java]
+----
+Student::Student():Person("Tom", "Thumb")  {  
+}
+----
+
+  
+student kurucusunun hemen sonrasında bir iki nokta üst üste ve iki argüman kabul eden person kurucuya yapılan bir çağrı görürüz. Herhangi bir argüman almayan biri de dahil olmak üzere herhangi bir geçerli yapıcı yerleştirebilirsiniz, bu durumda varsayılan kurucu çağrılır. Türetilmiş sınıfınızın gövdesine girmeden önce temel sınıfınızın başlatılmasını sağlamak için temel sınıf kurucusunu bu şekilde çağırmanız iyi bir programlama uygulaması yapın. Objective-C gibi diğer diller, temel sınıfın türetilmiş sınıflarınızdan önce başlatılmasını gerektirir.
+
+== Protected anahtar kelimesi
+
+  
+C +++++ kodunuzda kalıtım ile uğraşırken, taban sınıfının bazı üyelerini "dış dünya" için özel kılmak, ancak bu taban sınıfın public türetilmiş sınıflarını korumak isteyebilirsiniz. C +++++, bu amaçla protected anahtar kelimeyi sağlar.
+
+Örnek olarak, Person sınıfımızı ve student gibi türemiş sınıfları ele alalım. Şimdiye kadarki mevcut kod örneklerinde, studentin adının, soyadının veya yaşın doğrudan erişemediğini belirttik. Bunun nedeni, üye değişkenlerin Şahsen özel olarak ilan edilmesidir. Person sınıfının public accessor yöntemlerini bu özel üye değişkenlere erişmek için kullanabiliriz veya bunun yerine üye değişkenleri korumalı hale getirebiliriz. Böylece, çağrıyı erişim metodlarını aramaya gerek duymadan öğrenci sınıfımızda doğrudan başlatabiliriz. Belki de bunu yapmak istiyoruz, çünkü bir örnek olarak, bir Öğrenciyle Öğretmen arasında farklı şekilde yaş doğrulamasını yapmak istiyoruz. Öğrenci veya Öğretmen türetilen sınıflarda özel doğrulama kodu oluşturabilir ve yaşın korumalı erişimini sağlayarak üye değişkenini yaşa göre doğrudan ayarlayabiliriz.
+
+== Arkadaş Fonksiyonlar(Friend Functions)
+  
+Bir sınıf harici bir işlevi arkadaş fonksiyonu olarak tanımlayabilir. Bu, arkadaş işlevinin özel üyeler de dahil olmak üzere sınıfın tüm üyelerine erişmesini sağlar. Arkadaş işlevleri üye değildir, yani bir "bu" işaretçi almazlar. Sonuç olarak, bir nesneye erişmek için açık bir parametre gerektirmeleri gerekir.
+
+Aşağıdaki örnek, bir sınıfın SomeExternalFunction () adlı harici bir fonksiyonu sınıfın arkadaş fonksiyonu olarak nasıl ilan edebileceğini gösterir. SomeExternalFunction () fonksiyonun ele alacağı nesneyi tanımlayan bir referans parametresi alır:
+[source,java]
+----
+ class MyClass  {  
+ 
+        friend void SomeExternalFunction(MyClass & targetObject);  
+    };
+----
+
+Aşağıdaki kod parçası, SomeExternalFunction () öğesini nasıl uygulayabileceğinizi gösterir. Genel olarak, arkadaş fonksiyonu uygulamalarını, aynı sınıfın anlamsal anlamının bir parçası olduğu için, üye işlev uygulamaları ile aynı kaynak dosyaya koyarsınız. Bununla birlikte, sınıfın üyeleri olmadığı için arkadaş işlevlerini ClassName :: sözdizimiyle öneki kullanmazsınız.
+[source,java]
+----
+   void SomeExternalFunction(MyClass & targetObject) {  
+    
+    }
+----
+
+== Arkadaş Sınıflar(Friend Classes)
+
+  
+Bir sınıf başka bir sınıfı arkadaşı olarak tanımlayabilir. Bir arkadaş sınıfı, birinci sınıfın tüm üyelerine erişebilir. Bu, "ikili sisteminiz" varsa, birbirleriyle yakından ilgili olan iki sınıf olması durumunda yararlıdır.
+
+Arkadaş sınıflarının iyi bir örneği C ++'daki "handle-body" deyimidir. Bu deyim, bir semantik sınıfı, ilgili verileri tanımlayan bir "gövde" sınıfı ve genel davranışı tanımlayan "tanıtıcı" bir sınıfa karşılık gelen iki sınıfa bölünür. Gövde, tanı sınıfını bir arkadaş sınıfı olarak tanımlar; böylece tanı sınıfı, gövde sınıfındaki tüm üyelere (özel üyeler dahil) erişebilir.
+
+Aşağıdaki kod listeleri, C ++ 'da arkadaş sınıfları kullanarak handle-body deyimini nasıl uygulayacağınızı gösterir.
+
+class Handle;  // Forward reference of the "handle" class, so the compiler knows about it.  
+[source,java]
+----
+    class Body  
+    {  
+        friend class Handle;  
+
+    private:  
+        int someData;  
+        ...  
+    };
+    
+    class Handle  
+    {  
+    private:  
+        Body * body;   
+
+    public:  
+        Handle();  
+        ~Handle();  
+
+        void someOperationOnBody();  
+        ...  
+    };
+      Handle::Handle()  
+    {  
+        body = new Body;  // Create the underlying "body" object.  
+    }  
+
+    Handle::~Handle()  
+    {  
+        delete body;      // Delete the underlying "body" object.  
+    }  
+
+    void Handle::someOperationOnBody()  
+    {  
+        someData = 42;    // Perform operations on the underlying "body" object.  
+    }
+----

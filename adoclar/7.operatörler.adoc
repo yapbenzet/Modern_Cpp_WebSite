@@ -1,0 +1,101 @@
+= C++ OPERATÖRLER
+
+*Operatörler tüm programlama dillerinde olan,her birinin özel görevinin olduğu karakterler topluluğudur.Kendi içinde ikiye ayrılır.*
+
+
+*Atama Operatörü ( = ): Bu operatör sağ tarafındaki değerin bir kopyasını,veya değişkenin değerinin bir kopyasını, sol taraftaki değişkenin içine atar.
+Eğer if ifadesi içinde ise o zaman görevi farklıdır ve iki değerin birbirine eşit olup olmamasını kontrol eder.Normal atama operatöründen farkı iki kez kullanılıyor olmasıdır.*
+
+
+----
+int main(){
+    int a,b;
+    a=5;
+ /* a=b;  yanlış kullanım
+          bu ifade b değişkenin içindeki değeri a değişkeni içine kopyalar.
+          b değişkenine değer atamadığızdan dolayı,derleyici rastgele bir
+          değer atiyacaktır,ve a değişkenin içine kopyalıyacaktır. */
+    b=a; /* doğru kullanım
+          a'nın içindeki 5 değeri b'nin içine kopyalandı. */
+    // if(a=b)         yanlış kullanım. = operatörü if ifadesi içine ise
+    // cout<<"eşit";   iki değeri kontol eder.atama operatörü olarak kullanılamaz   
+    
+    if(a==b)    //doğru kullanım
+    cout<<"esit";
+    
+    cout<<"esit degil";
+    
+    
+    
+    return 0;
+}
+bu kod önce a'ya 5 değerini atar.sonra a değişkenin değerini b değişkenine kopyalar. ve if kontol ifadesinde a değeri ve b değeri eşit ise ekrana eşittir yazdırır.
+ekran çıktısı : eşittir
+----
+====
+.Aritmatik Operatörler
+*Bu operatörler matematiksel işlemlerde kullanılır.*
+
+. *+ operatörü : Toplama yapar.*
+. *- operatörü : Çıkaram yapar.*
+. ** operatörü : Çarpma yapar.*
+. */ operatörü : Bölme yapar.*
+. *% operatörü : Kendisine verilen degerin istenilen bir sayiya bölümünden kalanı bulur.*
+====
+
+*Örneğin :*
+------
+
+int main(){
+    
+    int x=15;
+    int a;
+    a=x%4;
+    cout<<a<<endl;
+    
+    return 0;
+}
+Bu kod x in(15 in) 4 ile bölümünden kalanı bulur ve adeğişkenine atar.
+Sonrada cout komutu ilea değişkenini ekrana bastırır.Çıktı 3 olacaktır.
+
+------
+
+ 
+*Karşılaştırma Operatörleri: Sayısal değerleri veya karakterleri karşılaştırmak için kullanılan operatörlerdir.*
+  
+
+  
+
+|====
+| Operatör | Açıklama | Example | Anlamı
+| > | Büyüktür | x > y | x, y den büyük mü?
+| < | Küçüktür | x < y | x, y den küçük mü?
+| == | Eşittir | x == y | x, y ye eşit mi?
+| >= | Büyük Eşittir | x >= y | x, y den büyük yada eşit mi?
+| <= | Küçük Eşittir | x <= y | x, y den küçük yada eşit mi?
+| != | Eşit Değildir | x != y | x, y ye eşit değilse
+| += (y += x) |  y = y + x
+| -= (y -= x) |  y = y - x
+| *= (y *= x) |  y = y * x
+|====
+
+
+
+*Mantıksal Operatörler :Birden fazla karşılaştırma işlemi, Mantıksal Operatörler'le birleştirilerek kullanılabilir.*   
+
+
+|====
+| Operatör | Açıklama | Example | Anlamı
+| && | VE | x>2 && x<y | x, 2 den büyük VE y den küçük mü?
+| || | VEYA | x>2 || x<y | x, 2 den büyük VEYA y den küçük mü?
+
+| ! | DEĞİL | !(x>2) | x, 2 den büyük değilse
+
+|====
+
+[source,java]
+----
+
+----
+
+

@@ -1,0 +1,24 @@
+= Taşınabilirlik
+
+== Farklı Platformlarda C++ Uygulamaları
+
+*Taşınabilirlik,kodda fazla değişiklik yapmadan farklı platformlarda veya farklı derleyiciler ile derleyebilme işlemidir.Bu platformlar donanım.CPU,işletim sistemleri vs olabilir.Derleyeci,kaynak kodun makine koduna çevirme işleminden sorumludur.*
+
+== Derleme İşlemi
+
+=== Önişlemci
+
+*Önişlemci kodu alır ve önişlemci adımlarına göre değerlendirir.Önişlemci komutları, kaynak kodun derleme modülüne verilmeden önce kaynakkodla ilgili yapılmak istenen ön işlemleriri belirtmek için kullanılan komutlarıdr. Önişlemci komutlarının derleme modülü ile hiç bir alakası yoktur. Önişlemci dediğimiz modül bu komutları değerlendirip işleme sokarak kaynak kodu derleme modülüne verir.*
+
+=== Derleyici
+
+*Önişlemciden kaynak kod dosyalarını alır,her birini ayrı bir nesne dosyası içinde derler.Daha sonra kodun syntax kurallarına göre yazılmışlığını kontrol eder.*
+
+=== Bağlama
+
+*Bağlayıcı(linker) bütün nesne dosyalarını alır ve çalıştırılabilir program içerisinde birbirine bağlar.Aynı zamanda derleyicinin bütün sözlerinin tutulmasını sağlar.*
+
+
+
+
+

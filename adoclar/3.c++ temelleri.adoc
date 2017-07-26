@@ -1,0 +1,10 @@
+= C++ Temelleri
+
+*C++ büyük/küçük harf duyarlıdır.Değişkenlerimizin isimleri programlama dilinin anahtar kelimeleri ile aynı olmamalıdır(cont,int,class ..).*
+
+== C++ deyimleri
+
+. *Bildirimler : Kodda kullanılacak değişkenleri ve sabitleri bildirir.*
+. *Atamalar : Koddaki değişkenlere değer atamak için kullanılır.*
+. *Yorumlar : Kodu belgelemek amaçlı kullanılır.Derleyici yorum satırlarını görmez.*
+. *Yürütülebilir ifadeler : Bunlar işlem yapmak ve talimatları yürütmek için kullanılır.Örnek : cout<<"hello world"; .*

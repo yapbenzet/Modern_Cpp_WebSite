@@ -1,0 +1,89 @@
+= Sinif Dosyaları
+
+== Header Dosyaları(.h)
+
+*C+++++ programları genellikle birden fazla sınıf dosyaları içerirler.Sınıf dosyaları,gerçek dünyadaki nesneleri modellememize izin verir,kodumuzun işlevselliğini arttırır.Programlardaki dosyalardan her biri,yine aynı uygulamada tanımladığımız sınıf dosyalarından herhangi birini veya tümünü kullanabilir.Buna göre sınıf dosyası tanımı,onu kullanan her dosya için aynı olmalıdır.Kodun çokluğunu önlemek için c+++++ ,header file(başlık dosyaları/üstbilgi dosyaları) kavramını ve #include önişlemci yönergesini kullanır. .h uzantılı header dosyası,sınıf dosyasında bulunan bildirimleri içerir.Bu bildirimler genel olarak fonksiyon prototipleri ve sınıf constructor(sınıf kurucu fonksiyonu) içerir.Uygulamayı gerçekleştirecek olan gerçek kodlar ise .cpp uzantılı uygulama dosyasında bulunur.*
+[source,java]
+----
+#ifndef UNTİTLED_SEKİL_H
+#define UNTİTLED_SEKİL_H
+class sekil{
+public:
+    int boy;
+    int en;
+    sekil(int,int);
+    int alanBul();
+};
+
+#endif //UNTİTLED_SEKİL_H
+----
+
+*Burada sekil isimli bir header dosyası actık ve sekil sınıfımızı,kurucu fonksiyonunu,üye değişkenlerini tanıttık.Public anahtar kelimesi,diğer sınıflardan bu üyelere erişme imkanı veriyor.*
+
+*ifndef(if not defined): Bu satır eğerki şu ana kadar sekil.h dosyası tanımlanmamış ise bir alt satıra geçer ve bu dosyayı define eder.Eğer define edilmiş ise if döngüsü gibi çalışır ve ona bağlı kod satırlarını atlar.Bu sürekli olarak aynı dosyayı tanımlamamızı önler.endif ise tanımlanacak alanın sonunu belirtir.*
+
+== Uygulama Dosyaları(.cpp)
+
+*Uygulama dosyası .cpp uzantılıdır ve gerçek kodları yazacağımız alandır.Bu dosyaya header dosyamızı include etmemiz lazım.*
+[source,java]
+----
+#include "sekil.h"
+
+int sekil::alanBul(){
+    return boy*en;
+}
+
+sekil::sekil(int b,int e){
+    boy=b;
+    en=e;
+}
+----
+*Görüldüğüü gibi header dosyamızda tanımladığımız metodların gövdelerini burada yazdık.*
+
+== main
+
+*Son olarak programımızın çalışmaya başlayacağı kısım main.istersek main.cpp dosyasını kullanabilir,istersek kendi açtığımızı uygulama dosyamızın içinde kullanabiliriz.main.cpp dosyamızı kullanacaksak header dosyamızı include etmeyi unutmamalıyız.Kendi .cpp uzantılı dosyamızı kullanmak istiyorsak
+
+[source,java]
+----
+#include "sekil.h"
+#include <iostream>
+using namespace std;
+
+int sekil::alanBul(){
+    return boy*en;
+}
+
+sekil::sekil(int b,int e){
+    boy=b;
+    en=e;
+}
+
+int main() {
+
+    sekil kare(15,20);
+    cout<<kare.alanBul();
+    return 0;
+}
+
+----
+*şeklinde,method gövdeleri kodlandıktan sonra main fonksiyonu kullanılabilir.*
+
+*ÖNEMLİ NOT::*
+
+*Dosyaları birbiri içinde include etmek istiyorsak aynı dosya yolu üzerinde bulunmalıdırlar.*
+----
+#include <C:\users\mehmetcane\CLionProjects\untitled\sekil.h
+----
+*aksi halde bu şekilde tam dosya yolunu biliyor olmamız gerekir.*
+
+
+
+
+
+
+
+
+
+
+

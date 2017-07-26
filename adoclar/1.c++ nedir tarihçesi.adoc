@@ -1,0 +1,30 @@
+= C++ Tam Olarak Nedir
+
+*C++ c dilinin gelişmiş bir versiyonudur.Soyut veri tiplerini destekler.Soyut veri tipleri olarak bağlı listeler,yığın,queue vs sayılabilir.Bu dil ile nesne yönelimli kodlar yazılabilir.*
+
+= Modern C++ Tarihçesi
+
+*1979da c olarak doğmuştur.1983 te şimdiki adını almıştır.Bu dil hiç bir kuruma ait değildir ve standart komite(şirket grupları,açık kaynak toplulukları,üniversite öğrencileri) tarafından geliştirilmeye devam edilmektedir.*
+
+= C++ Program Yapısı
+
+----
+#include <iostream><1>
+
+int main()<2>
+{<3>  
+    std::cout<<"hello world";<4>
+    
+    return 0;<5>
+    
+    
+    
+    
+}<6>
+----
+. *Burası direk olarak ön işlemci olarak bilinir.Derleyiciye bir dosya yerleştirme talimati verir.Bu dosya iostream kütüphanesi için gerekli kodları içerir.Bu kütüphane input,output kullanmaya izin veren kodları içerir.*
+. *Her c++ programı main isimli metoda sahip olmalıdır.Burası uygulamanın başlangıç noktasıdır.Kodlar yorumlanmaya bu satırdan başlanır.int kelimesi metodun dönüş tipidir.*
+. *C++ da metodların gövdesi bu karakter ile başlar.*
+. *Bu kod cout methodunu kullanır.cout ekrana hello world yazdırır.:: ise cout'un std isim uzayına ait olduğunu belirtir.*
+. *Bir metodun çağırana geri dönmesi gerektiği zaman,return deyimi o metodu bitirmek için kullanılır.Bu örnekte döndürülen tamsayı değeri sıfırdır.Program bu noktaya gelirse 0 dönmesi demek programın doğru çalıştığını gösterir.*
+. *Bu karakter main metodunun gövdesini kapatır ve derleyeici metodun nerde bittiğini bilir.Metoddan farklı olarak bazı işlevler içinde kullanılır.*

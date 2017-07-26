@@ -1,0 +1,56 @@
+== C++ Değişkenler ve Sabitler
+
+== Değişkenleri Tanıtma
+
+*C++ ta bir değişken oluşturulduğunda,bir veri türü verilmelidir.Değişkeni oluşturduğumuzda veya daha sonra kodumuzun içinde bir yerde değerini atayabiliriz.Buna değişkenin başlatılması denir.Büyük/küçük harf duyarlıdır.deger ve Deger ayrı değişkenler olarak tutulur.Aşşağıda bir değişkeni başlatmanın iki yöntemide gösterilmiştir.*
+
+----
+int main(){
+
+    int deger=0;
+    int Deger {1};
+    
+    cout<<Deger;
+
+    return 0;
+}
+----
+*Değişkenler bir harf veya _ karakteri ile tanımlanabilir.Rakamlar ile başlayamaz fakat değişkenin ortasında veya sonunda kullanılabilir.*
+
+== Sabitlerin Tanıtımı
+
+*Sabit bir değişken ,çalışırken değer değişikliği yapamaz.İfadenin sabit olduğunu belirmek için const anahtar sözcüğü kullanılır.C++ ta sabir bildirirken aynı anda sabit kalacak bir değeri atamanız gerekir.Daha sonra programdan atanamaz veya değiştirilemez.Ayrıca sabitin değerini değiştirebilecek başka bir değişken veya fonksiyon kullanlıamaz.*
+----
+void degis(int *x){
+    *x=22;
+}
+    int main(){
+
+        const int a{12};
+        cout<<a<<endl;
+        degis(&a);
+        cout<<a;
+
+        return 0;
+    }
+----
+
+*Yukarıdaki örnek adresini aldığı değişkenin değerini değiştirmeye çalışan degis fonksiyonunu gösterir.Fonksiyon const değeri değiştiremezken const olmayan değişkenin değerini değştirebilir.*
+
+== Tür Dönüşümleri
+
+*C++ ta küçük bir veri türünden bir değişkenin değerini,daha büyük veri türünden bi değişkenin içine atarsak,program otomatik olarak tür dönüşümü yapar,veri kaybı olmaz.Fakat bazı olası sorunlar görülebilir.Sayisal degerleri dönüstürmek icin statik_cast operatöru kullanılır.*
+
+----
+int main(){
+
+char ch;
+int i = 65;
+float f = 2.5;
+double dbl;
+ch = static_cast <char> (i); // int to char
+dbl = static_cast <double> (f); // çift float
+
+return 0;
+}
+----

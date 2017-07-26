@@ -1,0 +1,39 @@
+= Sabit Nesneler
+
+Bir c++ programında bazı nesneler değiştirilebilir ve bazısı da değiştirilemez olabilir.Const,anahtar kelimesi kullanılarak bir nesnenin değiştirilemez (sabit) olduğunu belirtebiliriz.*
+[source,c++]
+----
+class insan{
+private:
+    int maas;
+public:
+    insan(int maas1):maas(maas1){}
+    void zamYap(int zam){
+    maas+=zam;
+    }
+    void maasYaz(){
+    cout<<maas;
+    }
+};
+----
+[source,c++]
+----
+int main(){
+    insan i1(500);
+    const insan i2(500);
+    i1.zamYap(50);
+    i1.maasYaz();
+    i2.zamYap(100);  // hata : const bir nesneyi değiştirmeye çalışmak
+    i2.maasYaz();    //hata :  const bir nesne ile const olmayan bir fonksiyon çağırmak
+
+    return 0;
+}
+----
+Görüldüğü gibi 2 tür hata ile karşı karşıyayız.İlk hata sabit bir nesnenin maas değişkenini değiştirmeye çalışmaktır.Çağırmak istediğimiz fonksiyonda const olsa dahi,
+nesne değişkeni hiç bir şekilde değiştirilemeyecektir.
+İkinci hata ise const bir nesneden const olmayan bir fonksiyon çağırmaktır.Const nesnelerden sadece const fonksiyonlar çağırılabilir.
+
+Öyleyse unutmamamız gereken iki önemli husus var:
+
+. Const bir nesnenin değişkenleri asla değiştirilemez.
+. Const nesneden sadece const fonksiyonlar çağırılabilir.

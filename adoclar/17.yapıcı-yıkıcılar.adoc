@@ -1,0 +1,69 @@
+= Yapıcı ve Yıkıcılar
+
+*C++ programlama dilinde kurucu ve yıkıcılar asagidaki gibi tasarlanır.*
+----
+
+class sınıf_ismi {    // Bir class
+
+sınıf_ismi(); // Bir constructor
+sınıf_ismi(int,float); // Aşırı yuklenmiş Bir constructor
+~sınıf_ismi(); // Bir destructor
+};
+----
+
+**Sınıflar(class)** yaratılan nesnelerin ozelliklerini tanımlandıkları alanda deklare eden sistemlerdir.Sınıflar cesitli uyelere sahip olabilirler.Bunlar primitif tipte degiskenler olabilirken,kendi veri tiplerinden olusan degiskenler ve fonksiyonlarada sahip olabilirler.   
+
+Bir **constructor**(Yapılandırıcı veya kurucu olarak adlandırılır) fonksiyon,kendi sınıfı icerisindeki(genelde private olan uyeler) uyeleri veya olusturdugu nesnenin ilk cikis sahnesini olusturan fonksiyonlardir.Nesneler,genelde oluşturulurken ilk deger atamalarını kendi kurucu fonksiyonlari sayesinde yaparlar.Boyle bir kural sart degildir,ancak nesne yönelimli programlama dilleri(object oriented programming) uzerinde kod yazan programcılar genelde bu yaklaşım ile sınıflarını tasarlarlar.Bakıldıgı zaman programın optimizasyonu acısından da constructor fonksiyonları cok yararlıdır.  
+
+**Destructor(Yıkıcı veya Yok edici)** :olarak adlandırılan fonksiyonlar ise,constructor fonksiyonunun yaptıgı işin tersini yaparlar,yani gorevi biten nesneyi yok ederler.Bir sınıfın(class) uyesi olan bir degisken(orn:string tipli) gorevini noktaladigi durumda ~destructor() fonksiyonu otomatik cagrilarak,uzerinde calistigi nesneyi devre dışı bırakır.C++ programlama dili icerisinde destructor'lar bulunurken,java dilinde bu fonksiyonlar kaldırılmıştır.Nedeni ise,programlama zafiyeti acısından eger iyi tasarlanmazsa,bu fonksiyonlar programa ciddi zararlar verebilirler.Unutulmamalıdırki heapte(yığıt)  oluşturulan değişkenler yok edilemezler(program bitene kadar).Bunun için delete anahtar kelimesini çağırmalıyız.Delete çağırıldığında o sınıfa ait yıkıcı fonksiyonda çağırılmış olur.
+
+*destructor() fonksiyonları olmasada,constructor() fonksiyonlari aşırı yuklenebilir.Bu durumu fonksiyon parametrelerini degistirerek uygulayabilirsiniz.Ancak bu fonksiyonlarin donus tipi belirtilmemektedir.*   
+
+[source,java]
+----
+int main() {
+
+    sekil *kare=new sekil(2,2);
+    cout<<kare<<endl;
+    sekil *ucgen=new sekil(11,22);
+    cout<<ucgen;
+
+    return 0;
+}
+----
+*Çıktı*
+----
+C:\Users\mehmetcane\CLionProjects\untitled\cmake-build-debug\untitled.exe
+0xf910e8  
+0xf910f8
+Process finished with exit code 0
+----
+
+
+*görüldüğü üzre new işleci ile heap'ten bir alan ayırdık ve bu alanı serberst bırakmaz isek program kapanana kadar başka hiçbir değişken kullanamayacaktır.Ucgen ve kare değişkenlerinin gösterdikleri alanlar farklıdır.*
+
+*Ancak delete ile aldığımız alanı serbest bırakırsak ;*
+
+[source,java]
+----
+int main() {
+
+    sekil *kare=new sekil(2,2);
+    cout<<kare<<endl;
+    delete kare;
+    sekil *ucgen=new sekil(11,22);
+    cout<<ucgen;
+
+    return 0;
+}
+----
+*Çıktı*
+----
+C:\Users\mehmetcane\CLionProjects\untitled\cmake-build-debug\untitled.exe
+0x9010e8
+0x9010e8
+Process finished with exit code 0
+----
+
+
+*Kare ile ayırdığımız alanı serbest bıraktığımız için,üçgen değişkeni tekrar o alanı kullanabildi.*

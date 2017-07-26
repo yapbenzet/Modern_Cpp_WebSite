@@ -1,0 +1,276 @@
+= Akışlara Giriş (Stream)
+
+*C++, << ve >> operatörlerini kullanarak konsola veri girişi ve çıkışı yapmanızı sağlayan standart bir iostream kütüphanesi tanımlar.Bu kütüphanede istream,ostream gibi sınıflar bulunur(Aslında tam olarak bir sınıf değil,bir template örneği).Bu sınıflar ise ekrana veri giriş çıkışına izin verir. Bu operatörlerin bazı basit örneklerini zaten gördük. İşte kullanıcıya birkaç sayı girmesini ve ürünlerini çıkmasını sağlayan başka bir örnek:*
+[source,java]
+----
+#include <iostream>
+using namespace std;
+
+double birimFiyat;  
+int miktar;  
+
+cout << "Birim fiyatı ne? ";  
+cin >> birimFiyat;  
+
+cout << "Ne kadar istiyorsun? ";  
+cin >> miktar;  
+
+cout << "toplam tutar " << birimFiyat * miktar << endl;
+----
+  
+*Cin ve cout, std ad alanında önceden tanımlanmış nesnelerdir. Ayrıca, önceden tanımlanmış, cerr adı verilen ve hata mesajlarını çıktılamak için kullanışlı bir nesne de vardır. Bu üç nesne,  başlık dosyasında tanımlanır.*
+
+*  *Cin istream sınıfının bir örneğidir ve stdin cihazından girişi yapmanıza izin verir*
+
+* *Cout, ostream sınıfının bir örneğidir ve çıktıyı stdout aygıtına gerçekleştirmenize olanak tanır*
+
+* *Cerr, ostream sınıfının bir başka örneğidir ve çıktıyı stderr aygıtına gerçekleştirmenize izin verir.*
+
+== istream ostream
+
+*istream ve ostream aslında kendi başına sınıf değildir. Bunun yerine sırasıyla basic_istream ve basic_ostream şablon sınıflarının karakter tabanlı örneklemelerini temsil eden typedefler (ör. Takma adlar) vardır:*
+
+* *typedef basic_istream<char> istream;* 
+
+* *typedef basic_ostream<char> ostream;*
+
+*Burada istream, basic_istream<char> sınıfının takma adıdır.Aynı şekilde ostreamda basic_ostream<char>.*
+
+*Basic_istream sınıfı, yerleşik türlere değer girmenize izin veren bir dizi operator >> işlevini tanımlar. Aşağıdaki örnek, birçok yerleşik tür için değerleri nasıl gireceğinizi göstermektedir:*
+[source,java]
+----
+short s;  
+std::cin >> s;  
+
+int i;  
+std::cin >> i;  
+
+long l;  
+std::cin >> l;  
+
+unsigned short us;  
+std::cin >> us;  
+
+unsigned int ui;  
+std::cin >> ui;  
+
+unsigned long ul;  
+std::cin >> ul;  
+
+float f;  
+std::cin >> f;  
+
+double d;  
+std::cin >> d;  
+
+long double ld;  
+std::cin >> ld;  
+    
+bool b;  
+std::cin >> b;   
+
+void * ptr;  
+std::cin >> ptr;  
+----
+
+*Benzer şekilde basic_ostream sınıfı, yerleşik tür değerlerini göndermenize izin veren bir dizi << işleci işlevini tanımlar. Örneğin, önceki kod listesinden tüm değişkenleri şu şekilde çıktırabiliriz:*
+[source,java]
+----
+std::cout  
+<< s   << std::endl  
+<< i   << std::endl  
+<< l   << std::endl  
+<< ui  << std::endl  
+<< ul  << std::endl  
+<< f   << std::endl  
+<< d   << std::endl  
+<< ld  << std::endl  
+<< b   << std::endl  
+<< ptr << std::endl;
+----
+
+== stringlerde input ve output
+
+  
+*<String> header dosyasında tanımlanan std : : string sınıfı, bir akıma / dize dizelerini girip çıkarmaya izin veren >> ve << operatörlerini tanımlar. İşte basit bir örnek:*
+[source,java]
+----
+#include <iostream>   
+#include <string>  
+    …  
+std::string s;  
+cin >> s;  
+std::cout << "string : " << s << std::endl;
+----
+
+*>> operatörünün tek bir kelimeyi girdiğini, yani ilk boşluk karakterinde durduğunu unutmayın. Bir metnin tamamını girmek isterseniz bunun yerine std : : getline () işlevini kullanmalısınız. Bu işlev iki parametre alır:*
+
+. *Girdi almak istediğiniz girdi akışı.*
+. *Değerini depolamak istediğiniz std: :string nesnesi.*
+
+*Aşağıdaki örnek std : : getline () işlevinin nasıl kullanılacağını göstermektedir. Kod pasajı, kullanıcının tam adını ve adresini girmesini sağlar.*
+[source,java]
+----
+std::string isim;  
+std::cout << "tam isim: ";  
+std::getline(std::cin, isim);  
+
+std::string adres;  
+std::cout << "tam adres: ";  
+std::getline(std::cin, adres);  
+
+std::cout   
+<< isim << std::endl  
+<< adres << std::endl;
+----
+*Çıktı*
+[source,java]
+----
+C:\Users\mehmetcane\CLionProjects\mehmetproje\cmake-build-debug\mehmetproje.exe
+tam isim:mehmetcan karabulut    //klayveden yazılan
+ mehmetcan karabulut            //girdi
+tam adres:kocaeli umuttepe      //klavyeden yazılan
+ kocaeli umuttepe               //girdi
+ 
+mehmetcan karabulut             //çıktı
+kocaeli umuttepe                //çıktı
+
+Process finished with exit code 0   // return 0
+----
+  
+*Istream ve ostream sınıfları, tüm temel türler için girdi ve çıktıları destekler, ancak tabii ki kendi özel sınıflarınız için herhangi bir özgün desteğe sahip değildirler. Örneğin, bir nokta sınıfı tanımlarsanız, nokta nesnelerini bir akışa otomatik olarak girip çıkamazsınız. Aşağıdaki kod derleyici hatalarını verecektir:*
+
+[source,java]
+----
+class nokta{
+};
+
+int main(){
+    nokta n1;
+    cout<<n1;
+
+}
+----
+
+
+*error: no match for 'operator<<' (operand types are 'std::ostream {aka std::basic_ostream<char>}' and 'nokta')*
+
+  
+*İyi haber, özel sınıflar için akış girişi / çıktısını desteklemek için özel operatör >> ve operatör << işlevlerini kolayca tanımlayabilmenizdir. Teknikler deyimseltir, yani bir sınıf türü için >> operatörü ve << operatörünü nasıl tanımlayacağınızı öğrendikten sonra, sözdizimi diğer tüm sınıf türleri için temelde aynıdır.  Tam bir örnek görelim. Aşağıdaki basit nokta sınıfını desteklemek için akış G / Ç'yi genişletmek istediğinizi düşünelim (basitlik için x ve y veri üyelerinin herkese açık olduğunu unutmayın):*
+
+[source,java]
+----
+class nokta
+{
+public:
+    int x, y;
+};
+----
+  
+Bu sınıf göz önüne alındığında, aşağıdaki gibi özel bir operatör >> işlevi tanımlayabilirsiniz:
+[source,java]
+----
+std::istream & operator >> (std::istream & is, nokta & n)
+{
+    is >> n.x >> n.y;
+    return is;
+}
+----
+*Bağzı önemli hususlar ;*
+
+. *Metot, operatör >> olarak adlandırılmalıdır. Bu, C ++'da operatör aşırı yüklemeye bir örnektir, böylece kendi özel tiplerinizi desteklemek için standart operatörlerin anlamını genişletebilirsiniz.*
+
+. *Metot iki parametre almalıdır. İlk parametre bir std :: istream referansı olmalı ve değerlerin elde edileceği girdi akışını temsil etmektedir (örn. Std :: cin). İkinci parametre burada bir nokta referansdır ve akıştan girdi ile doldurulacak nesneyi temsil eder.*
+
+. *Metodun içinde, istream nesnesini tıpkı normal kodda std :: cin gibi kullanıyoruz. Özellikle, x ve y tamsayı değerlerini ayrı ayrı elde ederiz.*
+
+. *Metot, referans olarak bir std :: istream nesnesi döndürmelidir. Bu, istemci kodunun >> operatörünü kademeli olarak kullanmasına izin verir. Örneğin, istemci kodu kullanıcının iki nokta nesnesini aşağıdaki gibi girmesini isteyebilir:*
+[source,java]
+----
+nokta n1, n2;  
+std::cout << "iki nokta girin ";  
+std::cin >> n1 >> n2;
+----
+
+*Benzer şekilde, << metodunu aşağıdaki gibi özel bir operatör tanımlayabilirsiniz:*
+[source,java]
+----
+std::ostream & operator << (std::ostream & os, const nokta & n)  {  
+     os << "[" << n.x << "," << n.y << "]";  
+return os;  
+}
+----
+
+. *Metot operatör << olarak adlandırılmalıdır.*
+
+. *İşlev iki parametre almalıdır. İlk parametre bir std :: ostream referansında olmalı ve değerlerin çıktılacağı çıkış akışını temsil etmektedir (ör. Std :: cout). İkinci parametre burada bir const noktası referansını ve akışa çıkılacak nesneyi temsil eder.*
+
+. *metodun içinde ostream'i normal kodda std :: cout kullandığımız gibi kullanıyoruz. Özellikle noktayı [x, y] biçiminde çıktıyoruz.*
+
+. *Metot, referans olarak bir std :: ostream nesnesi döndürmelidir. Bu, istemci kodunun << operatörünü kademeli olarak kullanmasına izin verir. Örneğin, istemci kodu iki nokta nesnesi şu şekilde çıktılar:*
+[source,java]
+----
+std::cout  
+<< "Noktalar :" << std::endl  
+<< n1 << std::endl  
+<< n1 << std::endl;
+----
+
+= Manipülatörler
+
+*Çıktının bir akışta gösterilme biçimini biçimlendirebilirsiniz. Örneğin, görüntülendiğinde bir değerin minimum genişliğini ve o alan genişliğinde değerin sola hizalı mı yoksa sağa hizalı mı olacağını belirtebilirsiniz.Akış biçimlendirmesini kontrol etme şekliniz manipülatörler kullanmaktır. Manipülatörler arzu ettiğiniz biçimlendirme etkisini elde etmek için akıma gönderdiğiniz önceden tanımlanmış nesnelerdir. Bir manipülatörün en basit örneği std : : endl olup, akımın bir satır sonu karakteri çıkarmasını söyler.*
+[source,java]
+----
+std::cout << "Hello world" << std::endl;
+----
+*Diğer bir basit örnek, dahili tamponu fiziksel cihaza (örn. Konsol) hemen akıtmasını söyleyen std : : flush'tur. Hata ayıklama mesajınızın hemen görüntülenmesini sağladığı için (ör. Program daha sonra kilitlenmeden önce) hata ayıklama bilgilerini görüntülüyorsanız, bu yararlıdır:*
+[source,java]
+----
+std::cout << "Hata mesajı,x in değeri " << x << std::flush;
+----
+*Std : : endl ve std : : flush gibi manipülatörler herhangi bir parametre kullanmazlar ve  başlık dosyasında tanımlanırlar. Parametrelerini alan diğer manipülatörler vardır ve bunlar  başlık dosyasında tanımlanmıştır. Basit bir örnek, akış üzerinde görüntülenen bir sonraki değer için minimum alan genişliğini ayarlayan std : : setw'dir. Parametrelendirilmiş manipülatörleri kullanmak için kodunuza  başlık dosyasını eklemelisiniz (tabii ki  de dahil):*
+[source,java]
+----
+#include <iomanip>    // Parametre alan manipülatörleri kullanmak için gerekli.  
+#include <iostream>   // Genel i/o.  
+    …  
+std::cout << std::setw(10) << -123.45 << std::endl;
+----
+*Aşağıdaki gösterimler, bu biçimlendirme efektlerinin nasıl elde edileceğini göstermektedir*
+
+. *Alan genişliğini ayarlama.*
+. *Bir alan genişliğin için değer ayarlama.*
+. *Kayan nokta değerlerini biçimlendirme.*
+. *Ek çeşitli biçimlendirme teknikleri.*
+
+== Çıktı Biçimlendirme
+
+*Bir değer için minimum alan genişliği belirlerseniz, değer varsayılan olarak sağa yaslanmış olur. Gerekçelendirmeyi kontrol altına almak için std : : left ve std : : right manipülatörlerini aşağıdaki gibi kullanın*
+[source,java]
+----
+std::cout << std::left << std::setw(10) << "hello" << "world" << std::endl;  
+std::cout << std::right << std::setw(10) << "hello" << "world" << std::endl;
+----
+
+*setw metodu kendisinden sonraki ilk kelimeye uygulanır.Yani kodun ilk satırında std: :left manipülatörü kullanılmış.demekki setw metodu hello kelimesini sol tarafa yasliyacak sonra 10 birimlik boşluk bırakıp world kelimesini yazacaktır.ikinci satırda ise std: : right manipülatörünü görüyoruz.Buda demek oluyorki setw metodu önce 10 birim boşluk bırakacak sonra , cout ile hello kelimesini bastıracak,ardından world kelimesini yazacaktır.*
+
+*Çıktı :*
+[source,java]
+----
+C:\Users\mehmetcane\CLionProjects\mehmetproje\cmake-build-debug\mehmetproje.exe
+hello     world
+     helloworld
+
+Process finished with exit code 0
+----
+
+
+
+
+
+
+
+
+
+
+
