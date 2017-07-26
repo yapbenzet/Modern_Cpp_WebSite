@@ -1,0 +1,82 @@
+== Referanslar
+
+Referanslar bir değişkenin takma adı gibi davranan değişkenlerdir.
+
+Referanslar & işareti ile kullanılır. 
+
+[source,C++]
+----
+
+int a = 5; //normal int
+
+int &b = a; //int degiskene referans eden referans
+----
+
+Referanslar, referans ettikleri değişkenler gibi davranırlar. Bir tür takma ad gibi. Referansla yapılan her değişiklik normal değişkeni de etkiler.
+
+[source,C++]
+----
+#include <iostream> 
+int main()
+{    
+    int value = 5; // normal integer    
+    int &ref = value; // degiskene referanss   
+    value = 6; // value simdi 6 oldu    
+    ref = 7; // vaue simdi 7 oldu     
+    std::cout << value; // prints 7    
+    ++ref;    
+    6std::cout << value; // prints 8     
+    return 0;
+    
+}
+----
+
+*  Referanslar başlangıçta bir değer ile tanımlanmalı
+
+[source,C++]
+----
+int value = 5;
+int &ref = value; // uygun referans
+int &invalidRef; // bir seyleri referans etmesi gerekiyor.
+
+
+int &ref2 = 19; //Yanlis bir referans tanimlamasi
+----
+
+*  Referanslar başka değişkene atanamaz
+
+Tanımlandıktan sonra referansın referans ettiği değişken değiştirilemez.
+
+*  Fonksiyon parametresi olarak referans
+
+Referanslar en çok fonksiyonlarda kullanılır. Referans takma isim olarak davrandığı ve değişkenin içeriğini kopyalamadığı için daha performanslıdır.
+
+*  Fonksiyona referans olarak gönderilmiş değişkenler fonksiyon içerisinde değiştirilebilir.
+
+[source,c++]
+----
+#include <iostream> 
+//ref degiskene referans edecektir. Kopyalama olmaz
+void Degistir(int &ref)
+{	
+    ref = 6;
+    
+} 
+int main()
+{	
+    int n = 5; 	
+    std::cout << n << '\n'; 	
+    
+    Degistir(n); // Arguman referans olmak zorunda degildir.
+    std::cout << n << '\n';	
+    return 0;
+    
+}
+----
+
+Programın çıktısı:
+
+----
+5
+6
+----
