@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/ozden/CLionProjects/template_class_1/Dizi.h
+assert.h
+-
+
+C:/Users/ozden/CLionProjects/template_class_1/main.cpp
+iostream
+-
+Dizi.h
+C:/Users/ozden/CLionProjects/template_class_1/Dizi.h
+

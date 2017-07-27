@@ -51,7 +51,7 @@ const T& max(const T& x, const T& y){
 
 ==== Fonksiyon Şablonlarının Kullanımı
 
-Template fonksiyonların kullanımı diğer fonksiyonlarla aynıdır. Aşağıdaki örnekte gösterilmektedir:
+Template fonksiyonların kullanımı diğer fonksiyonlarla aynıdır.Aşağıdaki örnekte gösterilmektedir:
 
 [source, c++]
 ----
