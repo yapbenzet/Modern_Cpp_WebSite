@@ -1,0 +1,3 @@
+C:/Users/faruk/CLionProjects/deque2/cmake-build-debug/CMakeFiles/deque2.dir
+C:/Users/faruk/CLionProjects/deque2/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/faruk/CLionProjects/deque2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
