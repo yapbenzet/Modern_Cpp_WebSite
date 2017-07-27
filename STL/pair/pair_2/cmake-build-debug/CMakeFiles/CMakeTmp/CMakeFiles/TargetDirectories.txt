@@ -1,3 +1,0 @@
-C:/Users/ozden/CLionProjects/pair_2/cmake-build-debug/CMakeFiles/CMakeTmp/CMakeFiles/cmTC_1a776.dir
-C:/Users/ozden/CLionProjects/pair_2/cmake-build-debug/CMakeFiles/CMakeTmp/CMakeFiles/edit_cache.dir
-C:/Users/ozden/CLionProjects/pair_2/cmake-build-debug/CMakeFiles/CMakeTmp/CMakeFiles/rebuild_cache.dir
