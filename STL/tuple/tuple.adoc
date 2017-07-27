@@ -1,0 +1,101 @@
+# STL ( Standard Template Library )
+
+# Tuple
+
+Tuple pair'e çok benzer. Aralarındaki tek fark, tuple sadece iki değişken tutmak zorunda değildir. Tuple sınırsız sayıda değişken tutabilir.
+
+Kullanımı şu şekildedir.
+
+----
+#include <tuple> // Kullanmak icin koda eklenmesi gereken header
+
+std::tuple<degisken_turleri...> xx(degiskenler...);
+----
+
+Örnek:
+
+----
+
+std::tuple<int, char, std::string> foo(12, 'A', "ornek");
+
+----
+
+=== make_tuple 
+
+Tuple üretmek için make_tuple fonksiyonu da rahatlıkla kullanılabilir.
+
+----
+class foo;
+struct bar;
+
+
+auto xx = make_tuple(12, "abc", 4.5, foo, bar);
+----
+
+Ya da fonksiyondan tuple döndürülebilir.
+
+----
+
+tuple<int,char> foo(int x, char y)
+{
+    return {x, y}; C++17 ile birlikte kullanılabilir.
+    
+    return std::make_tuple(x, y); // Her zaman gecerlidir.
+}
+
+----
+
+Tuple içerisindeki elemanlara std::get fonksiyonuyla erişilebilir. 
+
+Örneğin:
+
+----
+
+std::tuple<int, char, std::string> foo(12, 'A', "ornek");
+
+auto x = std::get<0>(foo);
+auto y = std::get<1>(foo);
+
+std::cout << std::get<0>(foo) << "  " << std::get<2>(foo) << "\n";
+----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
