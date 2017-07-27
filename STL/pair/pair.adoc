@@ -1,0 +1,153 @@
+==== Pair
+
+Pair konteyner, iki veri öğesinden veya nesneden oluşan <utility> başlığında tanımlanan basit bir kapsayıcıdır.
+
+* İlk öğe 'birinci', ikinci öğe 'ikinci' olarak, sıralama sabittir (birinci, ikinci).
+
+* Eş türde farklı olabilecek iki değeri birleştirmek için kullanılır. Eş, iki heterojen nesneyi tek bir birim olarak depolamanın bir yolunu sağlar.
+
+* Eş, atanabilir, kopyalanabilir ve karşılaştırılabilir. Bir harita veya hash_map'da ayrılan nesnelerin dizisi, varsayılan olarak 'ilk' öğelerinin 'ikinci' değer nesneleri ile ilişkilendirilmiş benzersiz anahtar olduğu varsayılan 'çifti' türündedir.
+
+* Elemena erişmek için değişken ismini ve bunu izleyen nokta operatörünü, ardından birinci veya ikinci anahtar kelimeyi kullanıyoruz.
+
+
+**Tanımı:**
+
+----
+pair(veri_tipi_1,veri_tipi_2) pair_ismi;
+----
+
+**Kullanımı:**
+
+[source,C++]
+----
+#include <iostream>
+#include <utility>
+
+int main()
+{
+    pair<int,char> Pair1;
+    Pair1.first=100;
+    Pair1.second='A';
+    
+    std:cout<<Pair1.first<<std::endl;
+    std::cout<<Pair1.second<<std::endl;
+    
+}
+----
+
+**İlk değerle de başlatılabilir**
+
+----
+pair(veritipi_1,veritipi_2) pair_ismi(deger1,deger2);
+----
+
+[source,C++]
+----
+pair(char,,nt Nokta(A,100);
+----
+
+
+----
+pair  p1;         //Varsayılan
+pair  p2(1, 'a');  //farklı veri tipiyle başlatma
+pair  p3(1, 10);   //Aynı veri tipiyle başlatma
+pair  p4(p3);    //p3 pairini p4'e kopyalar.
+----
+
+
+**Pair Üye fonksiyonları**
+
+* make_pair(): Tür belirtimi yapmadan değerleri direkt belirtmenizi sağlar.
+
+----
+Pair_ismi = make_pair (deger1,deger2);
+----
+
+* Operatorler(=,==,!=,>=,\<=): 
+1- Assign(atama) Operatörü(=): 
+  
+----
+pair& operator= (const pair& pr);
+----
+
+Bu pr öğesini pair nesnesinin yeni içeriği olarak atar. Birinci değere pr ilk değeri atanır ve ikinci değere pr ikinci değeri atanır.
+        
+2- Pair karşılaştırma (==) operatörü: Verilen iki pairin pair 1 ve pair 2 olduğunu söylerseniz, karşılaştırma işleci, bu iki grubun ilk değerini ve ikinci değerini karşılaştırır, yani pair1.first, pair2.first'e eşitse veya etmezse VE eğer  pair1.first Pair2.second'a eşit veya değil.
+
+3-Pair Logic Operator(<,>,\<=,>=): Verilen iki pair için kullanılabilir.
+
+
+**Ornek:**
+
+----
+#include <iostream>
+#include <utility>
+#include <vector>
+#include <algorithm>
+#include <string>
+ 
+int main()
+{
+    std::vector<std::pair<int, std::string>> v = { {2, "baz"},{2, "bar"},{1, "foo"} };
+    std::sort(v.begin(), v.end());
+    for(auto p: v) {
+        std::cout << "(" << p.first << "," << p.second << ")\n";
+    }
+}
+----
+
+**Ekran Çıktısı:**
+
+----
+(1,foo)
+(2,bar)
+(2,baz)
+----
+
+**std::get(std:pair)**
+
+Pair'in içindeki değerleri çekmek için kullanılır.
+
+**Ornek**:
+
+[source,C++]
+----
+#include <iostream>
+#include <utility>
+
+int main()
+{
+    auto p = std::make_pair(1, 3.14);
+    std::cout << '(' << std::get<0>(p) << ", " << std::get<1>(p) << ")\n";
+    std::cout << '(' << std::get(p) << ", " << std::get<double>(p) << ")\n";
+}
+----
+
+**Ekran Çıktısı:**
+
+----
+(1, 3.14)
+(1, 3.14)
+----
+
+**Özellik**
+
+C++17 ile;
+
+----
+template<class T1, class T2>  
+pair(T1, T2) -> pair<T1, T2>;
+----
+
+Yukarıdaki bu kullanım ile, veri türünü otomatik olarak çıkartabilir.
+
+
+ 
+
+
+
+
+
+
+        
