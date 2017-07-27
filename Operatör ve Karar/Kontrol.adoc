@@ -1,0 +1,533 @@
+
+== Kontrol 
+
+= C++ Operatörleri
+Operatörler çeşitli matematik işlemleri, sadece matematik işlemleri olmamakla birlikte, işlemler yapan semboller ve bazı anahtar kelimelerdir.
+
+Operatörler farklı önceliklere sahiptir. Buna göre bir ifade içerisinde yer alan farklı operatörlerin işlemleri işlem önceliğine göre sırayla yapılır.
+
+Operatörler işleme girecek madde sayısı bakımından ve hangi yöne doğru işleneceğine göre birbirinden ayrılabilir. Bazı operatörler bir nesne ile etkileşime girerken bazı operatörler iki nesne ile etkileşime girer. Aynı operatör hem tek hem de iki nesne ile etkileşime girerek farklı işlemler gerçekleştirebilir.
+Örneğin:
+
+[source,C++]
+----
+int m = -5; // Negatif sayi
+
+int a = 9 - 3; // Cikarma islemi
+----
+
+== Atama Operatörleri
+
+Bir değişkene aritmetik ifade atamak için kullanılan operatörlerdir.  
+
+|====
+| Operatör | Açıklama | örnek | Sonuç
+| = | Atama | x = 4 | x = 4
+| += | Ekleyerek Atama | x += 2 | x = x+2
+| -= | Çıkartarak Atama | x -= 5 | x = x-5
+| *= | Çarparak Atama | x *= 6 | x = x*6
+
+| /= | Bölerek Atama | x /= 8 | x = x/8
+
+| %= | Bölüp, Kalanını Atama | x %= 3 | x = x%3
+|====
+
+Operatörler değişkenler üzerinde matematiksel ve karşılaştırma işlemleri yapar.
+
+== Aritmetik Operatörler
+
+Temel aritmetik işlemleri gerçekleştiren operatörlerdir.  
+
+|====
+| Operatör | Açıklama | Örnek | Sonuç
+| + | Toplama | 13+6 | 19
+| - | Çıkarma | 21-1 | 20
+| * | Çarpma | 8*2 | 16
+| / | Bölme | 36/4 | 9
+| % | Artık Bölme | 22%3 | 1
+|====
+
+== Karşılaştırma Operatörleri
+
+Sayısal değerleri veya karakterleri karşılaştırmak için kullanılan operatörlerdir.  
+
+|====
+| Operatör | Açıklama | Örnek | Anlamı
+| > | Büyüktür | x > y | x, y den büyük mü?
+| < | Küçüktür | x < y | x, y den küçük mü?
+| == | Eşittir | x == y | x, y ye eşit mi?
+| >= | Büyük Eşittir | x >= y | x, y den büyük yada eşit mi?
+| \<= | Küçük Eşittir | x <= y | x, y den küçük yada eşit mi?
+
+| != | Eşit Değildir | x != y | x, y ye eşit değilse
+|====
+
+
+== Mantıksal Operatörler 
+
+Birden fazla karşılaştırma işlemi, Mantıksal Operatörler'le birleştirilerek kullanılabilir.  
+
+|====
+| Operatör | Açıklama | Örnek | Anlamı
+| && | VE | x>2 && x<y | x, 2 den büyük VE y den küçük mü?
+| \|\| | VEYA | x>2 \|\| x<y | x, 2 den büyük VEYA y den küçük mü?
+
+| ! | DEĞİL | !(x>2) | x, 2 den büyük değilse
+|====
+
+== Virgül Operatörü
+
+Virgül operatörü ( ,), yalnızca bir ifadenin beklendiği yerlerde bulunan iki veya daha fazla ifadeyi ayırmak için kullanılır. İfadeler dizisi bir değer için değerlendirildiğinde, yalnızca en sağdaki ifade düşünülür.
+
+----
+a=(b=3,b+2);
+----
+
+Önce b değişkenine 3 degerini atar ve sonra a ya b+2 değişkenini atar. Yani, sonunda,a 5 değerini alır, b 3 üç değerini alır.
+
+== Bit Düzeyinde Operatörler
+  
+  
+|====
+| Operatör | Assembly Karşılığı |Açıklama
+| ``&`` | ``AND`` | AND işlemi
+| ``\|`` | ``OR`` |  OR işemi
+| ``^`` | ``XOR`` | XOR işlemi
+| ``~`` | ``NOT`` | Değil Operatörü
+| ``<<`` | ``SHL`` | Sola kaydırma 
+| ``>>`` | ``SHR`` | Sağa kaydırma
+|====  
+|====
+| Operatör | Assembly Karşılığı |Açıklama
+| ``&`` | ``AND`` | AND işlemi
+| ``\|`` | ``OR`` |  OR işemi
+| ``^`` | ``XOR`` | XOR işlemi
+| ``~`` | ``NOT`` | Değil Operatörü
+| ``<<`` | ``SHL`` | Sola kaydırma 
+| ``>>`` | ``SHR`` | Sağa kaydırma
+|====
+
+.Örnek
+[source,c++]
+----
+#include <iostream>
+
+int main() {
+    unsigned int a = 60;     // 60 = 0011 1100
+    unsigned int b = 13;     // 13 = 0000 1101
+    int c = 0;
+
+    c = a & b;             // 12 = 0000 1100
+    std::cout << "c: a&b (AND): " << c << std::endl ;
+
+    c = a | b;             // 61 = 0011 1101
+    std::cout << "c: a|b (OR): " << c << std::endl ;
+
+    c = a ^ b;             // 49 = 0011 0001
+    std::cout << "c:a^b (XOR): " << c << std::endl ;
+
+    c = ~a;                // -61 = 1100 0011
+    std::cout << "c:~a (NOT): " << c << std::endl ;
+
+    c = a << 2;            // 240 = 1111 0000
+
+    //a'yı 2 bit sola kaydırıp c'ye atar
+    std::cout << "c:a<<2:  " << c << std::endl ;
+    c = a >> 2;            // 15 = 0000 1111
+    //a'yı 2 bit sağa kaydırıp c'ye atar.
+    std::cout << "c:a>>2: " << c << std::endl ;
+    return 0;
+}
+----
+
+== Kapsam Çözümleme Operatör
+
+Operatörün sembolü "::" dir.
+
+Operatör başka bir kapsam içerisindeki bir değişkene ya da fonksiyona erişilmesini sağlar. Eğer evrensel kapsamdaki bir değişkene erişmek istiyorsak da bu operatörü kullanabiliriz. 
+
+.Örnek
+[source,c++]
+----
+#include 
+/**
+ *  Global ve lokal degisken atama
+ */
+using namespace std;
+int x{5}; // Global degisken
+int main()
+{
+    int x{10}; // Lokal degisken
+    cout << x << endl;
+    cout << ::x << endl;
+    return 0;
+}
+----
+
+Kapsam çözünürlük operatörü ile farklı ad uzaylarındaki ifadelere ulaşılabilir. Aynı zamanda sınıfların içerisinde tanımlanmış static ifadelere de kapsam çözünürlük operatörü ile ulaşılır. Örneğin std ad uzayından nesneleri kullanmak için kapsam çözünürlük operatörü kullanılır.
+
+[source,c++]
+----
+#include <iostream>
+/**
+ * Kapsam çözünürlük operatörü ile farklı ad uzayina erisim
+ */
+namespace foo
+{
+    int x;
+}
+int main()
+{
+    int x=1;
+    std::cout << "foo = "; // std ad uzayindan cout nesnesi cagrilmaktadir.
+    foo::x = 5; // Olusturulan foo ad uzayindan x nesnesine atama yapilir.
+
+    std::cout << foo::x << std::endl;
+    return 0;
+}
+----
+== Diğer Operatörler
+
+|====
+| Operatör | Tanım
+| sizeof | Değişkenin kapladığı alanı döndürür. Örneğin, sizeof(a), a int bir değer ise 4 döndürür
+| Durum ? X : Y | Eğer durum doğru ise X değeri yanlış ise Y değeri döner
+| . (nokta) ve \-> (ok işareti) | Sınıf, struct ve unionlardaki elemanları göstermek için kullanılır
+| & | Değişkenin adresini döndürür. Örneğin &a; a değişkeninin gerçek adresini verir.
+| * | Değişkenin işaretçisidir. Örneğin *a; a değişkeninin işaretçisidir.
+|====
+
+
+== Karar Bildirimleri
+.*If-Else*
+
+if sözcüğü eğer anlamına gelmektedir. "Eğer belirtilen parametre doğruysa if'ten sonraki bloktaki fonksiyonları gerçekleştir. Doğru değilse if ten sonraki bloğu atla (yok say)" uygulanır. If komutundan sonra ; (noktalı virgül) konulmamaktadır.
+
+Genel kullanımı:
+
+[source,c++]
+----
+
+if (koşul){
+    //Koşul doğru ise çalışır.
+}
+Else if(koşul2){
+    //Üstteki koşul sağlanmamış ve koşul2 doğru ise çalışır.
+}
+else{
+    //Koşul false dönerse çalışıcak olan blok
+}
+
+----
+
+.Örnek
+[source,c++]
+----
+#include 
+/**
+ * Bir sayinin pozitif negatifligini söylenmektedir.
+ */
+using namespace std;
+int main()
+{
+    int sayi;
+    cin >> sayi;
+    if(sayi > 0) //EĞER sayı sıfırdan büyük ise pozitiftir.
+        cout << "Sayi pozitif";
+    else if(sayi < 0) //DEĞİLSE EĞER sıfırdan küçükse negatiftir.
+        cout << "Sayi negatif";
+    else cout << "Sifir"; // Hiçbiri DEĞİLSE sıfırdır.
+    return 0;
+}
+----
+
+.Örnek
+[source,c++]
+----
+#include <iostream>
+#include <string>
+/**
+ * Depremin yikiciligini belirtmektedir.
+ */
+using namespace std;
+int main()
+{
+    cout << "Enter a magnitude on the Richter scale: ";
+    double richter;
+    cin >> richter;
+
+    if (richter >= 8.0)
+        cout << "Most structures fall\n";
+    else if (richter >= 7.0)
+        cout << "Many buildings destroyed\n";
+    else if (richter >= 6.0)
+        cout << "Many buildings considerably damaged, "
+             << "some collapse\n";
+    else if (richter >= 4.5)
+        cout << "Damage to poorly constructed buildings\n";
+    else if (richter >= 3.5)
+        cout << "Felt by many people, no destruction\n";
+    else if (richter >= 0)
+        cout << "Generally not felt by people\n";
+    else
+        cout << "Negative numbers are not valid\n";
+    return 0;
+}
+----
+
+
+.Örnek
+[source,c++]
+----
+#include <iostream>
+#include <string>
+
+/**
+ * Gelire göre vergi hesaplamasi yapilmaktadir.
+ */
+using namespace std;
+int main()
+{
+    const double SINGLE_LEVEL1 = 21450.00;
+    const double SINGLE_LEVEL2 = 51900.00;
+
+    const double SINGLE_TAX1 = 3217.50;
+    const double SINGLE_TAX2 = 11743.50;
+
+    const double MARRIED_LEVEL1 = 35800.00;
+    const double MARRIED_LEVEL2 = 86500.00;
+
+    const double MARRIED_TAX1 = 5370.00;
+    const double MARRIED_TAX2 = 19566.00;
+
+    const double RATE1 = 0.15;
+    const double RATE2 = 0.28;
+    const double RATE3 = 0.31;
+
+    double income;
+    double tax;
+
+    cout << "Please enter your income: ";
+    cin >> income;
+
+    cout << "Please enter s for single, m for married: ";
+    string marital_status;
+    cin >> marital_status;
+
+    if (marital_status == "s")
+    {
+        if (income <= SINGLE_LEVEL1)
+            tax =  RATE1 * income;
+        else if (income <= SINGLE_LEVEL2)
+            tax = SINGLE_TAX1
+                  + RATE2 * (income - SINGLE_LEVEL1);
+        else
+            tax = SINGLE_TAX2
+                  + RATE3 * (income - SINGLE_LEVEL2);
+    }
+    else
+    {
+        if (income <= MARRIED_LEVEL1)
+            tax =  RATE1 * income;
+        else if (income <= MARRIED_LEVEL2)
+            tax = MARRIED_TAX1
+                  + RATE2 * (income - MARRIED_LEVEL1);
+        else
+            tax = MARRIED_TAX2
+                  + RATE3 * (income - MARRIED_LEVEL2);
+    }
+    cout << "The tax is $" << tax << "\n";
+    return 0;
+}
+----
+
+.Örnek
+[source,c++]
+----
+#include <iostream>
+#include <string>
+/**
+ * Girilen sayinin ingilizce karsiligini yazmaktadir.
+ */
+using namespace std;
+string digit_name(int n)
+{
+    if (n == 1) return "one";
+    if (n == 2) return "two";
+    if (n == 3) return "three";
+    if (n == 4) return "four";
+    if (n == 5) return "five";
+    if (n == 6) return "six";
+    if (n == 7) return "seven";
+    if (n == 8) return "eight";
+    if (n == 9) return "nine";
+    return "";
+}
+string teen_name(int n)
+{
+    if (n == 10) return "ten";
+    if (n == 11) return "eleven";
+    if (n == 12) return "twelve";
+    if (n == 13) return "thirteen";
+    if (n == 14) return "fourteen";
+    if (n == 15) return "fifteen";
+    if (n == 16) return "sixteen";
+    if (n == 17) return "seventeen";
+    if (n == 18) return "eighteen";
+    if (n == 19) return "nineteen";
+    return "";
+}
+string tens_name(int n)
+{
+    if (n == 2) return "twenty";
+    if (n == 3) return "thirty";
+    if (n == 4) return "forty";
+    if (n == 5) return "fifty";
+    if (n == 6) return "sixty";
+    if (n == 7) return "seventy";
+    if (n == 8) return "eighty";
+    if (n == 9) return "ninety";
+    return "";
+}
+string int_name(int n)
+{
+    int c = n; // The part that still needs to be converted
+    string r; // The return value
+
+    if (c >= 1000)
+    {
+        r = int_name(c / 1000) + " thousand";
+        c = c % 1000;
+    }
+    if (c >= 100)
+    {
+        r = r + " " + digit_name(c / 100) + " hundred";
+        c = c % 100;
+    }
+    if (c >= 20)
+    {
+        r = r + " " + tens_name(c / 10);
+        c = c % 10;
+    }
+    if (c >= 10)
+    {
+        r = r + " " + teen_name(c);
+        c = 0;
+    }
+    if (c > 0)
+        r = r + " " + digit_name(c);
+    return r;
+}
+int main()
+{
+    int n;
+    cout << "Please enter a positive integer: ";
+    cin >> n;
+    cout << int_name(n);
+    return 0;
+}
+----
+
+
+
+.*Switch Case*
+
+Birçok değerin karşılaştırılması gerektiğinde ve yalnızca birinin gerçekleştirilmesi istendiğinde switch komutunu kullanılır.
+
+Genel kullanımı:
+
+[source,c++]
+----
+switch (Kontrol Değeri)
+{
+ case Sabit1:
+    //koşul uyuyor ise çalışacak kodlar
+    break;
+ case Sabit2:
+    //Koşul uyuyor ise çalışacak kodlar
+    break;
+ default:
+    //Hiçbir koşul uymazsa çalışacak olan kodlar.
+    break;
+}
+----
+
+.Örnek
+[source,C++]
+----
+#include <iostream>
+using namespace std; 
+int main()
+{ 	
+int sayi; 
+cout << "1-7 arasinda sayi giriniz: "; 	
+cin >> sayi; 	
+switch (sayi)	
+{	
+       case 1: 
+       cout << "Pazartesi" << endl;		
+       break; 	
+       case 2: 
+       cout << "Sali" << endl;
+       break; 	
+       case 3: 
+       cout << "Carsamba" << endl;		
+       break; 	
+       case 4: 
+       cout << "Persembe" << endl;		
+       break; 	
+       case 5: 
+       cout << "Cuma" << endl;		
+       break; 	
+       case 6: 
+       cout << "Cumartesi" << endl;		
+       break; 	
+       case 7:
+       cout << "Pazar" << endl;		
+       break; 	
+       default: 
+       cout << "Girilen sayi 1-7 araliginda degildi." << endl;
+       break;	
+    
+} 	
+system("pause");	
+return 0;
+}
+
+----
+
+
+
+.*Ternary Operatör*
+
+If yapısının görevini üstlenmektedir.
+
+Genel kullanımı:
+[source,]
+----
+koşul ? doğru_ise : yanlış_ise
+----
+
+.Örnek
+[source,c++]
+----
+#include <iostream>
+#include <string>
+/**
+ * Girilen 2 sayidan büyük olani yazmaktadir.
+ */
+using namespace std;
+int max(int sayi1, int sayi2)  {
+    return (sayi1>sayi2)? sayi1 : sayi2;
+}
+int main()
+{
+    int x, y;
+    cout << "2 sayi giriniz ";
+    cin >> x >> y;
+    cout << max(x, y);
+    return 0;
+}
+----
+Yukarıdaki örnekte eğer sayi1, sayi2'den büyükse sayi1'i döndür, değilse sayi2'yi döndür işlemi yapılmıştır.
+

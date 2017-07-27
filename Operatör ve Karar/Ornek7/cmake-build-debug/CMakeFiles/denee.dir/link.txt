@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2017.2\bin\cmake\bin\cmake.exe" -E remove -f CMakeFiles\denee.dir/objects.a
+C:\PROGRA~2\MINGW-~1\I686-7~1.0-P\mingw32\bin\ar.exe cr CMakeFiles\denee.dir/objects.a @CMakeFiles\denee.dir\objects1.rsp
+C:\PROGRA~2\MINGW-~1\I686-7~1.0-P\mingw32\bin\G__~1.EXE -g   -Wl,--whole-archive CMakeFiles\denee.dir/objects.a -Wl,--no-whole-archive  -o denee.exe -Wl,--out-implib,libdenee.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\denee.dir\linklibs.rsp
