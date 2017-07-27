@@ -1,0 +1,185 @@
+==== Sınıf Erişim Niteleyiciler
+
+Veri gizleme nesneye yönelik programlamanın önemli özelliklerinden biridir. Program fonksiyonlarının sınıf elemanlarına doğrudan erişmeyi engeller. 3 adet erişim niteleyici vardır, bunlar private, public ve protected olarak adlandırılır.
+
+Bir sınıfta birden fazla erişim niteleyici bulunabilir. Erişim niteleyici kullanılmadığı durumda varsayılan olarak private olurlar.
+
+[source,c++]
+----
+class Niteleyici {
+
+   public:
+
+   // public elemanlar
+
+   protected:
+
+   // protected elemanlar
+
+   private:
+
+   // private elemanlar
+
+};
+----
+
+===== Public Üyeler
+Public üyeler sınıfın dışında da kullanılabilir. Public değişkenlerin değerleri üye fonksiyon kullanmadan da değiştirilebilir veya yazdırılabilir.
+
+[source,c++]
+----
+using namespace std;
+
+class Dikdortgen{
+public:
+    int uzunluk;
+    int genislik;
+    void setUzunluk(int u);
+    void setGenislik(int g);
+};
+
+void Dikdortgen::setUzunluk(int u) {
+    uzunluk = u;
+}
+
+void Dikdortgen::setGenislik(int g) {
+    genislik = g;
+}
+
+int main() {
+
+    Dikdortgen kutu;
+
+    kutu.setGenislik(5);
+    kutu.uzunluk=10;    ///Hata vermez. Bu atama şekli sadece public elemanlara yapılabilir
+
+    return 0;
+}
+----
+
+===== Private Üyeler
+Private bir üye fonksiyon veya değişkene sınıfın dışından erişilmesi mümkün değildir. Yalnızca sınıftan veya friend fonksiyonlarla private üyelere erişilebilir. Varsayılan olarak bir sınıfın tüm elemanları private üye olacaktır, örneğin aşağıdaki örnekte uzunluk değişkeni herhangi bir niteleyici altında kalmadığı için private üye olacaktır.
+
+[source,java]
+----
+class Dikdortgen{
+    int uzunluk; /// private üye
+public:
+    int genislik;
+    void setUzunluk(int u);
+    void setGenislik(int g);
+};
+----
+
+Yukarıdaki özellikleri kapsayan bir örnek hazırlamak istersek şöyle bir program yazabiliriz: 
+
+[source,c++]
+----
+using namespace std;
+
+class Dikdortgen{
+public:
+    void setUzunluk(int u);
+    void setGenislik(int g);
+    int getUzunluk();
+    int getGenislik();
+    int getAlan();
+private:
+    int uzunluk;
+    int genislik;
+};
+
+/// Üye Fonksiyonların Tanımlamaları
+void Dikdortgen::setUzunluk(int u) {
+    uzunluk = u;
+}
+
+void Dikdortgen::setGenislik(int g) {
+    genislik = g;
+}
+
+int Dikdortgen::getUzunluk() {
+    return uzunluk;
+}
+
+int Dikdortgen::getGenislik(){
+    return genislik;
+}
+
+int Dikdortgen::getAlan(){
+    return uzunluk*genislik;
+}
+
+int main() {
+
+    Dikdortgen kutu;
+
+    kutu.setGenislik(5);
+    //kutu.uzunluk=10; ///Hata: Private olan bir elemana doğrudan erişilemez.
+    kutu.setUzunluk(10);/// Üye fonksiyon kullanılmalıdır
+
+    cout << "kutu uzunlugu: " << kutu.getUzunluk() << endl;
+    //cout << "kutu genisligi: " << kutu.genislik << endl; ///Hata: Private elemana doğrudan erişilemez
+    cout << "kutu genisligi: " << kutu.getGenislik() << endl;/// Üye fonksiyon kullanılmalıdır
+
+    cout << "kutu alani: " << kutu.getAlan() << endl ;
+
+    return 0;
+}
+----
+
+Çıktı:
+
+----
+kutu uzunlugu: 10
+kutu genisligi: 5
+kutu alani: 50
+----
+
+===== Protected Üyeler
+Protected üyeler private üyelere oldukça benzerdir, tek fark protected üyelere çocuk sınıflardan yani türetilmiş sınıflardan erişilebilir.
+
+Türetilmiş sınıflar ve kalıtım konusundan daha sonra bahsedilecek. Şimdilik aşağıda Dikdortgen sınıfından türetilmiş turetilmisDikdortgen sınıfını inceleyebilirsiniz.
+
+[source,c++]
+----
+using namespace std;
+
+class Dikdortgen{
+protected:
+    int uzunluk;
+    int genislik;
+};
+
+class turetilmisDikdortgen:Dikdortgen{///Türetilmiş(çocuk) sınıf
+public:
+    void setUzunluk(int u);
+    int getUzunluk();
+};
+
+/// Çocuk Sınıfın Üye Fonksiyon Tanımlamaları
+void turetilmisDikdortgen::setUzunluk(int u) {
+    uzunluk = u;
+}
+
+int turetilmisDikdortgen::getUzunluk() {
+    return uzunluk;
+}
+
+int main () {
+    turetilmisDikdortgen kutu;
+
+    ///kutu.uzunluk = 85;///Hata: Protected üyeye ana veya türetilmiş sınıf dışında erişilemez
+    kutu.setUzunluk(85);/// Üye fonksiyon kullanılmalıdır
+
+    cout << "kutu uzunlugu: " << kutu.getUzunluk() << endl ;
+
+    return 0;
+}
+----
+
+Çıktı:
+
+----
+kutu uzunlugu: 85
+----

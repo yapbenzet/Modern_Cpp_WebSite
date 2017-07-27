@@ -1,0 +1,3 @@
+C:/Users/faruk/CLionProjects/publicKalitim/cmake-build-debug/CMakeFiles/publicKalitim.dir
+C:/Users/faruk/CLionProjects/publicKalitim/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/faruk/CLionProjects/publicKalitim/cmake-build-debug/CMakeFiles/rebuild_cache.dir
