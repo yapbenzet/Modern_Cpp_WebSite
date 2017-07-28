@@ -2,8 +2,11 @@
 #include "stdafx.h"
 #include <forward_list>
 using namespace std;
-// bu kodu visual studio projenizin içine kopyalayýn
-// örnek kod 4 : listenin istenilen bir yerine dizi ekleme
+// bu kodu visual studio projenizin iÃ§ine kopyalayin
+// Ã¶rnek kod 4 : listenin istenilen bir yerine dizi ekleme
+// Ã§ikti
+// 50 40 30 20 10
+// 50 8 6 4 2 40 30 20 10
 
 int main() {
 	forward_list<int> l1;
@@ -14,20 +17,16 @@ int main() {
 	l1.push_front(50);
 
 	for (auto i = l1.begin(); i != l1.end(); i++)
-		cout << *i << "  ";             // liste 50 40 30 20 10
+		cout << *i << "  ";                    // liste 50 40 30 20 10
 	cout << endl;
 	int a[] = { 8 , 6 , 4 , 2 };
-	l1.insert_after(l1.begin(), a, a + 4);   // 50 elemanýnýn sonrasýna [a,a+4) aralýðýný ekleme
+	l1.insert_after(l1.begin(), a, a + 4);         // 50 elemaninin sonrasina [a,a+4) araligini ekleme
 	for (auto i = l1.begin(); i != l1.end(); i++)
-		cout << *i << "  ";                  // 50 8 6 4 2 40 30 20 10
+		cout << *i << "  ";                    // 50 8 6 4 2 40 30 20 10
 	cout << endl;
 
-	// çýktý
-	// 50 40 30 20 10
-	// 50 8 6 4 2 40 30 20 10
 
-
-		getchar();
+	getchar();
 	return 0;
 }
 
