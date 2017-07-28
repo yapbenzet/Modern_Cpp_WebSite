@@ -1,0 +1,260 @@
+= Map
+
+Map, anahtar ve değerler arasındaki ilişkiyi tutar. Her anahtar bir değere sahiptir fakat bir değerin ilişkili olduğu birden fazla anahtar olabilir.
+
+.Map ve Multimap Sembolik Venn Şeması Gösterimi
+image::MapMultimap.png[]
+
+.Avantaj
+* Ekleme silme işlemleri hızlıdır.
+* Anahtar, istenilen herhangi bir türde olabilir.
+
+.Dezavantaj
+* Arama işlemleri yavaştır.
+
+
+.Örnek
+[source,c++]
+----
+#include <iostream>
+#include <iomanip>
+#include <map>
+/**
+ * Map tanimlamalari ve atama islemleri gösterilmistir.
+ */
+template<typename Map>
+void print_map(Map& m)  //Kolay yazdirma islemi
+{
+    std::cout << '{';
+    for(auto& p: m)
+        std::cout << p.first << ':' << p.second << ' ';
+    std::cout << "}\n";
+}
+//map.first: Anahtar
+//map.second: Deger
+
+struct Nokta { double x, y; };
+struct NoktaCmp {
+    bool operator()(const Nokta& lhs, const Nokta& rhs) const {
+        return lhs.x < rhs.x;
+    }
+};
+int main() {
+    // (1) Default yapici
+    std::map<std::string, int> map1;
+    map1["Bir"] = 1;
+    map1["Iki"] = 2;
+    map1["One"] = 1;
+    std::cout << "map1 = ";
+    print_map(map1);
+
+    // (2) Aralık atamali yapici
+    std::map<std::string, int> iter(map1.find("Bir"), map1.end()); 
+    //find(): Gonderilen elemani bulup döndürür.
+    //end(): Map in son elemanni döndürür.
+    std::cout << "\nAralik alinan = ";
+    print_map(iter);
+    std::cout << "map1 = ";
+    print_map(map1);
+
+    // (3) Kopyalamali yapici
+    std::map<std::string, int> copied(map1);
+    std::cout << "\nKopyalanan = ";
+    print_map(copied);
+    std::cout << "map1 = ";
+    print_map(map1);
+
+    // (4) Tasimali yapici
+    std::map<std::string, int> moved(std::move(map1));
+    //move(): Yollanani tasir.
+    std::cout << "\nTasimali = ";
+    print_map(moved);
+    std::cout << "map1 = ";
+    print_map(map1);
+
+    // (5) Liste seklinde tanimlamali yapici
+    const std::map<std::string, int> map2{
+            {"Merhaba",  100},
+            {"Dunya",   100},
+    };
+    std::cout << "\ninit = ";
+    print_map(map2);
+
+    std::map<Nokta, double, NoktaCmp> map3 = { //Struct bir anahtara sahip map
+            {{5,  -12}, 13},
+            {{3,  4},   5},
+            {{-8, -15}, 17}
+    };
+
+    for (auto p : map3)
+        std::cout << "Nokta: (" << p.first.x
+                  << ", " << p.first.y << ") Buyukluk:  "
+                  << p.second << '\n';
+
+    return 0;
+}
+----
+
+Çıktı:
+[source,]
+----
+map1 = {Bir:1 Iki:2 One:1 }
+
+Aralik alinan = {Bir:1 Iki:2 One:1 }
+map1 = {Bir:1 Iki:2 One:1 }
+
+Kopyalanan = {Bir:1 Iki:2 One:1 }
+map1 = {Bir:1 Iki:2 One:1 }
+
+Tasimali = {Bir:1 Iki:2 One:1 }
+map1 = {}
+
+init = {Dunya:100 Merhaba:100 }
+Nokta: (-8, -15) Buyukluk:  17
+Nokta: (3, 4) Buyukluk:  5
+Nokta: (5, -12) Buyukluk:  13
+----
+
+.Örnek
+[source,c++]
+----
+#include <map>
+#include <iostream>
+/**
+ * Map kopyalama ve tasima islemi yapilmistir.
+ */
+using namespace std;
+void boyutuYazdir(const map<int,int> &sayilar1,
+                   const map<int,int> &sayilar2,
+                   const map<int,int> &sayilar3)
+{
+    cout << "sayilar1: " << sayilar1.size()
+              << " sayilar2: " << sayilar2.size()
+              << " sayilar3: " << sayilar3.size() << '\n';
+}
+//size(): Boyutu dondurur.
+int main()
+{
+    map<int, int> sayilar1 {{2, 1}, {8, 5}, {5, 9},
+                              {9, 3}, {7, 1}, {6, 1}};
+    map<int, int> sayilar2;
+    map<int, int> sayilar3;
+
+    cout << "Tanimlanan:\n";
+    boyutuYazdir(sayilar1, sayilar2, sayilar3);
+
+    sayilar2 = sayilar1;
+    cout << "Kopyalanan:\n";
+    boyutuYazdir(sayilar1, sayilar2, sayilar3);
+
+    sayilar3 = move(sayilar1);
+    //move(): Yollanani tasir.
+    cout << "Tasinan:\n";
+    boyutuYazdir(sayilar1, sayilar2, sayilar3);
+}
+----
+
+Çıktı:
+[source,]
+----
+Tanimlanan:
+sayilar1: 6 sayilar2: 0 sayilar3: 0
+Kopyalanan:
+sayilar1: 6 sayilar2: 6 sayilar3: 0
+Tasinan:
+sayilar1: 0 sayilar2: 6 sayilar3: 6
+----
+
+.Örnek
+[source,]
+----
+#include <map>
+#include <iostream>
+
+int main()
+
+{
+    std::map<int,char> sayilar {{1, 'a'}, {3, 'b'}, {5, 'c'}, {7, 'd'}};
+
+    std::cout << "Bos mu?: " << sayilar.empty() << std::endl; //1 ise bos
+    //empty(): Eleman olup olmadigini kontrol eder.
+
+    std::cout << "Boyut: " << sayilar.size() << std::endl;
+    //size(): Boyutu dondurur.
+
+    std::cout << "Tanimlanabilecek en buyuk boyut: " << sayilar.max_size() << std::endl;
+    //max_size():Tanimlanabilecek en buyuk boyutu dondurur.
+    
+    sayilar.clear();
+    //Map in bütün elemanlarini siler.
+    std::cout << "Boyut: " << sayilar.size() << std::endl;
+}
+----
+
+Çıktı:
+[source,]
+----
+Bos mu?: 0
+Boyut: 4
+Tanimlanabilecek en buyuk boyut: 178956970
+Boyut= 0
+----
+
+.Örnek
+[source,c++]
+----
+#include <map>
+#include <iostream>
+int main()
+{
+    std::map<int, std::string> sayi = {{1, "bir"}, {2, "iki"}, {3, "uc"},
+                                    {4, "dort"}, {5, "bes"}, {6, "alti"}};
+
+    for(auto i = sayi.begin(); i != sayi.end(); )
+        if(i->first % 2 == 1)  //tek sayilari sil
+            i = sayi.erase(i);
+            //erase(): Eleman silme islemi.
+        else
+            ++i;
+    for(auto& p : sayi)
+        std::cout << p.second << ' ';
+}
+----
+
+Çıktı:
+[source,]
+----
+iki dort alti
+----
+
+.Örnek
+[source,c++]
+----
+#include <iostream>
+#include <map>
+int main()
+{
+    std::map<int, char> aranacak = {{1,'a'},{2,'b'}};
+
+    auto ara = aranacak.find(2); 
+    //find(): Gonderilen anahtari elemanlarda ara.
+    if(ara != aranacak.end()) {
+        //end(): Map in son elemanini dondurur.
+        std::cout << "Bulundu: " << ara->first << " " << ara->second << std::endl ;
+    }
+    else {
+        std::cout << "Bulunamadi\n";
+    }
+}
+----
+
+Çıktı:
+[source,]
+----
+Bulundu: 2 b
+----
+
+
+
+
+

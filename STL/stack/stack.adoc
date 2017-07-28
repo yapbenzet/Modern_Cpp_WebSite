@@ -1,0 +1,84 @@
+Yığın konteyneri, yığınları c ++ ile çoğaltmak için kullanılır, ekleme ve silme daima yığının en arkasında gerçekleştirilir.
+
+. push() : stackın üstüne eleman ekler
+. pop() : son eklenen elemanı çıkarır ayrıca stackın boyutunu 1 azaltır
+. top : stackın en üstteki elemanı gösterir
+. size(): stacktaki eleman sayısını döndürür
+. empty(): stakcın boş olup olmadığını kontrol eder.boş ise true,değilse false değerini döndürür
+. swap(): iki stackın elemanları arasında takas yapar
+
+stacka eleman ekleyen kod
+
+[source,c++]
+----
+int main() {
+
+	stack<int> s;    // boş stack
+	s.push(12);
+	cout<<s.top()<<endl;   // top 12 yi gösteriyor
+	s.push(13);      // stacka 13 ekledik
+	cout << s.top(); // top şimdi 13 ü gösterir
+
+
+	getchar();
+	return 0;
+}
+çıktı
+12
+13
+----
+
+stacktan eleman çıkarma
+
+[source,c++]
+----
+int main() {
+
+	stack<int> s;    // boş stack
+	s.push(12);
+	cout<<s.top()<<endl;   // top 12 yi gösteriyor
+	s.push(13);      // stacka 13 ekledik
+	cout << s.top()<<endl; // top şimdi 13 ü gösterir
+	s.pop();        // son eklenen elemanı cıkartır (13)
+	cout << s.top();  // top şimdi 12 yi gösterir
+
+	getchar();
+	return 0;
+}
+çıktı
+12
+13
+12
+
+----
+
+boyutunu ve doluluğunu kontrol etme
+
+[source,c++]
+----
+int main() {
+
+	stack<int> s;     // boş stack
+	bool e;
+	e = s.empty();     // stack boş olduğu için 1 döner
+	cout << e<<endl;  // 1
+	cout << "eleman sayisi " << s.size() << endl;  // eleman sayısı 0
+
+	s.push(12);      // 12 ekledik
+	s.push(13);      // 13 ekledik
+
+	e = s.empty();    // stack dolu olduğu için 0 döner
+	cout << e <<endl ; // 0
+	cout << "eleman sayisi " << s.size() << endl;   // eleman sayisi 2
+	
+	getchar();
+	return 0;
+}
+çıktı
+
+1
+eleman sayisi 0
+0
+eleman sayisi 2
+0
+----

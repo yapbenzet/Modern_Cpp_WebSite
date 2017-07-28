@@ -1,0 +1,474 @@
+= Liste (List)
+  
+Standart Şablon Kütüphanesinin (stl) bir üyesi olan liste çift bağlantılıdır. Erişimi yavaştır çünkü herhangi bir öğeye ulaşmak için listenin başından itibaren geçilmesi gerekir.
+
+Genel Kullanım:
+----
+std::list integer_listesi;
+----
+
+.Örnek
+[source,c++]
+----
+#include <list>
+#include <string>
+#include <iostream>
+/**
+ * Liste tanimlamasi gösterilmiştir. Aynı zamada başa ve sona eleman ekleme işlenmiştir.
+ */
+using namespace std;
+template<typename T> // Liste yazdirmasinin daha kolay kullanimi
+std::ostream& operator<<(std::ostream& s, const std::list<T>& v) {
+    s.put('[');
+    char virgul[3] = {'\0', ' ', '\0'};
+    for (const auto& e : v) {
+        s << virgul << e;
+        virgul[0] = ',';
+    }
+    return s << ']';
+}
+int main()
+{
+    list<int> sayilar;
+    sayilar.push_front(1); //Başa 1 ekler. Eleman yoksa ilkini olusturur.
+    //push_front(): Basa eleman ekleme.
+    sayilar.push_front(2); //Başa 2 ekler.
+    sayilar.push_back(3); //Sona 3 ekler.
+    //push_back(): Sona eleman ekleme.
+    cout << sayilar <<endl;
+
+    list<string> kelime{"Merhaba", "Dunya"};
+    cout << kelime <<endl;
+
+    list<string> kelime2(kelime);  //kelime'ü kelime2'ye atar.
+    cout << kelime2 <<endl;
+
+    list<string> kelime3(kelime.begin(), kelime.end()); // kelimenin başlangıcından sonuna kelime3'e atar.
+    cout << kelime3 <<endl;
+
+    list<string> kelime4(5, "La"); //5 tane Mo ekler
+    cout << kelime4 <<endl;
+}
+----
+
+Çıktı:
+[source,]
+----
+[2, 1, 3]
+[Merhaba, Dunya]
+[Merhaba, Dunya]
+[Merhaba, Dunya]
+[La, La, La, La, La]
+----
+
+.Örnek
+[source,c++]
+----
+#include <list>
+#include <iostream>
+/**
+ * Listenin kapasitesi icin islemler
+ */
+using namespace std;
+int main()
+{
+    list<char> karakter;
+    karakter.assign(5, 'a');  //5 tane char degeri atar.
+    //assing(): Atama islemi yapar.
+
+    for (char c : karakter) { //Karakter sayisi kadar döngü döner.
+        cout << c << '\n';
+    }
+
+    list<int> sayilar;
+    cout << "Bos mu? " << sayilar.empty() << '\n'; //Boş ise 1 dondurur.
+    //empty(): Map in boslugunu kontrol eder.
+    sayilar.push_back(33);
+    //push_basck(): Sona eleman ekleme.
+    sayilar.push_back(27);
+    cout << "Bos mu? " << sayilar.empty() << '\n'; //Dolu ise 0 dondurur.
+
+    list<int> sayilar2 {1, 3, 5, 7};
+    cout << "sayilar2'nin eleman sayisi: " << sayilar2.size() << " elements.\n"; //Listenin eleman sayisini dondurur.
+    //size(): Map in boyutunu dondurur.
+    
+    list<int> s;
+    cout << "Tanimlanabilecek en buyuk boyut: " << s.max_size() << "\n"; //Tanimlanabilecek en buyuk boyuttur.
+    //max_size(): Map in tanimlanabilecegi en buyuk boyut.
+    return 0;
+}
+----
+
+Çıktı:
+[source,]
+----
+a
+a
+a
+a
+a
+Bos mu? 1
+Bos mu? 0
+sayilar2'nin eleman sayisi: 4 elements.
+Tanimlanabilecek en buyuk boyut: 357913941
+----
+
+.Örnek
+[source,c++]
+----
+#include <string>
+#include <list>
+#include <iostream>
+
+using namespace std;
+int main()
+{
+    list<string> names;
+
+    names.push_back("Tom");
+    //push_back(): Sona eleman ekleme.
+    names.push_back("Dick");
+    names.push_back("Harry");
+    names.push_back("Juliet");
+
+    list<string>::iterator pos;
+    pos = names.begin();
+    //begin(): Ilk elemanin adresini atar.
+    pos++;
+    pos++;
+    pos++;
+
+    names.insert(pos, "Romeo"); // Bastan ucuncuden sonrakine ekleme yap.
+    //insert(): Soylenen elemanin bulundugu yere atama yapilir. Digeri bir sonrakine aktarilir.
+
+    for (pos = names.begin(); pos != names.end(); pos++)
+    //end()= Son elemanin adresini dondurur.
+        cout << *pos << "\n";
+    cout << endl;
+
+    pos = names.begin();
+    pos++;
+
+    names.erase(pos); //Bastan bir sonrakini sil
+
+    for (pos = names.begin(); pos != names.end(); pos++)
+        cout << *pos << "\n";
+
+    return 0;
+}
+----
+
+Çıktı:
+[source,]
+----
+Tom
+Dick
+Harry
+Romeo
+Juliet
+
+Tom
+Harry
+Romeo
+Juliet
+----
+
+.Örnek
+[source,c++]
+----
+#include <iostream>
+#include <list>
+int main()
+{
+    std::list<int> c = {1, 2, 3};
+    std::cout << "Liste: ";
+    for(auto& el: c) std::cout << el << ' ';
+    std::cout << '\n';
+    
+    c.resize(5); // Tanimlanmayan elemanlar icin 0 degerini ata.
+    //resize(): Yeniden boyutlandir.
+    std::cout << "5 elemanli: ";
+    for(auto& el: c) std::cout << el << ' ';
+    std::cout << '\n';
+    
+    c.resize(2);
+    std::cout << "2 elemanli: ";
+    for(auto& el: c) std::cout << el << ' ';
+    std::cout << '\n';
+}
+----
+
+[source,]
+----
+Liste: 1 2 3
+5 elemanli: 1 2 3 0 0
+2 elemanli: 1 2
+----
+
+.Örnek
+[source,c++]
+----
+#include <list>
+#include <iostream>
+#include <iterator>
+
+using namespace std;
+int main( )
+{
+    std::list<int> sayilar{0, 1, 2, 3, 4, 5, 6, 7};
+    for (auto &i : sayilar) {
+        std::cout << i << " ";
+    }
+    std::cout << '\n';
+
+    sayilar.erase(sayilar.begin());
+    //begin(): Ilk elemani dondurur. 
+    //erase(): Silme islemi.
+    
+    for (auto &i : sayilar) {
+        std::cout << i << " ";
+    }
+    std::cout << '\n';
+
+    list<int>::iterator bas = sayilar.begin();
+    //Iterator oldugu icin ilk elemanin adresini dondurur.
+    list<int>::iterator son = sayilar.begin();
+    advance(bas,2); //Bastan 2
+    advance(son,5); //Bastan 5.
+
+    sayilar.erase(bas, son);  // [2,5) yani bastan 2 dahil bese kadar sil.
+
+    for (auto &i : sayilar) {
+        std::cout << i << " ";
+    }
+    std::cout << '\n';
+}
+----
+
+Çıktı:
+[source,]
+----
+0 1 2 3 4 5 6 7
+1 2 3 4 5 6 7
+1 2 6 7
+----
+
+.Örnek
+[source,c++]
+----
+#include <list>
+#include <string>
+#include <iostream>
+using namespace std;
+struct Baskan
+{
+    string isim;
+    string ulke;
+    int yil;
+
+    Baskan(string Isim, string Ulke, int Yil)
+            : isim(move(Isim)), ulke(move(Ulke)), yil(Yil)
+    {
+        cout << "Yapici ile olusturuldu.\n";
+    }
+    Baskan(Baskan&& baska)
+            : isim(move(baska.isim)), ulke(move(baska.ulke)), yil(baska.yil)
+    {
+        cout << "Yeniden secildi. Bilgiler tasindi." << endl;
+    }
+    Baskan& operator=(const Baskan& baska) = default;
+};
+//move: Map in tasinmasi.
+
+int main()
+{
+    list<Baskan> Secilen;
+    Secilen.emplace_back("Nelson Mandela", "South Africa", 1994);
+    //emplace_back(): Sona ekleme. Kurucu ile doğrudan eklenir.
+
+    list<Baskan> yenidenSecilen;
+    yenidenSecilen.push_back(Baskan("Franklin Delano Roosevelt", "the USA", 1936));
+    //push_back(): Sona ekleme
+
+    for (Baskan const& baskan: Secilen) {
+        cout << baskan.isim << " " << baskan.ulke << "'nin " << baskan.yil << " yili baskanidir.\n";
+    }
+    for (Baskan const& president: yenidenSecilen) {
+        cout << president.isim << " " << president.ulke << "'de " << president.yil << " yilinda tekrar baskan secilmistir.\n";
+    }
+}
+----
+
+Çıktı:
+[source,]
+----
+Yapici ile olusturuldu.
+Yapici ile olusturuldu.
+Yeniden secildi. Bilgiler tasindi.
+Nelson Mandela South Africa'nin 1994 yili baskanidir.
+Franklin Delano Roosevelt the USA'de 1936 yilinda tekrar baskan secilmistir.
+----
+
+.Örnek
+[source,c++]
+----
+#include <iostream>
+#include <list>
+/**
+ * Birlestirilmis siralama
+ */
+using namespace std;
+ostream& operator<<(ostream& ostr, const list<int>& list)
+{
+    for (auto &i : list) {
+        ostr << " " << i;
+    }
+    return ostr;
+}
+int main()
+{
+    list<int> liste1 = { 3,9,0,1,3 };
+    list<int> liste2 = { 7,7,2,5,4 };
+
+    liste1.sort();
+    //sort(): Siralar.
+    liste2.sort();
+    cout << "liste1:  " << liste1 << endl;
+    cout << "liste2:  " << liste2 << endl;
+    
+    liste1.merge(liste2);
+    //merge(): Birlestirir.
+    cout << "Birlestirilmis hali: " << liste1 << endl;
+}
+----
+
+Çıktı:
+[source,]
+----
+liste1:   0 1 3 3 9
+liste2:   2 4 5 7 7
+Birlestirilmis hali:  0 1 2 3 3 4 5 7 7 9
+----
+
+.Örnek
+[source,c++]
+----
+#include <iostream>
+#include <list>
+/**
+ * Araya koyma fonksiyonu.
+ */
+std::ostream& operator<<(std::ostream& ostr, const std::list<int>& list)
+{
+    for (auto &i : list) {
+        ostr << " " << i;
+    }
+    return ostr;
+}
+int main ()
+{
+    std::list<int> liste1 = { 1, 2, 3, 4, 5 };
+    std::list<int> liste2 = { 10, 20, 25, 30, 50 };
+
+    auto ata = liste1.begin();
+    //begin(): Ilk elemani dondurur.
+    std::advance(ata, 2);
+
+    std::cout << "list1: " << liste1 << "\n";
+    std::cout << "list2: " << liste2 << "\n";
+
+    liste1.splice(ata, liste2); //2. elemandan itibaren liste2'yi araya koy.
+    //splice():Araya koyar.
+    std::cout << "list1: " << liste1 << "\n";
+    std::cout << "list2: " << liste2 << "\n";
+}
+----
+
+Çıktı:
+[source,]
+----
+list1:  1 2 3 4 5
+list2:  10 20 25 30 50
+list1:  1 2 10 20 25 30 50 3 4 5
+list2:
+----
+
+.Örnek
+[source,c++]
+----
+#include <iostream>
+#include <list>
+ /**
+  * Sıralama ve tersini alma
+  */
+std::ostream& operator<<(std::ostream& ostr, const std::list<int>& list)
+{
+    for (auto &i : list) {
+        ostr << " " << i;
+    }
+    return ostr;
+}
+ 
+int main()
+{
+    std::list<int> liste = { 15,7,5,9,0,9,3,2,6,4 };
+ 
+    std::cout << "Once:   " << liste << "\n";
+    liste.sort();
+    std::cout << "Artan:   " << liste << "\n";
+    liste.reverse();
+    std::cout << "Azalan: " << liste << "\n";
+}
+----
+
+Çıktı:
+[source,]
+----
+Once:    15 7 5 9 0 9 3 2 6 4
+Artan:    0 2 3 4 5 6 7 9 9 15
+Azalan:  15 9 9 7 6 5 4 3 2 0
+----
+
+.Örnek
+[source,c++]
+----
+#include <iostream>
+#include <list>
+/**
+ * Tekrar önleme (Yalnızca ard arda oldugunda)
+ */
+int main()
+{
+    std::list<int> sayilar = {17, 20, 1, 2, 2, 5, 3, 3, 2, 1, 1, 2};
+
+    std::cout << "Once:  ";
+    for (auto i : sayilar)
+        std::cout << ' ' << i;
+    std::cout << '\n';
+
+    sayilar.unique();
+    //unique(): Ard arda gelen tekrarlari siler.
+    std::cout << "Ard arda tekrarsiz: ";
+    for (auto i : sayilar)
+        std::cout << ' ' << i;
+    std::cout << '\n';
+
+    sayilar.sort(); //Ard arda oldugunda tekrar onlendigi icin siralama yapildi.
+    //sort(): Kucukten buyuge siralar.
+    sayilar.unique();
+    std::cout << "Tekrarsiz: ";
+    for (auto i : sayilar)
+        std::cout << ' ' << i;
+    std::cout << '\n';
+    return 0;
+}
+----
+
+Çıktı:
+[source,]
+----
+Once:   17 20 1 2 2 5 3 3 2 1 1 2
+Ard arda tekrarsiz:  17 20 1 2 5 3 2 1 2
+Tekrarsiz:  1 2 3 5 17 20
+----
+

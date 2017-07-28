@@ -1,0 +1,86 @@
+queue konteyneri, sıranın C ++ 'da çoğaltılması için kullanılır, ekleme her zaman sıranın arkasında gerçekleşir ve silme her zaman sıranın ön kısmında gerçekleştirilir.
+
+. push() : sıranın arkasına eleman ekler
+. pop() : sıranın ilk elemanını çıkarır ayrıca stackın boyutunu 1 azaltır
+. front(): sıranın en baştaki elemanını döndürür
+. back(): sıranın sonundaki elemanı döndürür
+. size(): sıranın eleman sayısını döndürür
+. empty(): sıranın boş olup olmadığını kontrol eder.boş ise 1 ,dolu ise 0 değerini döndürür
+. swap(): iki sıranın elemanları arasında takas yapar
+
+sıranın ilk ve son elemanını görme
+
+[source,c++]
+----
+int main() {
+
+	queue<int> q;    // boş sıra
+	q.push(12);      // sıraya 12 ekledik
+	cout << q.front() <<"  "<<q.back() << endl;   // ilk eleman 12 son eleman 12
+	q.push(13);      // sıraya 13 ekledik
+	cout << q.front() << "  " << q.back() << endl; // ilk eleman 12 son eleman 13
+
+
+	getchar();
+	return 0;
+}
+çıktı
+
+12  12
+12  13
+----
+
+sıradan eleman çıkarma
+
+[source,c++]
+----
+int main() {
+
+	queue<int> q;    // boş sıra
+	q.push(12);      // sıraya 12 ekledik
+	q.push(13);      // sıraya 13 ekledik
+	q.push(14);      // sıraya 14 ekledik
+	cout << q.front() << "  " << q.back() << endl;  // ilk eleman 12 son eleman 14
+	q.pop();        // sıradan ilk eleman çıkar (12)
+	cout << q.front() << "  " << q.back() << endl;  // ilk eleman 13 son eleman 14
+
+	getchar();
+	return 0;
+}
+çıktı
+12  14
+13  14
+----
+
+== priority queue
+
+priority queue'nin,queue'den tek farkı elemanların büyükten küçüğe doğru sıralanmasıdır.
+
+[source,c++]
+----
+int main() {
+
+	priority_queue<int> q;
+	q.push(7);     // ilk eleman 7 son eleman 7
+	q.push(9);    // ilk eleman 9  son eleman 7,
+	q.push(8);    // ilk eleman 9 son eleman hala 7 
+	             // normal queue olsa idi sıralama 7 9 8 olurdu
+                 // priority queue olduğu için sıralama 9 8 7 oldu
+	cout<<q.top()<<endl;   // ilk eleman 9
+	q.pop();      // sıranın ilk elemanı cıkar (9)
+	cout << q.top();    // ilk eleman artık 8
+
+
+	getchar();
+	return 0;
+}
+çıktı
+9
+8
+----
+
+
+
+
+
+
