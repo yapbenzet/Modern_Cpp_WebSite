@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <list>
 /**
  * Tekrar önleme (Yalnızca ard arda oldugunda)
@@ -13,12 +13,14 @@ int main()
     std::cout << '\n';
 
     sayilar.unique();
+    //unique(): Ard arda gelen tekrarlari siler.
     std::cout << "Ard arda tekrarsiz: ";
     for (auto i : sayilar)
         std::cout << ' ' << i;
     std::cout << '\n';
 
     sayilar.sort(); //Ard arda oldugunda tekrar onlendigi icin siralama yapildi.
+    //sort(): Kucukten buyuge siralar.
     sayilar.unique();
     std::cout << "Tekrarsiz: ";
     for (auto i : sayilar)

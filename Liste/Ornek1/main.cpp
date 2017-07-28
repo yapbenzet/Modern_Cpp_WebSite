@@ -19,8 +19,10 @@ int main()
 {
     list<int> sayilar;
     sayilar.push_front(1); //Başa 1 ekler. Eleman yoksa ilkini olusturur.
+    //push_front(): Basa eleman ekleme.
     sayilar.push_front(2); //Başa 2 ekler.
     sayilar.push_back(3); //Sona 3 ekler.
+    //push_back(): Sona eleman ekleme.
     cout << sayilar <<endl;
 
     list<string> kelime{"Merhaba", "Dunya"};

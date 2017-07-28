@@ -1,7 +1,7 @@
-#include <iostream>
+﻿#include <iostream>
 #include <list>
 /**
- * Sıralama ve tersini alma
+ * Araya koyma fonksiyonu.
  */
 std::ostream& operator<<(std::ostream& ostr, const std::list<int>& list)
 {
@@ -10,14 +10,20 @@ std::ostream& operator<<(std::ostream& ostr, const std::list<int>& list)
     }
     return ostr;
 }
-
-int main()
+int main ()
 {
-    std::list<int> liste = { 15,7,5,9,0,9,3,2,6,4 };
+    std::list<int> liste1 = { 1, 2, 3, 4, 5 };
+    std::list<int> liste2 = { 10, 20, 25, 30, 50 };
 
-    std::cout << "Once:   " << liste << "\n";
-    liste.sort();
-    std::cout << "Artan:   " << liste << "\n";
-    liste.reverse();
-    std::cout << "Azalan: " << liste << "\n";
+    auto ata = liste1.begin();
+    //begin(): Ilk elemani dondurur.
+    std::advance(ata, 2);
+
+    std::cout << "list1: " << liste1 << "\n";
+    std::cout << "list2: " << liste2 << "\n";
+
+    liste1.splice(ata, liste2); //2. elemandan itibaren liste2'yi araya koy.
+    //splice():Araya koyar.
+    std::cout << "list1: " << liste1 << "\n";
+    std::cout << "list2: " << liste2 << "\n";
 }

@@ -20,14 +20,17 @@ struct Baskan
     }
     Baskan& operator=(const Baskan& baska) = default;
 };
+//move: Map in tasinmasi.
 
 int main()
 {
     list<Baskan> Secilen;
     Secilen.emplace_back("Nelson Mandela", "South Africa", 1994);
+    //emplace_back(): Sona ekleme. Kurucu ile dogrudan eklenir.
 
     list<Baskan> yenidenSecilen;
     yenidenSecilen.push_back(Baskan("Franklin Delano Roosevelt", "the USA", 1936));
+    //push_back(): Sona ekleme
 
     for (Baskan const& baskan: Secilen) {
         cout << baskan.isim << " " << baskan.ulke << "'nin " << baskan.yil << " yili baskanidir.\n";

@@ -17,9 +17,12 @@ int main()
     list<int> liste2 = { 7,7,2,5,4 };
 
     liste1.sort();
+    //sort(): Siralar.
     liste2.sort();
     cout << "liste1:  " << liste1 << endl;
     cout << "liste2:  " << liste2 << endl;
+    
     liste1.merge(liste2);
+    //merge(): Birlestirir.
     cout << "Birlestirilmis hali: " << liste1 << endl;
 }
