@@ -3,8 +3,11 @@
 #include <forward_list>
 using namespace std;
 
-/* bu kodu visual studio projenizin içine kopyalayýn
-Örnek kod 2: bir listeyi yazdýrma örneði */
+/* bu kodu visual studio projenizin iÃ§ine kopyalayin
+Ã–rnek kod 2: bir listeyi yazdirma Ã¶rnegi 
+// Ã§ikti
+// 50  40  30  20  10
+*/
 
 int main() {
 	forward_list<int> l1;
@@ -17,9 +20,6 @@ int main() {
 	for (auto i = l1.begin(); i != l1.end(); i++)
 		cout << *i << "  ";
 	cout << endl;
-
-	// çýktý
-	// 50  40  30  20  10
 
 
 	getchar();
