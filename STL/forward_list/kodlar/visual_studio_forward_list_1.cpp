@@ -4,6 +4,8 @@
 using namespace std;
 /* bu kodu visual studio projenizin içine kopyalayın
 örnek kod 1: push_front ve pop_front fonksiyonlarını kullanma
+ çıktı
+ 50 40
 */
 int main()
 {
@@ -17,9 +19,7 @@ int main()
 	cout << *l1.begin() << endl;  // listenin baş elemanı 50
 	l1.pop_front();               // listenin başındaki eleman silindi (50)
 	cout << *l1.begin() << endl;  // listenin başındaki eleman 40
-
-								  // çıktı
-								  // 50 40
+							
 
 	getchar();
 	return 0;
