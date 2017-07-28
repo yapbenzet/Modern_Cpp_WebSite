@@ -1,0 +1,161 @@
+== unordered_set
+
+unordered_set , bir öğenin değeri aynı zamanda anahtarı, onu benzersiz olarak tanımlar.Anahtarlar değişmezdir, bu nedenle sırasız bir kümedeki öğeler konteynırde bir kez değiştirilemez - ancak eklenebilir veya kaldırılabilirler.
+
+
+Dahili olarak, onordered_setteki öğeler belirli bir sıraya göre sıralanmaz, ancak değerlerine göre doğrudan tek tek öğelere hızlı bir şekilde erişmek için hash değerlerine bağlı olarak gruplara ayrılabilirler.(Ortalama bir O(n) algoritma karmaşıklığına sahiptir.)
+
+**Tanımı**
+
+[source,C++]
+----
+template < class Key,                         unordered_set::key_type/value_type
+           class Hash = hash<Key>,
+           class Pred = equal_to<Key>,       
+           class Alloc = allocator<Key>     
+           > class unordered_set;
+----
+
+**std::unoredered_set özellikleri**
+
+
+* Associative(ilişkisel): İlşkisel konteynırdaki elemanlara,mutlak konumu ile değil anahtarı ile atıfta bulunulur.
+
+* Unordered(sırasız): Sıralanmamış konteynırdaki elemanlara hızlı erişim için hash tablosu kullanılır.
+
+* Set(Küme): Bir öğenin değeri onu tanımlamak için kullanılan anahtarın değeridir.
+
+* Unique key(Tekil Anahtar):Konteynırdaki öğelerin anahtarı aynı olamaz.
+
+* Allocater-aware(Yer ayırıcı):İhtiyaç duyulan bellekteki alan dinamik olarak ayrılır.
+
+**Template Parametreleri**
+
+* Key: Sıralanmamış konteynırdaki her eleman için Key değerleri farklıdır.Üyeleri std:: unordered_set::key_type ve std::unordered_set::value_type olarak isimlendirilip farklılaştırılmıştır.
+
+* Hash: Bağımsız değişken olarak elemanlarla aynı türde bir nesneyi alır ve ona dayalı size_t türünde benzersiz bir değer döndüren tekli bir işlev nesnesi türü. Bu, bir fonksiyon çağırma işlemi veya bir fonksiyone pointer uygulayan bir sınıf olabilir. Bu varsayılan değer, hash değerini çarpışma olasılığı olan 1.0 / std :: numeric_limits <size_t> :: max () ile döndüren hash <Key> olarak döndürür.
+Unordered_set nesnesi, elemanlarını dahili olarak organize etmek için bu işlev tarafından döndürülen karma değerlerini kullanır ve tek tek öğeleri bulma işlemini hızlandırır.
+Unordered_set ::hasher üye türü olarak farklılaştırılmıştır.
+
+* Pred: İki parametre alır, argümanlar aynı veri tipine sahipse true döndürür. unordered_set, iki öğrenin anahtarının eşit olup olmadığını belirlemek için bu ifadeyi kullanır. unordered_set::key_equal olaran isimlendirilmiştir.
+
+
+* Alloc(Yer alma): Varsayılan olarak en basit yer ayırma modeli olan allocater sınıfını kullanır. 
+
+**Ornek Kullanımı**
+
+[source,C++]
+----
+include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    unordered_set<string> stringSet;///String elemanları tutmak için uorder set tanımlanıyor
+
+    //Eleman eklemek için insert kullanılır.
+    stringSet.insert("code");//
+    stringSet.insert("in");
+    stringSet.insert("c++");
+    stringSet.insert("is");
+    stringSet.insert("fast");
+
+    string key = "slow";///Oluşturulan sette(kümede) arama işlemi yapmak için bir key(anahtar) oluşturulur.
+
+    if (stringSet.find(key) == stringSet.end())//Set içinde anahtarı arama kısmı, setin sonuna kadar
+        cout << key << " Bulunamadi.\n\n";
+    else
+        cout << "Bulundu:" << key << endl << endl;
+
+    key = "c++";
+    if (stringSet.find(key) == stringSet.end())
+        cout << key << " Bulunamadi\n";
+    else
+        cout << "Bulundu " << key << endl;
+
+    ///unorder list ile birlikte
+    cout << "\nTum elemanlar : ";
+    unordered_set<string> :: iterator itr;
+    for (itr = stringSet.begin(); itr != stringSet.end(); itr++)
+        cout << (*itr) << endl;
+}
+----
+
+**Ornek**
+
+[source,java]
+----
+//unordered sete, oluşturulan integer dizideki elemanlardan tekrar edenleri ekler
+#include <bits/stdc++.h>///
+void Tekrarli(int arr[], int n)
+{
+    std::unordered_set intSet;
+    std::unordered_set tekrarli_set;
+    for (int i = 0; i < n; i++)
+    {
+        //Daha once eklenip eklenmedigini kontrol eder
+        if (intSet.find(arr[i]) == intSet.end())
+            intSet.insert(arr[i]);
+        else 
+            tekrarli_set.insert(arr[i]);
+    }
+    std::cout << "Tekrar eden elemanlar ";
+    std::unordered_set :: iterator itr;
+    for (itr = tekrarli_set.begin(); itr != tekrarli_set.end(); itr++)
+        std::cout << *itr << " ";
+}
+
+int main()
+{
+    int dizi[] = {1, 5, 2, 1, 4, 3, 1, 7, 2, 8, 9, 5};
+    int n = sizeof(dizi) / sizeof(int);//Dizideki eleman sayısını verir.
+    std::cout<<"Eleman sayisi:"<<n<<std::endl;
+    Tekrarli(dizi, n);//
+    return 0;
+}
+----
+
+**Set ve Unorder_set**
+
+Set seti, sıralı bir benzersiz anahtar dizisidir; unordered_set ise, anahtarın herhangi bir sırada depolanabileceği, öylesine sıralanmamış olduğu bir kümedir.
+Set, dengeli bir ağaç yapısı olarak uygulanmaktadır, bu nedenle öğeler arasında bir sıranın sürdürülmesinin mümkün olduğu (belirli ağaç geçişi ile) mümkündür. İşlemlerin zaman karmaşıklığı O (Log n), sırasız ayar için O (1).
+
+**Ornek**
+[source,C++]
+----
+#include <iostream>
+#include <unordered_set>
+
+struct Point 
+{ 
+   double x, y; 
+};
+
+int main() {
+    Point pts[3] = { {1, 0}, {2, 0}, {3, 0} };//struct dizisi
+    std::unordered_set<Point *> points = { pts, pts + 1, pts + 2 };
+    //auto kullanarak iterator tanımı
+    for(auto iter = points.begin(); iter != points.end(); ++iter)
+    {
+        (*iter)->y = ((*iter)->x) * ((*iter)->x);/x ve y koordinatlarını çeker.
+        std::cout << "(" << (*iter)->x << ", " << (*iter)->y << ") ";
+    }
+    std::cout << '\n';
+
+    for(Point * i : points)//
+    {
+        i->y += 10;
+        std::cout << "(" << i->x << ", " << i->y << ") ";
+    }
+}
+----
+
+
+
+
+
+
+
+
+
+
