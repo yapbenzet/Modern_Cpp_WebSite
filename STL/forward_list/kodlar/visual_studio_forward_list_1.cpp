@@ -1,32 +1,26 @@
 #include <iostream>
-#include "stdafx.h"
 #include <forward_list>
+#include "stdafx.h"
 using namespace std;
-// bu kodu visual studio projenizin i�ine kopyalay�n
-// �rnek kod 3 : listenin istenilen bir yerine eleman ekleme
-
-int main() {
+/* bu kodu visual studio projenizin içine kopyalayın
+örnek kod 1: push_front ve pop_front fonksiyonlarını kullanma
+*/
+int main()
+{
 	forward_list<int> l1;
 	l1.push_front(10);
 	l1.push_front(20);
 	l1.push_front(30);
 	l1.push_front(40);
-	l1.push_front(50);
+	l1.push_front(50);  // ekleme işlemi başa yapıldığı için sıralama 50 40 30 20 10 şeklinde oldu
 
-	for (auto i = l1.begin(); i != l1.end(); i++)
-		cout << *i << "  ";             // liste 50 40 30 20 10
-	cout << endl;
-	l1.insert_after(l1.begin(), 45);  // listenin ba� eleman�n sonras�na 35 ekle
-	for (auto i = l1.begin(); i != l1.end(); i++)
-		cout << *i << "  ";            // yeni liste 50 45 40 30 20 10
-	cout << endl;
+	cout << *l1.begin() << endl;  // listenin baş elemanı 50
+	l1.pop_front();               // listenin başındaki eleman silindi (50)
+	cout << *l1.begin() << endl;  // listenin başındaki eleman 40
 
-	// ��kt�
-	// 50  40  30  20  10
-	// 50  45  40  30  20  10
-
+								  // çıktı
+								  // 50 40
 
 	getchar();
 	return 0;
 }
-
