@@ -1,7 +1,9 @@
 = Map
 
 Map, anahtar ve değerler arasındaki ilişkiyi tutar. Her anahtar bir değere sahiptir fakat bir değerin ilişkili olduğu birden fazla anahtar olabilir.
-//Resim ekle sayfa 521
+
+.Map ve Multimap Sembolik Venn Şeması Gösterimi
+image::MapMultimap.png[]
 
 .Avantaj
 * Ekleme silme işlemleri hızlıdır.
