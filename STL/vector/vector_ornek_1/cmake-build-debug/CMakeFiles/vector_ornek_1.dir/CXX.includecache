@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/ozden/CLionProjects/vector_ornek_1/main.cpp
+iostream
+-
+vector
+-
+algorithm
+-
+iterator
+-
+
