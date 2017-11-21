@@ -1,0 +1,67 @@
+== Visual Studio İle Eigen Kütüphanesi Kullanma
+
+Öncelikle eigen kütüphanesi indirilmelidir. Aşağıdaki linkten eigen kütüphanesini indirebilirsiniz.
+
+https://bitbucket.org/eigen/eigen/downloads/
+
+Site açıldıktan sonra download repository'e tıklayarak indirebilirsiniz. İndirdikten sonra zip dosyasını açıp içindekileri bilgisayarda istediğiniz yere kopyalayın.
+
+Visual Studio'da file->new->project dedikten sonra Visual C++ seçeneğini seçiniz. Yanda  Windows Console Application vardır. Bunu seçiniz.
+
+image::Pictures/Captureasdasdasd.png[]
+
+Projeye ad girip OK dedikten sonra karşınıza kod ekranı gelecektir.
+
+Burada project sekmesine tıklayıp propeties'e tıklamamız gerekmektedir. Properties ekranından Önce C/C++ sonra da General sekmesine tıklayalım. 
+
+image::Pictures/pro.png[]
+
+Additional include directories'e tıkladıktan sonra sağda bir ok gözükecektir. O oke tıklayıp edit diyelim.
+
+image::Pictures/additi.png[]
+
+New line tuşuna tıklayalım. Sonrasında Eigen kütüphanesini çıkardığımız yolu buraya girelim. Kaydedip kod ekranına geri dönelim.
+
+Kod ekranında, Eigen kütüphanesini kullanabilmek için 
+
+----
+#include <Eigen> 
+
+using namespace Eigen; /* C++ ozelligi simdilik konu karismasin diye boyle yaziyoruz. */
+----
+
+satırlarını ekleyelim.
+
+
+[source,c++]
+----
+#include "stdafx.h"
+#include <Eigen>
+#include <iostream>
+
+using namespace Eigen;
+using namespace std;
+
+int main()
+{
+	Matrix<int, 4, 4> matris; //4x4luk tam sayi tutan matris
+
+	matris << 1, 2, 3, 4, // matris tanimlama
+		1, 2, 3, 4,
+		1, 2, 3, 4,
+		1, 2, 3, 4;
+
+	Matrix<int, 4, 1> vektor; // 4 elemanli sutun vektoru
+
+	vektor << 1, 2, 3, 4;
+
+	Matrix<int, 4, 1> sonuc = matris * vektor; //Matris vektor carpimi 
+											   
+	//Carpim sonucu olusacak deger 4x1lik vektordur.
+
+	cout << sonuc; //ekrana yazdirma
+
+	cin.get();
+    return 0;
+}
+----
