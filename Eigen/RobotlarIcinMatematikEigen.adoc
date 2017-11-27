@@ -1,0 +1,543 @@
+== Matrix'in İlk Üç Template Parametresi
+
+Matrix sınıfı 6 template parametresine sahiptir fakat şimdilik ilk 3 parametreyi öğrenmek yeterli olacaktır. 
+
+Matrix sınıfının 3 zaruri template parametesi şunlardır:
+
+[source, c++]
+----
+Matrix<typename Scalar, int RowsAtCompileTime, int ColsAtCompileTime>
+----
+
+* Scalar sayısal tiptir yani katsayıların tipidir. Yani float matrisi isteniyorsa burada float seçilir. 
+
+* RowsAtCompileTime ve ColsAtCompileTime matrisin satır ve sütun sayılarını belirler.
+
+[source, c++]
+----
+Matrix<int, 3, 2> mat1;
+----
+
+Eigen içerisinde olağan durumlar için kolaylık sağlayan typedef tanımlamaları bulunur. Örneğin, Matrix4f, 4x4 float matrisidir:
+
+[source, c++]
+----
+typedef Matrix<float, 4, 4> Matrix4f;
+----
+
+Matrix2i, tanımlaması:
+
+[source, c++]
+----
+typedef Matrix<int, 2, 2> Matrix2i;
+----
+
+== Vektörler
+
+Vektörler 1 satır veya 1 sütuna sahip özel matrislerdir. Genellikle 1 sütunlu oluşturulanlar sütun vektörü olarak adlandırılır, 1 satırlı vektörler ise satır vektörü olarak adlandırılır.
+
+Eigen kütüphanesinin hazır tanımlarında sütun vektörü ColumnVector yerine Vector şeklinde adlandırılır!!!
+
+Örneğin, Eigen tarafından tanımlanmış Vector3f sütun vektörü:
+
+[source, c++]
+----
+typedef Matrix<float, 3, 1> Vector3f;
+----
+
+Satır vektörleri için de kolaylık sağlayacak typedef tanımlamaları bulunmaktadır:
+
+[source, c++]
+----
+typedef Matrix<int, 1, 2> RowVector2i;
+----
+
+=== Dynamic Özel Değeri
+
+Eigen boyutları derlenme zamanında bilinen matrislerle sınırlı değildir. RowsAtCompileTime ve ColsAtCompileTime template parametreleri derlenme zamanında boyutunu belirsiz yapan Dynamic özel değerini alabilirler. Referans gösterilmiş boyutlar dinamik boyut, derlenme süresinde bilinen boyut sabit boyuttur. Örneğin, MatrixXd typedef'i dinamik boyuta sahip double matris anlamına gelir:
+
+[source, c++]
+----
+typedef Matrix<double, Dynamic, Dynamic> MatrixXd;
+----
+
+Benzer şekilde VectorXi şöyle tanımlanır:
+
+[source, c++]
+----
+typedef Matrix<int, Dynamic, 1> VectorXi;
+----
+
+=== Constructor
+
+Varsayılan yapıcı fonksiyon her zaman mevcuttur, asla herhangi bir dinamik hafıza tutma veya matris katsayısı tanımlama işlemi yapmaz.
+
+[source, c++]
+----
+Matrix3f a;
+MatrixXf b;
+----
+
+* a, elemanları atanmamış, float değerde 3x3 bir matristir.
+* b, elemanları henüz atanmamış ve boyutu henüz 0x0 olan dinamik boyutlu bir matristir.
+
+Boyut alan yapıcı fonksiyonlar da mevcuttur. Matrisler için her zaman satırlar önce girilir. Vektörler için ise sadece vektör boyutu girilir. Matris elemanları için yer ayrılır fakat kendi kendine elemanlara atama yapılmaz: 
+
+[source, c++]
+----
+MatrixXf a(10, 15);
+VectorXf b(30);
+----
+
+* a, yeri ayrılmış fakat henüz atanmamış 10x15 dinamik boyutlu matristir.
+* b, yeri ayrılmış fakat henüz atanmamış 30 boyutunda dinamik boyutlu vektördür.
+
+=== Eleman Erişimi
+
+Eigen'de ilkel eleman erişimi parantez operatörünün overload edilmesiyle yapılır. Matrisler için her zaman satır indeksi ilk olarak gönderilir. Vektörde ise sadece sadece bir indeks gönderilir. Numaralama 0 ile başlar.
+
+[source, c++]
+----
+#include "stdafx.h"
+#include <iostream>
+#include <Eigen>
+
+
+int main()
+{
+	Eigen::Matrix<int, 3, 2> mat1;
+
+
+	//Atama işlemleri
+	Eigen::Matrix2i a ; //2 x 2 'lik integer kare matris  2->2x2  i->integer.
+
+	//a = [1 2 3 4];  yanlış atama şekli
+	//a = [1, 2 : 3, 4];
+
+	a << 1, 2,// atama işlemi operator<< ile yapılabilir. (Virgül ile atama)
+		 3, 4;
+	//veya tek tek indislere değer verilebilir.
+	a(0, 0) = 1;
+	a(0, 1) = 2;
+	a(1, 0) = 3;
+	a(1, 1) = a(0, 0) + a(1, 0);
+
+	std::cout << "a matrisi: " << std::endl << a << std::endl << std::endl;
+	std::cout << "a matrisi 1. sutun 1. satir degeri: "  << a(1, 1) << std::endl << std::endl;
+
+	Eigen::RowVector3d vec1; //  3 elemanlı double satır vektörü 3->3 eleman d->double
+
+	vec1 << 0.5, 1.3, 3.2;
+
+	//veya
+
+	//vec1(0, 0) = 0.5; typedef tanımlı vektör için yanlış atama şekli
+	//vec1(0, 1) = 1.3;
+	//vec1(0, 2) = 3.2;
+
+	vec1(0) = 0.5;
+	vec1(1) = 1.3;
+	vec1(2) = 3.2;
+
+	std::cout << "vec1 satir vektoru: " << std::endl << vec1 << std::endl << std::endl;
+
+	Eigen::MatrixXi b(5,3); // 5 satır 3 sütunluk integer matris
+
+	for (int i = 0; i < b.rows(); ++i)
+		for (int j = 0; j < b.cols(); ++j)
+			b(i, j) = j + i*b.cols();
+
+	std::cout << "b matrisi: " << std::endl << b << std::endl << std::endl;
+
+	//Blok işlemleri
+
+    return 0;
+----
+
+=== Virgül ile Atama
+
+Matris ve vektör elemanları virgül ile kolayca atanabilir.
+
+[source, c++]
+----
+Matrix3f m;
+m << 1, 2, 3,
+     4, 5, 6,
+     7, 8, 9;
+cout << m;
+----
+
+Çıktı:
+
+----
+1 2 3
+4 5 6
+7 8 9
+----
+
+
+Virgül ile atama yapılabilmesi için matris veya vektörün eleman sayısının belirli olması gerekir. Daha az ya da daha fazla eleman girildiği zaman Eigen hata verir.
+
+[source, c++]
+----
+Matrix<double, Dynamic, Dynamic> m;//Boyutu derlenme sırasında belirlenmemiş double matris
+
+//m << 0.0, 1.1, 2.2, Matrisin boyutu henüz belli olmadığı için 
+//	   3.3, 4.4, 5.5; girilen değerlerin anlamı yoktur.
+
+Matrix<double, Dynamic, Dynamic> a(2, 3);//2 satır 3 sütundan oluşan double matris
+a << 0.0, 1.1, 2.2, 
+     3.3, 4.4, 5.5;
+
+//veya 
+
+MatrixXd b(2, 3);//MatrixXd --> X = Dynamic , d = double
+//b << 0.0, 1.1, 2.2, Eleman sayısından fazla eleman girilmiş, hata verir.
+//	 3.3, 4.4, 5.5,
+//	 6.6, 7.7, 8.8;
+----
+
+
+=== Yeniden Boyutlandırma
+
+Bir matrisin mevcut boyutu rows(), cols() ve size() fonksiyonları ile okunabilir. Bu fonksiyonlar sırasıyla satır sayısı, sütun sayısı ve eleman sayısını döndürür. Dinamik boyutlu bir matris resize() fonksiyonu ile yeniden boyutlandırılabilir.
+
+[source, c++]
+----
+#include "stdafx.h"
+#include <Eigen>
+#include <iostream>
+
+using namespace Eigen;
+using namespace std;
+
+int main()
+{
+	MatrixXd m(2, 5);
+	m.resize(4, 3);
+	cout << "m matrisi boyutu: "
+		<< m.rows() << "x" << m.cols() << endl;
+	cout << "Eleman sayisi: " << m.size() << endl;
+	VectorXd v(2);
+	v.resize(5);
+	cout << "v vektoru boyutu : " << v.size() << endl;
+	cout << "Matris olarak, v'nin boyutu: " << v.rows() << "x" << v.cols() << endl;
+
+    return 0;
+}
+----
+
+Matrisin boyutunun değişmediği durumda resize() fonksiyonu bir işlem yapmaz, diğer durumlarda ise yıkıcı bir fonksiyonudur: elemanların değerleri değişebilir. Eğer değişkenlerin değişmesi istenmiyorsa conservativeResize() kullanılabilir.
+
+Bu fonksiyonlar sabit boyutlu matrisler için de geçerlidir. Tabii ki sabit boyutlu bir matris yeniden boyutlandırılamaz. Sabit boyutu farklı bir değerle değiştirmek bir ekleme hatasını tetikleyecektir; fakat aşağıdaki kod hata vermez:
+
+[source, c++]
+----
+#include "stdafx.h"
+#include <Eigen>
+#include <iostream>
+
+using namespace Eigen;
+using namespace std;
+
+int main()
+{
+	Matrix4d m;
+	m.resize(4, 4); // işlem yapılmaz
+	// m.resize(5, 5); // hata verir
+	cout << "m matrisinin boyutu: "
+		<< m.rows() << "x" << m.cols() << std::endl; 
+
+    return 0;
+}
+----
+
+=== Atama ve Yeniden Boyutlandırma
+
+Atama, operator= ile bir matrisi bir diğerine kopyalama işlemidir. Eigen otomatik olarak eşitliğin solundaki matrisi eşitliğin sağındaki matrisin boyutuna boyutlandırır. Örneğin:
+
+[source, c++]
+----
+#include "stdafx.h"
+#include <Eigen>
+#include <iostream>
+
+using namespace Eigen;
+using namespace std;
+
+int main()
+{
+	MatrixXf a(2, 2);
+	cout << "a matrisinin boyutu: " << a.rows() << "x" << a.cols() << endl;
+	MatrixXf b(3, 3);
+	a = b;
+	cout << "a matrisinin yeni boyutu: " << a.rows() << "x" << a.cols() << endl;
+
+    return 0;
+}
+----
+
+Tabii ki, eşitliğin sol tarafı sabit boyutlu ise buna izin verilmeyecektir.
+
+=== Sabit vs. Dinamik Boyut
+
+Ne zaman sabit boyut (Matrix4f), ne zaman dinamik boyut (MatrixXf) tercih edilmelidir? Küçük boyutlar için olabildiğince sabit boyut kullanılmalıdır ve büyük boyutlar için dinamik boyut kullanılabilir. Küçük boyutlar için, özellikle (yaklaşık olarak) 16'dan küçük boyutlar için sabit boyut kullanmak performans açısından büyük yarar sağlar, Eigen'in dinamik hafıza tutmasını engellemeyi sağlar. Sabit boyutlu Eigen matrisi sadece bir dizidir:
+
+[source, c++]
+----
+Matrix4f m;
+----
+
+şuna denk gelir:
+
+[source, c++]
+----
+float m[16];
+----
+
+yani çalışma zamanı maliyeti yoktur. Buna karşın, dinamik boyutlu matrisin dizisi heap üzerinde yer alır.
+
+[source, c++]
+----
+MatrixXf m(satir*sutun);
+----
+
+şuna denk gelir:
+
+[source, c++]
+----
+float *m = new float[satir*sutun];
+----
+
+ve buna ek olarak MatrixXf nesnesi satır ve sütun sayılarını üye değişken olarak saklar.
+
+Sabit boyut kullanmanın kısıtı tabii ki derleme zamanındaki boyutun değiştirilememesidir. Ayrıca büyük boyutlar için, (yaklaşık olarak) 32'den büyük boyutlar için sabit boyutun sağladığı performans yararı önemsizdir.
+
+=== Diğer Template Parametreleri
+
+Konunun başında Matrix sınıfının 6 template parametresi olduğu belirtilmişti fakat henüz sadece ilk üçü incelendi. Diğer 3 parametre seçmelidir:
+
+[source, c++]
+----
+Matrix<typename Scalar,
+       int RowsAtCompileTime,
+       int ColsAtCompileTime,
+       int Options = 0,
+       int MaxRowsAtCompileTime = RowsAtCompileTime,
+       int MaxsColsAtCompileTime = ColsAtCompileTime>
+----
+
+* MaxRowsAtCompileTime ve MaxColsAtCompileTime belirlenmek istendiği zaman kullanışlı olabilir, derlenme zamanında matrisin kesin boyutu bilinmese bile, sabit bir üst sınır derlenme zamanında bilinir. Bunu yapmanın en önemli sebebi dinameik hafıza ayırmayı önlemektir. Örneğin aşağıdaki matris dinamik yer alma yapmadan 12 float'lık bir dizi oluşturur:
+
+[source, c++]
+----
+Matrix<float, Dynamic, Dynamic, 0, 3, 4>
+----
+
+
+
+== Blok İşlemleri
+
+Eigen'in en genel blok işlemi .block()'tur. İki versiyonu vardır, söz dizimi aşağıdaki gibidir:
+
+* Dinamik boyutlu blok ifadesi oluşumu:
+
+[source, c++]
+----
+matrix.block(i, j, p, q);
+----
+
+* Sabit boyutlu blok ifadesi oluşumu:
+
+[source, c++]
+----
+matrix.block<p, q>(i, j);
+----
+
+Her iki versiyon da sabit ve dinamik boyutlu matris ve dizilerde kullanılabilir. İki ifade de anlamsal olarak aynıdır. Tek fark sabit boyut blok boyutu küçük ise daha hızlı bir kod sağlayacaktır fakat boyutu derlenme zamanında bilinmelidir.
+
+[source, c++]
+----
+#include "stdafx.h"
+#include <Eigen>
+#include <iostream>
+
+using namespace Eigen;
+using namespace std;
+
+int main()
+{
+	Eigen::MatrixXf m(4, 4);
+	m << 1, 2, 3, 4,
+		 5, 6, 7, 8,
+		 9, 10, 11, 12,
+		 13, 14, 15, 16;
+	cout << "Ortadaki blok" << endl;
+	cout << m.block<2, 2>(1, 1) << endl << endl;
+	for (int i = 1; i <= 3; ++i)
+	{
+		cout << "Blok boyutu: " << i << "x" << i << endl;
+		cout << m.block(0, 0, i, i) << endl << endl;
+	}
+
+    return 0;
+}
+----
+
+
+
+Yukarıdaki örnekte .block() fonksiyonu rvalue olarak kullanıldı, yani sadece okuma işlemi yapıldı. Fakat bloklar aynı zamanda lvalue olarak da kullanılabilirler yani bir bloğa atama yapılabilir.
+
+[source, c++]
+----
+#include "stdafx.h"
+#include <Eigen>
+#include <iostream>
+
+using namespace Eigen;
+using namespace std;
+
+int main()
+{
+	Array22f m;
+	m << 1, 2,
+		3, 4;
+	Array44f a = Array44f::Constant(0.6);
+	cout << "a dizisi: " << endl << a << endl << endl;
+	a.block<2, 2>(1, 1) = m;
+	cout << "m, merkez 2x2 bloguna kopyalandiginda a:" << endl << a << endl << endl;
+	a.block(0, 0, 2, 3) = a.block(2, 1, 2, 3);
+	cout << "Sag-alt 2x3 blogu sol-ust 2x2 bloguna kopyalandgiginda a:" << endl << a << endl << endl;
+
+    return 0;
+}
+----
+
+=== Satırlar ve Sütunlar
+
+Satırlar ve sütunlar özel bloklardır. Eigen fonksiyonları bunları kolayca adreslemyi sağlar: .col() ve .row().
+
+* i^th^ row :
+
+[source, c++]
+----
+matrix.row(i);
+----
+
+* j^th^ column* :
+
+[source, c++]
+----
+matrix.col(j);
+----
+
+col() ve row()'a gönderilen argüman erişilecek satır veya sütunun indeksidir.
+
+[source, c++]
+----
+#include "stdafx.h"
+#include <Eigen>
+#include <iostream>
+
+using namespace Eigen;
+using namespace std;
+
+int main()
+{
+	Eigen::MatrixXf m(3, 3);
+	m << 1, 2, 3,
+		 4, 5, 6,
+		 7, 8, 9;
+	cout << "m matrisi : " << endl << m << endl;
+	cout << "2. satir: " << m.row(1) << endl;
+	m.col(2) += 3 * m.col(0);
+	cout << "Birinci sutunun uc katini ucuncu sutuna ekleyince, m matrisi:\n";
+	cout << m << endl;
+
+    return 0;
+}
+----
+
+
+Bu örnek aynı zamanda blok ifadelerinin diğer ifadeler gibi aritmetik işlemlerde kullanılabildiğini gösterir.
+
+=== Köşe İlişkili İşlemler
+
+
+
+[width="100%"]
+|====================
+| Dinamik boyutlu blok | Sabit boyutlu blok 
+| matrix.topLeftCorner(p,q); |  matrix.topLeftCorner<p,q>();
+| matrix.bottomLeftCorner(p,q); |  matrix.bottomLeftCorner<p,q>();
+| matrix.topRightCorner(p,q); |  matrix.topRightCorner<p,q>();
+| matrix.bottomRightCorner(p,q); |  matrix.bottomRightCorner<p,q>();
+| matrix.topRows(q); |  matrix.topRows<q>();
+| matrix.bottomRows(q); |  matrix.bottomRows<q>();
+| matrix.leftCols(p); |  matrix.leftCols<p>();
+| matrix.rightCols(q); |  matrix.rightCols<q>();
+|====================
+
+===== Örnek:
+
+[source, c++]
+----
+#include "stdafx.h"
+#include <Eigen>
+#include <iostream>
+
+using namespace Eigen;
+using namespace std;
+
+int main()
+{
+	Eigen::Matrix4f m;
+	m << 1, 2, 3, 4,
+		5, 6, 7, 8,
+		9, 10, 11, 12,
+		13, 14, 15, 16;
+	cout << "m.leftCols(2) =" << endl << m.leftCols(2) << endl << endl;
+	cout << "m.bottomRows<2>() =" << endl << m.bottomRows<2>() << endl << endl;
+	m.topLeftCorner(1, 3) = m.bottomRightCorner(3, 1).transpose();
+	cout << "Atama sonrasi, m = " << endl << m << endl;
+
+    return 0;
+}
+----
+
+=== Vektörler İçin Blok İşlemleri
+
+
+[width="100%"]
+|====================
+| Blok işlemi | Dinamik boyutlu blok | Sabit boyutlu blok 
+| İlk n elemanı içeren blok | vector.head(n); | vector.head<n>(); 
+| Son n elemanı içeren blok | vector.tail(n); | vector.tail<n>(); 
+| i elemanından başlayıp n elemanı içeren blok | vector.segment(i,n); | vector.segment<n>(i);  
+|====================
+
+===== Örnek:
+
+[source, c++]
+----
+#include "stdafx.h"
+#include <Eigen>
+#include <iostream>
+
+using namespace Eigen;
+using namespace std;
+
+int main()
+{
+	Eigen::ArrayXf v(6);
+	v << 1, 2, 3, 4, 5, 6;
+	cout << "v.head(3) =" << endl << v.head(3) << endl << endl;
+	cout << "v.tail<3>() = " << endl << v.tail<3>() << endl << endl;
+	v.segment(1, 4) *= 2;
+	cout << "after 'v.segment(1,4) *= 2', v =" << endl << v << endl;
+
+    return 0;
+}
+----
+
+
