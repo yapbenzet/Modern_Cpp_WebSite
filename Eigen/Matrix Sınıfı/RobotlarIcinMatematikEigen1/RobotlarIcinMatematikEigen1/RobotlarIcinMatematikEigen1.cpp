@@ -9,12 +9,13 @@ using namespace Eigen;
 
 int main()
 {
-	Eigen::Matrix<int, 3, 2> mat1;
-
+	Matrix<int, 3, 3> mat1;
+	
+	Matrix3i mat2;
 
 	//Atama işlemleri
 
-	/*Eigen::Matrix2i a ; //2 x 2 'lik integer kare matris  2->2x2  i->integer.
+	Eigen::Matrix2i a ; //2 x 2 'lik integer kare matris  2->2x2  i->integer.
 
 	//a = [1 2 3 4];  yanlış atama şekli
 	//a = [1, 2 : 3, 4];
@@ -26,17 +27,18 @@ int main()
 	a(0, 1) = 2;
 	a(1, 0) = 3;
 	a(1, 1) = a(0, 0) + a(1, 0);
-
+	
 	std::cout << "a matrisi: " << std::endl << a << std::endl << std::endl;
 	std::cout << "a matrisi 1. sutun 1. satir degeri: "  << a(1, 1) << std::endl << std::endl;
 
 	Eigen::RowVector3d vec1; //  3 elemanlı double satır vektörü 3->3 eleman d->double
 
-	//vec1 << 0.5, 1.3; Boyutu derlenme zamanında belirlenmiş matris ve vektörlere virgül ile atama yapılacaksa
-	//vec1(2) = 3.2;   tüm elemanlara değer verilmesi gerekmektedir.
+     //vec1 << 0.5, 1.3; //Boyutu derlenme zamanında belirlenmiş matris ve vektörlere virgül ile atama yapılacaksa
+	//vec1(2) = 3.2;  // tüm elemanlara değer verilmesi gerekmektedir.
 
-	vec1 << 0.5, 1.3, 3.2;
-
+	//vec1 << 0.5, 1.3, 3.2;
+	//std::cout << vec1;
+//	std::cin.get();
 	//veya
 
 	//vec1(0, 0) = 0.5; typedef tanımlı vektör için yanlış atama şekli
@@ -48,32 +50,42 @@ int main()
 	vec1(2) = 3.2;
 
 	std::cout << "vec1 satir vektoru: " << std::endl << vec1 << std::endl << std::endl;
-
-	Eigen::MatrixXi b(5,3); // 5 satır 3 sütunluk integer matris
-
+	
+	/*Eigen::MatrixXi b(5,3); // 5 satır 3 sütunluk integer matris
+	std::cout << b << std::endl;
 	for (int i = 0; i < b.rows(); ++i)//b.rows() -> b matrisinin satır sayısı
 		for (int j = 0; j < b.cols(); ++j)//b.cols() -> b matrisinin sütun sayısı
 			b(i, j) = j + i*b.cols();
 
 	std::cout << "b matrisi: " << std::endl << b << std::endl << std::endl;
-
-	Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic> x;
+	*/
+	/*Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic> x(1,4);
 	x << 0, 1, 2, 3;
 	std::cout << x;
+	x.resize(1, 5);
+	x(0,4) = 6;
+	std::cout << x;*/
+	/*
+	//Matrix<double, Dynamic, Dynamic> m;//Boyutu derlenme sırasında belirlenmemiş double matris
 	*/
+	
+	Matrix<int, 3, 1> vector;
 
-	Matrix<double, Dynamic, Dynamic> m;//Boyutu derlenme sırasında belirlenmemiş double matris
+	vector << 1, 2, 3;
+	
+	std::cout << vector << "vektorun normu  " << vector.norm() << std::endl;
+
 
 	//m << 0.0, 1.1, 2.2,// Matrisin boyutu henüz belli olmadığı için 
 	//	   3.3, 4.4, 5.5;// girilen değerlerin anlamı yoktur.
-	
-	Matrix<double, Dynamic, Dynamic> a(2, 3);//2 satır 3 sütundan oluşan double matris
-	a << 0.0, 1.1, 2.2, 
-   	     3.3, 4.4, 5.5;
+	/*
+	Matrix<double, Dynamic, Dynamic> a2(2, 3);//2 satır 3 sütundan oluşan double matris
+	a2 << 0.0, 1.1, 2.2, 
+   	     3.3, 4.4, 5.5;*/
 
 	//veya 
 
-	MatrixXd b(2, 3);//MatrixXd --> X = Dynamic , d = double
+//	MatrixXd b(2, 3);//MatrixXd --> X = Dynamic , d = double
 	//b << 0.0, 1.1, 2.2, Eleman sayısından fazla eleman girilmiş, hata verir.
 	//	   3.3, 4.4, 5.5,
 	// 	   6.6, 7.7, 8.8;
