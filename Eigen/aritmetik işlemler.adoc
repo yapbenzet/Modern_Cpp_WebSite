@@ -1,4 +1,4 @@
-== Eigen ile Matris ve Vektör Aritmatiği
+== Eigen ile Matris ve Vektör Aritmetiği
 
 Eigen ile matrislerde ve vektörlerde çeşitli işlemler yapılabilmektedir. Bunlar basitçe *, +, - vb. işlemler olabilir. Eigen C{plus}{plus} operatörlerinin bir kısmını overload etmiştir. 
 
@@ -176,7 +176,7 @@ Now mat is mat:
 15 22
 ----
 
-=== Basit aritmatik indirgeme operatörleri
+=== Basit aritmetik indirgeme operatörleri
 
  .sum() Matris elemanlarının toplamını döndürür
  .prod() Matris elemanlarının çarpımını döndürür

@@ -78,6 +78,7 @@ int main()
 
 	//m << 0.0, 1.1, 2.2,// Matrisin boyutu henüz belli olmadýðý için 
 	//	   3.3, 4.4, 5.5;// girilen deðerlerin anlamý yoktur.
+<<<<<<< HEAD
 	/*
 	Matrix<double, Dynamic, Dynamic> a2(2, 3);//2 satýr 3 sütundan oluþan double matris
 	a2 << 0.0, 1.1, 2.2, 
@@ -86,6 +87,15 @@ int main()
 	//veya 
 
 //	MatrixXd b(2, 3);//MatrixXd --> X = Dynamic , d = double
+=======
+	
+	Matrix<double, Dynamic, Dynamic,RowMajor> a(2, 3);//2 satýr 3 sütundan oluþan double matris
+	a << 0.0, 1.1, 2.2, 
+   	     3.3, 4.4, 5.5;
+	//veya 
+	std::cout << *(a.data()+1);
+	MatrixXd b(2, 3);//MatrixXd --> X = Dynamic , d = double
+>>>>>>> 9c474fbe4ff1d1ae618612ee30f0e17d061896bd
 	//b << 0.0, 1.1, 2.2, Eleman sayýsýndan fazla eleman girilmiþ, hata verir.
 	//	   3.3, 4.4, 5.5,
 	// 	   6.6, 7.7, 8.8;

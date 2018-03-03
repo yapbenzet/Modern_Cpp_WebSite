@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 #TargetFrameworkVersion=v4.0:PlatformToolSet=v141:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=10.0.16299.0
 Debug|Win32|D:\Github\Modern_Cpp_WebSite\Eigen\Matrix Sınıfı\RobotlarIcinMatematikEigen1\|
+=======
+#TargetFrameworkVersion=v4.0:PlatformToolSet=v141:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=10.0.15063.0
+Debug|Win32|C:\Users\faruk\Documents\GitHub\Modern_Cpp_WebSite\Eigen\Matrix Sınıfı\RobotlarIcinMatematikEigen1\|
+>>>>>>> 9c474fbe4ff1d1ae618612ee30f0e17d061896bd

@@ -1,0 +1,279 @@
+= Örtüşme
+
+Örtüşme, atama sırasında operatörün solunda ve sağında aynı matrisin (veya dizinin veya vektörün) bulunmasıdır. +  
+"mat = 2 * mat;" gibi bir örtüşme zararsızdır fakat "mat = mat.transpose()" gibi bir atama beklenmedik sonuçlara sebep olur.
+
+.Örnek
+[source,c++]
+----
+//#include "stdafx.h" Visual Studio icin.
+#include <iostream>
+#include <Eigen>
+using namespace std;
+using namespace Eigen;
+
+int main()
+{
+	MatrixXi mat(3, 3); //3x3'luk matris
+	mat << 1, 2, 3, 
+		   4, 5, 6, 
+		   7, 8, 9;
+	cout << "Here is the matrix mat:\n" << mat << endl;
+	// This assignment shows the aliasing problem
+	mat.bottomRightCorner(2, 2) = mat.topLeftCorner(2, 2); //Sag köseye sol koseyi ata.
+	cout << "After the assignment, mat = \n" << mat << endl;
+	/*
+	1 2 3		 1 2 3			1 2 3
+	4 5 6   ->	 4 1 2			4 1 2
+	7 8 9	     7 4 5			7 4 1
+		       (istenen)    (gerceklesen)
+
+	mat.bottomRightCorner(2, 2) = mat.topLeftCorner(2, 2) islemi icin sirasiyla;
+	mat(1,1) = mat(0,0);
+	mat(1,2) = mat(0,1);
+	mat(2,1) = mat(1,0);
+	mat(2,2) = mat(1,1); atama islemleri yapilir. mat(2,2)'ye mat(1,1)'i atama islemi 
+	yapilirken mat(1,1)'in eski degeri degil de yeni degeri atanir. Bu sebepten hata gerceklesir.
+	*/
+	cin.get();
+}
+----
+
+Çıktı:
+[source,]
+----
+Here is the matrix mat:
+1 2 3
+4 5 6
+7 8 9
+After the assignment, mat =
+1 2 3
+4 1 2
+7 4 1
+----
+
+
+Genelde örtüşmeler derleme esnasında tespit edilemez. Eğer ilk örnek biraz daha büyük olsaydı örtüşme sorunu yaşanmazdı. +
+Fakat bazı örtüşmeler çalışma zamanında tespit edilebilir. Aşağıdaki örnekte buna örnek verilmiştir.
+
+.Örnek
+[source,]
+----
+//#include "stdafx.h" //Visual Studio icin.
+#include <iostream>
+#include <Eigen>
+using namespace std;
+using namespace Eigen;
+
+int main()
+{
+	Matrix2i a; a << 1, 2, 3, 4;
+	cout << "Here is the matrix a:\n" << a << endl;
+	a = a.transpose(); // !!! HATA !!!
+	cout << "and the result of the aliasing effect:\n" << a << endl;
+	/*
+		1 2		->		1 3			1 2
+		3 4				2 4			2 4
+					 (istenen)  (gerceklesen)
+	*/
+	cin.get();
+}
+----
+
+Çıktı:
+[source,]
+----
+Here is the matrix a:
+1 2
+3 4
+Assertion failed: (!check_transpose_aliasing_run_time_selector <typename Derived::Scalar,blas_traits<Derived>::IsTransposed,OtherDerived> ::run(extract_data(dst), other)) && "aliasing detected during transposition, use transposeInPlace() " "or evaluate the rhs into a temporary using .eval()", file d:\program\eigen\src\core\transpose.h, line 378
+----
+
+
+Örtüşme hatasının giderilmesi için sağ taraf geçici bir matriste/dizide tutulmalı ve daha sonra sol tarafa atanmalıdır. Eval() komutu bu işlevi yapar.
+
+.Örnek
+[source,]
+----
+//#include "stdafx.h" //Visual Studio icin.
+#include <iostream>
+#include <Eigen>
+using namespace std;
+using namespace Eigen;
+
+int main()
+{
+	MatrixXi mat(3, 3);
+	mat << 1, 2, 3, 
+		   4, 5, 6, 
+		   7, 8, 9;
+	cout << "Here is the matrix mat:\n" << mat << endl;
+	mat.bottomRightCorner(2, 2) = mat.topLeftCorner(2, 2).eval();
+	//eval(): Ortusme hatas
+	cout << "After the assignment, mat = \n" << mat << endl;
+	cin.get();
+    return 0;
+}
+
+
+----
+
+Çıktı:
+[source,]
+----
+Here is the matrix mat:
+1 2 3
+4 5 6
+7 8 9
+After the assignment, mat =
+1 2 3
+4 1 2
+7 4 5
+----
+
+.Örnek
+[source,]
+----
+//#include "stdafx.h" //Visual Studio icin.
+#include <iostream>
+#include <Eigen>
+using namespace std;
+using namespace Eigen;
+
+int main()
+{
+	MatrixXf a(2, 3); a << 1, 2, 
+						   3, 4, 
+						   5, 6;
+	cout << "Here is the initial matrix a:\n" << a << endl;
+	/*
+	"a = a.transpose().eval();" komutu hatayi giderir. Fakat 
+	"a.transposeInPlace();" komutu ile de hatasiz calisma saglanabilir.
+	*/
+	a.transposeInPlace();
+	cout << "and after being transposed:\n" << a << endl;
+	cin.get();
+    return 0;
+}
+
+
+----
+
+Çıktı:
+[source,]
+----
+Here is the initial matrix a:
+1 2 3
+4 5 6
+and after being transposed:
+1 4
+2 5
+3 6
+----
+
+Eğer "xxxInPlace()" fonksiyonu mevcut ise bu fonksiyonu kullanmak ne yapıldığını daha net bir şekilde ifade etme açısından daha iyidir.
+
+|====
+| Original function | In-place function
+| MatrixBase::adjoint() | MatrixBase::adjointInPlace()
+| DenseBase::reverse() | DenseBase::reverseInPlace()
+| LDLT::solve() | LDLT::solveInPlace()
+| LLT::solve() | LLT::solveInPlace()
+| TriangularView::solve() | TriangularView::solveInPlace()
+| [DenseBase::transpose() | DenseBase::transposeInPlace()
+|====
+
+Bununla birlikte, bileşen tabanlı işlemleri uygulamak (matris ekleme ve skaler çarpma  gibi) güvenlidir.
+
+.Örnek
+[source,]
+----
+//#include "stdafx.h" //Visual Studio icin.
+#include <iostream>
+#include <Eigen>
+using namespace std;
+using namespace Eigen;
+
+int main()
+{
+	MatrixXf mat(2, 2);
+	mat << 1, 2, 4, 7;
+	cout << "Here is the matrix mat:\n" << mat << endl << endl;
+	mat = 2 * mat;
+	cout << "After 'mat = 2 * mat', mat = \n" << mat << endl << endl;
+	mat = mat - MatrixXf::Identity(2, 2); //mat matrisinden birim matris cikarma islemi
+	cout << "After the subtraction, it becomes\n" << mat << endl << endl;
+	ArrayXXf arr = mat;
+	arr = arr.square(); //karesini alma islemi
+	cout << "After squaring, it becomes\n" << arr << endl << endl;
+	// Combining all operations in one statement:
+	mat << 1, 2, 4, 7;
+	mat = (2 * mat - MatrixXf::Identity(2, 2)).array().square();
+	cout << "Doing everything at once yields\n" << mat << endl << endl;
+	cin.get();
+    return 0;
+}
+
+----
+
+Çıktı:
+[source,]
+----
+Here is the matrix mat:
+1 2
+4 7
+
+After 'mat = 2 * mat', mat =
+ 2  4
+ 8 14
+
+After the subtraction, it becomes
+ 1  4
+ 8 13
+
+After squaring, it becomes
+  1  16
+ 64 169
+
+Doing everything at once yields
+  1  16
+ 64 169
+----
+
+.Örnek
+[source,]
+----
+//#include "stdafx.h" //Visual Studio icin.
+#include <iostream>
+#include <Eigen>
+using namespace std;
+using namespace Eigen;
+
+int main()
+{
+	MatrixXf matA(2, 2), matB(2, 2);
+	matA << 2, 0, 
+			0, 2;
+	matB = matA * matA;
+	// Verimli degil.
+	cout << matB << endl << endl;
+	matB.noalias() = matA * matA;
+	// Daha verimli. Sonucu gecici bir matriste tutup matB'ye kopyalanmak yerine dogrudan matB'ye atar.
+	cout << matB;
+	cin.get();
+    return 0;
+}
+
+----
+
+Çıktı:
+[source,]
+----
+4 0
+0 4
+
+4 0
+0 4
+----
+
+  
