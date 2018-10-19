@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include <iostream>
 #include <exception>
 
@@ -135,11 +135,9 @@ public:
 	}
 	void remove(T incomingData) {
 		node* dataToBeDeleted = this->root;
-		std::cout << "Your Data = " << incomingData << "\n";
 		while (!(dataToBeDeleted->data == incomingData)) {
 			dataToBeDeleted = dataToBeDeleted->next;
 		}
-		std::cout << "Data To Be Deleted = " << dataToBeDeleted->data << "\n";
 		if (this->isFirst(dataToBeDeleted)) {
 			this->root = dataToBeDeleted->next;
 			this->root->prev = nullptr;
@@ -272,13 +270,11 @@ public:
 	}
 	void remove(T incomingData) {
 		node* dataToBeDeleted = this->root;
-		std::cout <<"Your Data = " << incomingData << "\n";
 		node* preValue = nullptr;
 		while (!(dataToBeDeleted->data == incomingData)) {
 			preValue = dataToBeDeleted;
 			dataToBeDeleted = dataToBeDeleted->next;
 		}
-		std::cout << "Data To Be Deleted = " << dataToBeDeleted->data << "\n";
 		if (this->isFirst(dataToBeDeleted)) {
 			this->root = dataToBeDeleted->next;
 			dataToBeDeleted->next = nullptr;
@@ -301,4 +297,3 @@ int main()
 	SinglyLinkedList<MyObject> deneme;
 	DoublyLinkedList<MyObject> test;
 }
-
