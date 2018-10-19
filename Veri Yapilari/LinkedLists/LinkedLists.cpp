@@ -1,7 +1,7 @@
 #include "pch.h"
 #include <iostream>
 #include <exception>
-
+#include <time.h>
 class MyObject {
 public:
 	int data;
@@ -49,8 +49,8 @@ class DoublyLinkedList
 		node(node&&) = default;
 		node(const node&) = default;
 		~node() {
-			delete next;
-			delete prev;
+			if(next != nullptr)
+				delete next;
 		}
 	};
 	node* root;
@@ -67,7 +67,6 @@ public:
 			root = new node(incomingData);
 			pointer = new node;
 			pointer = root;
-			
 		}
 		else{
 			pointer->next = new node(incomingData);
@@ -88,7 +87,6 @@ public:
 			currentNode->prev = prevNode;
 			currentNode->next = nextNode;
 			nextNode->prev = currentNode;
-			pointer = pointer->next;
 		}
 		
 	}
@@ -135,20 +133,31 @@ public:
 	}
 	void remove(T incomingData) {
 		node* dataToBeDeleted = this->root;
+		std::cout << "IncomingData = " << incomingData << "\n";
+		if (this->root == nullptr)
+		{
+			return;
+		}
 		while (!(dataToBeDeleted->data == incomingData)) {
 			dataToBeDeleted = dataToBeDeleted->next;
+			if (dataToBeDeleted == nullptr) {
+				return;
+			}
 		}
 		if (this->isFirst(dataToBeDeleted)) {
+			if (dataToBeDeleted->next == nullptr && dataToBeDeleted->prev == nullptr) {
+				this->root = nullptr;
+				return;
+			}
 			this->root = dataToBeDeleted->next;
 			this->root->prev = nullptr;
 			dataToBeDeleted->next = nullptr;
-			pointer = pointer->prev;
 		}
 		else if (this->isLast(dataToBeDeleted)) {
 			node* temp = this->last()->prev;
 			this->last()->prev = nullptr;
 			temp->next = nullptr;
-			pointer = pointer->prev;
+			pointer = temp;
 		}
 		else
 		{
@@ -157,7 +166,6 @@ public:
 			previousNode->next = nextNode;
 			nextNode->prev = previousNode;
 			dataToBeDeleted->next = dataToBeDeleted->prev = nullptr;
-			pointer = pointer->prev;
 		}
 	}
 	
@@ -269,19 +277,31 @@ public:
 		return false;
 	}
 	void remove(T incomingData) {
+		std::cout << "incomingData = " << incomingData << "\n";
 		node* dataToBeDeleted = this->root;
 		node* preValue = nullptr;
+		if (this->root == nullptr)
+		{
+			return;
+		}
 		while (!(dataToBeDeleted->data == incomingData)) {
 			preValue = dataToBeDeleted;
 			dataToBeDeleted = dataToBeDeleted->next;
+			if (dataToBeDeleted == nullptr) {
+				return;
+			}
 		}
 		if (this->isFirst(dataToBeDeleted)) {
+			if (dataToBeDeleted->next == nullptr) {
+				this->root = nullptr;
+				return;
+			}
 			this->root = dataToBeDeleted->next;
 			dataToBeDeleted->next = nullptr;
 		}
 		else if (this->isLast(dataToBeDeleted)) {
 			preValue->next = nullptr;
-			dataToBeDeleted = nullptr;
+			pointer = preValue;
 		}
 		else
 		{
@@ -294,6 +314,19 @@ public:
 
 int main()
 {
-	SinglyLinkedList<MyObject> deneme;
-	DoublyLinkedList<MyObject> test;
+	clock_t tStart = clock();
+	SinglyLinkedList<MyObject> test;
+	DoublyLinkedList<MyObject> test2;
+	for (size_t i = 0; i < 1000; i++)
+	{
+		test.insert(MyObject(i));
+	}
+	for (size_t i = 0; i <10000; i++)
+	{
+		test.remove(MyObject(i));
+	}
+	std::cout << "    Current List : \n ";
+	test.listprint();
+	printf("Time taken: %.6fs\n", (double)(clock() - tStart) / CLOCKS_PER_SEC);
 }
+
