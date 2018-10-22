@@ -47,6 +47,8 @@ class Stack:
             self.SP = self.SP.prev
             self.capacity = self.capacity + 1
             return  temp.data
+    def peek(self):
+        return self.SP.data
 
 test = Stack(5)
 
@@ -54,9 +56,7 @@ for i in range(6):
     test.push(i+1)
 
 test.display()
+print(test.peek())
 
 for i in range(6):
     test.pop()
-
-
-
