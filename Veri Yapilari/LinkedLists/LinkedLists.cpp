@@ -48,10 +48,7 @@ class DoublyLinkedList
 		node() = default;
 		node(node&&) = default;
 		node(const node&) = default;
-		~node() {
-			if(next != nullptr)
-				delete next;
-		}
+		~node() = default;
 	};
 	node* root;
 	node* pointer;
@@ -190,10 +187,7 @@ class SinglyLinkedList
 		node(T data) : data(data) {}
 		node(const node&) = default;
 		node(node&&) = default;
-		~node()
-		{
-			delete next;
-		}
+		~node() = default;
 	};
 	node *root;
 	node *pointer;
