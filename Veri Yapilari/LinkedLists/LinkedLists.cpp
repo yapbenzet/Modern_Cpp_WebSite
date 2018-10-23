@@ -271,7 +271,6 @@ public:
 		return false;
 	}
 	void remove(T incomingData) {
-		std::cout << "incomingData = " << incomingData << "\n";
 		node* dataToBeDeleted = this->root;
 		node* preValue = nullptr;
 		if (this->root == nullptr)
@@ -311,16 +310,17 @@ int main()
 	clock_t tStart = clock();
 	SinglyLinkedList<MyObject> test;
 	DoublyLinkedList<MyObject> test2;
-	for (size_t i = 0; i < 1000; i++)
+	int i;
+	for (i = 0; i < 1000000; i++)
 	{
 		test.insert(MyObject(i));
 	}
-	for (size_t i = 0; i <10000; i++)
+	for (i = 0; i <1000000 ; i++)
 	{
 		test.remove(MyObject(i));
 	}
-	std::cout << "    Current List : \n ";
+	std::cout << "Current List : \n ";
 	test.listprint();
-	printf("Time taken: %.6fs\n", (double)(clock() - tStart) / CLOCKS_PER_SEC);
+	printf("Time taken: %.4fs\n", (double)(clock() - tStart) / CLOCKS_PER_SEC);
 }
 
