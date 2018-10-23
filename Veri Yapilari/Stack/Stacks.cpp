@@ -37,10 +37,7 @@ class Stack
 		node() = default;
 		node(node&&) = default;
 		node(const node&) = default;
-		~node() {
-			if (prev != nullptr)
-				delete prev;
-		}
+		~node() = default;
 	};
 	node* root;
 	node* SP;
@@ -115,16 +112,15 @@ public:
 int main()
 {
 	clock_t tStart = clock();
-	Stack<MyObject> test(3000);
-	for (int i = 0; i < 3001; i++)
+	Stack<MyObject> test(300000);
+	for (int i = 0; i < 300001; i++)
 	{
 		test.push(MyObject(i + 1));
 	}
 	std::cout << test.peek() << "\n";
-	test.display();
-	for (int i = 0; i < 3001; i++)
+	for (int i = 0; i < 300001; i++)
 	{
-		std::cout << "Returned Data = " << test.pop() << "\n";
+		test.pop();
 	}
 	test.display();
 	std::cout << test.peek() << "\n";
