@@ -7,7 +7,7 @@ std::array belli sayida veri tutabilen bir dizidir. Siniri bellidir.
 Sinir degerini template deger parametresi olarak alir.
 */
 
-using namespace std; 
+using namespace std;
 
 void uzunlukYaz(const array<int, 5> &myArray)
 {
@@ -45,7 +45,7 @@ int main()
 
 
 	//at() ile atama da yapilabillir.
-	myArray.at(1) = 42; 
+	myArray.at(1) = 42;
 
 	//size() fonksiyonu arrayin boyutunu dondurur.
 	cout << "arrayin boyutu = " << myArray.size() << endl;
@@ -59,7 +59,7 @@ int main()
 	}
 	cout << endl;
 
-	//Arrayleri std::sort ile siralayabiliriz. 
+	//Arrayleri std::sort ile siralayabiliriz.
 	sort(myArray.begin(), myArray.end());
 
 	for (const auto &elem : myArray)
