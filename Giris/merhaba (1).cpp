@@ -10,8 +10,8 @@ int main() // Her C programının main () olarak bilinen bir metodu olmalıdır.
    // ::, cout öğesinin std ad alanının bir parçası olduğunu belirtmek için kullanılır.
    //Ayrıca satırın noktalı virgülle bittiğine dikkat edin. C ++ ifadeleri (statements) noktalı virgüllerle sonlandırılır.
    return 0;
-   // Return ifadesi, bir arayana geri değer gönderilmesi beklendiğinde bir işlevi veya yöntemi sonlandırmak için kullanılır.
-   // Bu durumda, arayan kişi işletim sistemidir ve döndürülen değer 0 tamsayıdır.
+   // Return ifadesi, bir arayana geri değer gönderilmesi beklendiğinde bir işlevi veya yöntemi sonlandırmak için kullanılır. 
+   // Bu durumda, arayan kişi işletim sistemidir ve döndürülen değer 0 tamsayıdır. 
    // Program bu ifadeye ulaşırsa, 0 değerinin döndürülmesi, işletim sistemine kodun başarıyla çalıştırıldığının bir göstergesidir.
    // Geçmişte, programcılar başarılı bir uygulama olduğunu belirtmek için 0 değerini ve programda bir yerde bir hata olduğunu göstermek için sıfır olmayan değerleri gösterirdi.
 }
