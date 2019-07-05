@@ -1,0 +1,21 @@
+= C ++ başlık dosyaları
+
+Üstbilgi dosyaları , işlem öncesi #include ifadesi kullanılarak herhangi bir C++ programına içe aktarılan veya kullanılan *İşlev ve Değişkenlerin* tanımlarını içerir.Üstbilgi dosyası işlev bildirimi ve makro tanımı içeren bir ".h" uzantısına sahiptir.
+
+image::https://www.sitesbay.com/cpp/images/header-files-in-cpp.png[]
+
+Örnek Başlık Dosyaları:
+
+ #include <iostream>
+
+ #include <conio.h>
+ 
+ #include <math.h>
+ 
+ #include <stdio.h>
+ 
+===== Neden başlık dosyalarına ihtiyaç var?
+
+Programımızda herhangi bir işlevi kullanmak istediğimizde, önce tanımlarını C++ kütüphanesinden içe aktarmamız gerekir, bildirimlerini ve tanımlarını almak için başlık dosyasına *#include* kullanarak başlık dosyasını dahil etmemiz gerekir. Üstbilgi dosyası, herhangi bir  programının en üstünde yer alır.
+
+Örneğin, C ++ programında clrscr () kullanıyorsak, conio.h başlık dosyasını dahil etmemiz gerekir, çünkü conio.h başlık dosyasında clrscr () tanımının (clear screen için) conio.h başlık dosyasına yazılması gerekir.
