@@ -1,0 +1,30 @@
+= İlk Uygulamamız : ''Merhaba Dünya Uygulaması“
+
+ #include <iostream>(1)
+ int main()(2)
+ {(3)
+    std::cout<<"hello world";(4)
+ return 0;(5)
+ }(6)
+ 
+*1.* Burası direk olarak ön işlemci olarak bilinir.Derleyiciye bir dosya yerleştirme talimati verir.Bu dosya iostream kütüphanesi için gerekli kodları içerir.Bu kütüphane input,output kullanmaya izin veren kodları içerir.
+
+*2.* Her c++ programı main isimli metoda sahip olmalıdır.Burası uygulamanın başlangıç noktasıdır.Kodlar yorumlanmaya bu satırdan başlanır.int kelimesi metodun dönüş tipidir.
+
+
+*3.* C++ da metodların gövdesi bu karakter ile başlar.
+
+*4.*
+Bu kod cout methodunu kullanır.cout ekrana hello world yazdırır.:: ise cout’un std isim uzayına ait olduğunu belirtir.
+
+
+*5.*  Bir metodun çağırana geri dönmesi gerektiği zaman,return deyimi o metodu bitirmek için kullanılır.Bu örnekte döndürülen tamsayı değeri sıfırdır.Program bu noktaya gelirse 0 dönmesi demek programın doğru çalıştığını gösterir.
+
+
+*6.* 
+Bu karakter main metodunun gövdesini kapatır ve derleyeici metodun nerde bittiğini bilir.Metoddan farklı olarak bazı işlevler içinde kullanılır.
+
+
+
+
+
