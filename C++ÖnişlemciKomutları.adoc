@@ -1,0 +1,23 @@
+= Ön İşlemci Kullanımı (Preprocessor)
+
+Ön işlemci komutu ne demektir? Önişlemci komutları, kaynak kodun derleme modülüne verilmeden önce kaynakkodla ilgili yapılmak istenen ön işlemleriri belirtmek için kullanılan komutlarıdr. Önişlemci komutlarının derleme modülü ile hiç bir alakası yoktur. Önişlemci dediğimiz modül bu komutları değerlendirip işleme sokarak kaynak kodu derleme modülüne verir.
+
+====== #include önişlemci komutu
+
+Kaynak koda standart bir takım başlık dosyalarını veya kendi fonksiyonlarımızla ilgili prototip bilgilerin içeren dosyaları eklemek için kullanılan önişlemci komutudur. İki tip kuıllanımı vardır.
+
+* #include <iostream.h> // Komut böyle kullanılırsa derleyicinin varsayılan olarak belirlediği kalsörlerde iostream.h dosyası aranır bulunursa kaynak koda eklenir ve kod derleme modülüne iletilir.Eğer iostream.h dosyası bulunamaz ise derleme zamanında hata alırız. Bu şekilde ki kullanımı genellikle standart başlık dosyalarını kaynak koda eklemek istediğimiz zamana kullanırız.
+
+====== #define önişlemci komutu
+
+#define önişlemci komutu #include önişlemci komutu gibi hemen hemen bütün profesyonel uygulamada gördüğümüz bir komuttur. #define önişlemci komutu kaynak kod içerisinde deyim yerindeyse metinsel bir değişiklik yapar.
+
+*  Mesela Geometrik şekillerin alanlarını veya onların bir takım özelliklerini bulmak için C++ ile bir kütüphane geliştirmek istiyorsunuz. Hemen hemen bütün geometrik şekillerde pi sayısının kullanıldığını tahmin edebilirsiniz. pi sayısının her lazım olduğu yerde 3.14 sayısını kullanmak yerine genel bir pi sayısı tanımlarsak pi sayısını istediğimiz gibi değiştirebiliriz.Eğer her pi lazım olduğunda değeri ile kullansaydık pi sayısını değiştirmek istediğimizde kaynak kodda bütün 3.14 geçen yerleri tek tek değiştirmemiz gerekecekti, halbuki eğer genel bir tanımlama yapmış olsaydık pi yi tek bir yerde değiştirmemiz yetecekti. En cok kullanılan ön işlemci komutlarından #define bu işi yapmamız için tasarlanmıştır.
+ 
+ #define pi 3.14
+
+
+
+
+
+
