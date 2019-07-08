@@ -1,0 +1,26 @@
+= C++  Programlama Dili Genel Yapısı
+
+C++ programla dili aynı C dili gibi iki temel bölümden oluşur.
+
+* Ön işlemci direktifleri
+
+* Ana fonksiyon ve yardımcı fonksiyonlar
+
+=== Önişlemci Direktifleri
+
+* #include<kütüphane_ismi . header_dosyası>: Bu komut önişlemciye hangi kütüphanenin header_dosyasını kullanarak programı çalıştırması gerekiğini söyler. Mesela C programlama dilince (#include<stdio.h>) diye tanımladığımız kod c++ dilinde (#include<iostream>) şeklinde tanımlarız ve kodlarımız bu kütüphanedeki kurallara uygun olarak derlenir ve bilgisayar tarafından çalıştırılır.
+
+* #define tanım kalıp :  Bu komut önişlemciye  tanım isminde kalıp verisini yaz der ve ister ana fonksiyonda ister diğer fonksiyonlarda artık tanım ismini çağırdığımızda kalıp verisi gelecektir. Örnek olarak göstermek gerekirse;
+
+ #define PI 3,14158263355333
+
+Bu komutu kullanarak artık programımızın istediğimiz  yerinde bu PI değişkenini kullanabilirve işlem yapabiliriz.
+
+=== Ana Fonksiyon Ve Yardımcı Fonksiyonlar
+
+main() : Bu fonksiyon C programlama dersinde olduğu gibi C++ programlama dili için de ana fonksiyondur ve diğer fonksiyonların çalışması için gereklidir.
+
+
+
+
+
