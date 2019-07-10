@@ -9,7 +9,7 @@
  
 *1.* Burası direk olarak ön işlemci olarak bilinir.Derleyiciye bir dosya yerleştirme talimati verir.Bu dosya iostream kütüphanesi için gerekli kodları içerir.Bu kütüphane input,output kullanmaya izin veren kodları içerir.
 
-*2.*Her C programının main () olarak bilinen bir metodu olmalıdır. Programın bilgisayarınızda yürütülmesine başladığınızda uygulamanın giriş noktası olarak adlandırılır. 
+*2.* Her C programının main () olarak bilinen bir metodu olmalıdır. Programın bilgisayarınızda yürütülmesine başladığınızda uygulamanın giriş noktası olarak adlandırılır. 
 int kısmı, yöntemin dönüş türüdür. Yöntem adından sonraki parantezler (), bunun bir yöntemin olduğunu ve argüman almadığını, başka bir deyişle, değerleri aktarmak için parametre olmadığını belirtir.
 
 
