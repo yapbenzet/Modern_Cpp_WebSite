@@ -1,4 +1,4 @@
-= C ++ başlık dosyaları
+= Modern C ++ da başlık dosyaları
 
 Üstbilgi dosyaları , işlem öncesi #include ifadesi kullanılarak herhangi bir C++ programına içe aktarılan veya kullanılan *İşlev ve Değişkenlerin* tanımlarını içerir.Üstbilgi dosyası işlev bildirimi ve makro tanımı içeren bir ".h" uzantısına sahiptir.
 
