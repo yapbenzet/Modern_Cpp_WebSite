@@ -13,17 +13,21 @@
 int kısmı, yöntemin dönüş türüdür. Yöntem adından sonraki parantezler (), bunun bir yöntemin olduğunu ve argüman almadığını, başka bir deyişle, değerleri aktarmak için parametre olmadığını belirtir.
 
 
-*3.* C++ da metodların gövdesi bu karakter ile başlar.
+*3.* C ++ 'daki metod gövdeleri açık bir küme ayracı ile başlar.
 
-*4.*
-Bu kod cout methodunu kullanır.cout ekrana hello world yazdırır.:: ise cout’un std isim uzayına ait olduğunu belirtir.
+*4.* std::cout << "Hello World!";   Bu kod, Merhaba Dünya! Metnini göndermek için cout ('see out' olarak telaffuz edilir) olarak bilinen bir yöntem kullanır çıkış olarak konsola görüntüleme için kullanılır. 
+Bu komutun std :: öneki, cout'un std olarak bilinen bir ad alanının parçası olduğunu göstermenin bir yoludur.
+::, cout öğesinin std ad alanının bir parçası olduğunu belirtmek için kullanılır.
+Ayrıca satırın noktalı virgülle bittiğine dikkat edin. C ++ ifadeleri (statements) noktalı virgüllerle sonlandırılır.
 
 
-*5.*  Bir metodun çağırana geri dönmesi gerektiği zaman,return deyimi o metodu bitirmek için kullanılır.Bu örnekte döndürülen tamsayı değeri sıfırdır.Program bu noktaya gelirse 0 dönmesi demek programın doğru çalıştığını gösterir.
-
+*5.*  Return ifadesi, bir arayana geri değer gönderilmesi beklendiğinde bir işlevi veya yöntemi sonlandırmak için kullanılır. 
+ Bu durumda, arayan kişi işletim sistemidir ve döndürülen değer 0 tamsayıdır. 
+ Program bu ifadeye ulaşırsa, 0 değerinin döndürülmesi, işletim sistemine kodun başarıyla çalıştırıldığının bir göstergesidir.
+ Geçmişte, programcılar başarılı bir uygulama olduğunu belirtmek için 0 değerini ve programda bir yerde bir hata olduğunu göstermek için sıfır olmayan değerleri gösterirdi.
 
 *6.* 
-Bu karakter main metodunun gövdesini kapatır ve derleyeici metodun nerde bittiğini bilir.Metoddan farklı olarak bazı işlevler içinde kullanılır.
+Bu çizgi main () fonksiyonunun gövdesini kapatır ve zorunludur, böylece derleyici, işlevin veya yöntemin nerede bittiğini bilir, fakat aynı zamanda dersin ilerleyen bölümlerinde değişken kapsam ve görünürlükle ele alınacak başka amaçlar için de kullanılır.
 
 
 
