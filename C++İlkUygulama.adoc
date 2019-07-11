@@ -4,17 +4,17 @@
 [source,c++]
 ----
 
-#include<iostream> // <1>
+#include<iostream>  <1>
 
-int main() ;;<2>
+int main() <2>
 
-{ // <3>
+{  <3>
 
-cout<<"hello world"<<endl; # <4>
+std::cout<<"hello world"<<endl;  <4>
 
-return 0; ;; <5>
+return 0;  <5>
 
-} // <6>
+}  <6>
 ----
  
 *1.* Burası direk olarak ön işlemci olarak bilinir.Derleyiciye bir dosya yerleştirme talimati verir.Bu dosya iostream kütüphanesi için gerekli kodları içerir.Bu kütüphane input,output kullanmaya izin veren kodları içerir.
