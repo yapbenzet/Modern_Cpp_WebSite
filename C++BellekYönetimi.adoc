@@ -1,0 +1,155 @@
+== BELLEK YÖNETİMİ
+
+Bellek yönetimi önemli bir kavramdır ve bu denli önemli olmasının sebebi sınırsız belleğimizin olmamasıdır.Burada önemli olan belleği verimli kullanabilmektir. Belleği verimli kullanabilmek her programcının amacı olmalıdır. Eğer programcı bellek yönetimini iyi yapamıyorsa daha fazla belleğe ihtiyaç duyar. Daha fazla belleğe ihtiyaç duymak belli başlı birkaç sorunu beraberinde getirir. Fazla maliyet, programın yavaş çalışması bunların en önemlileridir. Yavaş çalışan ve gereğinden fazla bellek tüketen bir program niçin kullansın ki ?
+
+
+
+Normalde kullandığımız tüm değişkenlerin boyutları derleme sırasında bilinir ve program buna göre yazılır.Ama bazen bir veri için ne kadar yerin ayrılması gerektiğini bilemeyiz. Örneğin kullanıcıdan ismini istediğimiz zaman girilecek ismin kaç karakterli olduğunu bilemeyiz. Bunun için bir üst sınır vermemiz gerekir. Peki ya kullanıcı daha fazlasını girerse? Ya da bir dosyadan veri okurken dosyanın boyutunu bilemeyiz. Boyutunu bilmediğimiz veriler için program çalışırken yer ayırmak zorundayız.
+
+Bunu da new deyimi ile yapıyoruz. Kullanımı şöyledir:
+
+.Editable.c++
+[source,c++]
+----
+
+1 degiskenturu *degisken adi = new degiskenturu
+
+----
+
+Dinamik veri ayırma işlemini pointerler ile yapıyoruz.
+
+.Editable.c++
+[source,c++]
+----
+
+1 int *ptr = new int; //Dinamik yer ayirma
+----
+
+sonradan * operatörü ile değer verebiliriz.
+
+.Editable.c++
+[source,c++]
+----
+1 *ptr = 10;
+----
+
+
+
+Dinamik olarak bellekten yer ayırma yaptığımızda işletim sistemine yer ayırma yapmak istediğimizi belirtiyoruz. Eğer ramde yer varsa işletim sistemi bize ramden bir adres döndürüyor.
+
+* Dinamik ayrılan değişkene ilk değer verme
+C++11 ile birlikte bunu aşağıdaki gibi yapabiliriz.
+
+.Editable.c++
+[source,c++]
+----
+1 int *x = new int(5);
+
+2 int *y = new int{15};
+----
+
+Dinamik olarak ayrılmış yer ile işimiz bittiği zaman aldığımız yeri işletim sistemine geri vermeliyiz. Eğer bunu yapmazsak ramde çöp dellek olur. Buna “memory leak” denir.
+
+Bunun için delete deyimi kullanılır.
+
+.Editable.c++
+[source,c++]
+----
+1 delete x;
+----
+
+Eğer pointer kullanılmayacaksa pointeri nullptr’ye eşitlemek gerekir.
+
+.Editable.c++
+[source,c++]
+----
+1 x = nullptr;
+----
+
+Silinmiş pointeri dereferans etmek tanımlanmamış davranıştır. Yani veri hala orda olabilir ya da işletim sistemi orayı başka bir program için saklıyor olabilir.
+
+Bunun için bir daha kullanmayacağımız pointerları nullptrye eşitlemek iyi bir yaklaşımdır.
+
+
+====== Dinamik yer ayrılmış diziler
+
+Diziler için new[] ve delete[] kullanılır.
+
+.Editable.c++
+[source,c++]
+----
+#include <iostream>
+int main()
+{
+    std::cout << "Enter a positive integer: ";
+    int length;
+    std::cin >> length;
+    int *array = new int[length]; // lenth sabit olmak zorunda degildir.
+    std::cout << "I just allocated an array of integers of length " << length << '\n';
+    array[0] = 5; // set element 0 to value 5
+    delete[] array; // use array delete to deallocate array
+    array = nullptr;
+    return 0;
+
+}
+----
+
+
+
+new yazarken [] kullanmasak da dil bizim dizi için yer ayırdığımızı bildiği için sıkıntı olmaz.
+
+* Dinamik olarak ayrılmış dizilerin belleklelerini serbest bırakma
+
+Bunu yaparken delete[] kullanmak zorundayız. Normal delete tanımlanmamış davranış (undefined behavior) sebep olur.
+Eğer dinamik dizinin tanımlanma sırasında tüm elemanlarının sıfır olmasını istiyorsanız aşağıdaki gibi yazabilirsiniz.
+
+.Editable.c++
+[source,c++]
+----
+1 int *dizi = new int[10]();
+
+----
+
+C++11 ile gelen bir özellik sayesinde dizilerinizi aşağıdaki gibi tanımlayabilirsiniz.
+
+
+.Editable.c++
+[source,c++]
+----
+1 int *dizi = new int[10] {1,2,3,4,5,6,7,8,9,10};
+
+----
+
+
+
+
+Dizileri yeniden boyutlandırma
+
+C++ direkt olarak böyle bir özellik sunmaz ama bunu size kendiniz kodlayabilirsiniz. Bunun yerine bir standart kütüphane üyesi olan std::vectorü kullanabilirsiniz.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
