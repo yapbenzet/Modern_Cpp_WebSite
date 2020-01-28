@@ -1,0 +1,210 @@
+= Bilgisayarlı Görü ve Görüntü İşleme için Modern C ++
+:TOC:
+
+
+
+== 1. ÖZET
+
+Bu seride değişkenler ve temel tipleri (built-in types(yerleşik tipler), strings(dizgi), vector, array(dizi)) ve control yapıları (if statement, switch statement, loops) örneklerle anlatılmaktadır.
+
+== 2. GİRİŞ
+
+=== 2.1. Değişkenleri Adlandırma
+
+Değişken bildirimi her zaman aşağıdaki şekildedir:
+
+----
+<TYPE> <NAME> [ = <VALUE>];
+----
+
+* Her değişkenin bir türü vardır 
+* Değişkenler türlerini değiştiremez
+* Mümkünse değişkenleri tanımlarken başlangıç değeri verin
+[source,C++]
+----
+1 int baslangıc_degeri_yok;
+2 bool baslangıc_degeri_var = true;
+----
+
+//include::Değişken isimlendirme.adoc[]
+
+* C++, **büyük ve küçük harflere karşı duyarlı**dır. Böylece ‘Sayi’ ve ‘sayi’ isminde 2 farklı değişken oluşturabilirsiniz hepsi ayrı değişken olarak algınalırlar.
+
+* Değişkenlere *anlamlı adlar* verilmelidir.Bu yüzden değişken tanımlarken uzun isimlendirmeden çekinmeyin.(A, B, C vb. kısa anlamsız isimlendirmeler kodun okunurluğunu, anlaşılırlığını azaltır).Ayrıca değişken tanımlarken olumsuz ifadeler içeren isimler kullanmayın bu hem kafa karışıklığına hemde yavaş düşünmenize neden olur. 
+
+* Değişkenlerin isimleri alfabede bulunan karakterlerle ya da _ (alt çizgi) ile başlamalı.Kesinlikle sayı veya özel karakter ile isimlendirmeye başlayamayız. Ama ilk harf hariç diğer karakterler sayı olabilir.
+
+* Değişken isimlerinde C++ dilinin özel anahtar kelimelerini kesinlikle kullanamayız.
+
+* Değişken isimleri birden fazla kelime olduğu zaman; kelimelerin arasına boşluk konmaz. Bu tür değişkenleri ya kelimeleri birleştirerek veya kelimeler arasına _ (alt çizgi) karakteri koyarak isimlendiririz.
+
+* Değişken ismi en fazla 255 karakterden oluşabilir.
+
+https://translate.google.com/?source=gtx_m#view=home&op=translate&sl=en&tl=tr&text=Google%20C%2B%2B%20Style%20Guide[Google C ++ Stil Kılavuzu]
+
+=== 2.2. Built-in types
+[source,cpp]
+----
+1 bool sonuc = false; // Boolean: doğru veya yanlış.
+2 char karakter = '\n'; // Tek karakter.
+3 int tam_sayi = 42; //  Tam sayı.
+4 short kisa_tamsayi = 42; // Kısa numara.
+5 long uzun_tamsayi = 42; // Uzun sayı.
+6 float fraction = 0.01f; // virgüllü sayı.
+7 double precise_num = 0.01; // virgülden sonrası çok olan sayi.
+8 auto some_int = 13; // otomotik tip [int].
+9 auto some_float = 13.0f; // otomotik tip [float].
+10 auto some_double = 13.0; // otomotik tip [double].
+----
+
+https://en.cppreference.com/w/cpp/language/types[Daha fazla ayrıntı için....]
+
+=== 2.3. Aritmetik tiplerde işlemler
+
+* Tüm karakter(character), tamsayı(integer) ve kayan nokta(floating point) türleri aritmetiktir
+* Aritmetik işlemler: +, -, *, /
+* Karşılaştırma: <, >, <=, >=, == return bool
+* a += 1 ⇔ a = a + 1, benzer şekilde -=, *=, /=, etc.
+* Kayan nokta( floating point) türleri için *==* kullanmaktan kaçının 
+* Boolean değişkenlerinin mantıksal işlemleri vardır;
+
+veya(or): *||*  ve(and): *&&*  değil(not): *!*
+
+[source,cpp]
+----
+1 bool mutlu_mu = (!ac && sıcak) || zengin_mi;
+----
+* Tamsayı değişkenleri üzerinde ek işlemler:
+
+*/* tamsayı bölümü: 7 / 3 == 2 
+
+*%* modüler bölümü: 7 / 3 == 1
+
+Arttırma Operatörü: a{plus}{plus} ⇔ ++a ⇔ a += 1
+
+Azaltma Operatörü: a-- ⇔ --a ⇔ a -= 1
+
+[IMPORTANT]
+====
+Arttırma ve azaltma operatörlerini diğer ifedalerle kullanmayın.
+Örneğin; a = (a{plus}{plus}) + ++b
+====
+
+
+=== 2.4. Strings
+
+* std::string kullanmak için #include <string> kütüphanesini eklemek lazım
+
+* Strings ifadeler + ile birleştirilir
+
+* str nin boş olup olmadığını kontrol etmek için *str.empty()* kullanılır
+
+[source,cpp]
+----
+1 #include <iostream >
+2 #include <string >
+3 int main() {
+4 std::string hello = "Hello";
+5 std::cout << "Type your name:" << std::endl;
+6 std::string name = ""; // Init empty.
+7 std::cin >> name; // Read name.
+8 std::cout << hello + ", " + name + "!" << std::endl;
+9 return 0;
+10 }
+----
+
+=== 2.5. Sabit boyutlu diziler için std::array kullanılır
+
+* std::array kullanmak için #include<array>
+kütüphanesini eklemek lazım
+
+* Aynı tip verileri saklamak için kullanılır
+
+* Verilerden oluşur:
+[source,cpp]
+----
+array<float, 3> arr = {1.0f, 2.0f, 3.0f};
+----
+* *arr[i]* ile ögelere erişilir, indeks 0 ile başlar
+ 
+* Depolanan öğe sayısı: *arr.size()* ile bulunur
+
+* İlk elemana ulaşmak için *arr.front() == arr[0]* ifadesi kullanılır
+ 
+* Son elemana ulaşmak için *arr.back() == arr[arr.size() - 1]* ifadesi kullanılır
+ 
+=== 2.6. Bilinmeyen boyutlu diziler için std::vector kullanılır
+
+* std::vector kullanmak için #include<vector>
+kütüphanesini eklemek lazım
+
+* Vektör dinamik bir tablo olarak uygulanır
+
+* Depolanan öğelere std :: array'deki gibi erişilir
+
+* Tüm ögeleri silmek için *vec.clear()* kullanılır
+
+* İki yoldan biriyle yeni bir öğe ekleyin:
+** vec.emplace_back(value) [tercihli, c++11]
+** vec.push_back(value) [tarihsel olarak daha iyi bilinen]
+
+* Kullanın! Hızlı ve esnektir!
+Bunun varsayılan bir kapsayıcı olduğunu düşünün aynı türden eşya koleksiyonlarını depolar
+
+==== 2.6.1. Vektörün boyutlandırılması 
+
+* *push_back/emplace_back* operatörleri birden fazla kez vektörün boyutunu değiştirebilir
+
+* *reserve(n)* vektörün *n* öğeyi saklamak için yeterli belleğe sahip olmasını sağlar
+
+* *n* parametresi yaklaşık bile olabilir, bu çok önemli bir optimizasyon
+
+[source , cpp]
+----
+1 std::vector <std::string > vec;
+2 const int kIterNum = 100;
+3 // Always call reserve when you know the size.
+4 vec.reserve(kIterNum);
+5 for (int i = 0; i < kIterNum; ++i) {
+6 vec.emplace_back("hello");
+7 }
+----
+==== 2.6.2. Vektör örneği
+
+[source , cpp]
+----
+1 #include <string >
+2 #include <vector >
+3 #include <iostream >
+4 using namespace std;
+5 int main() {
+6 vector <int> numbers = {1, 2, 3};
+7 vector <string > names = {"Igor", "Cyrill"};
+8 names.push_back("another_string");
+9 cout << "First name: " << names.front() << endl;
+10 cout << "Last number: " << numbers.back() << endl;
+11 return 0;
+12 }
+----
+
+=== 2.7. Değişkenlerin kapsam alanı
+
+* Tek bir global kapsam vardır 
+* Yerel kapsamlar *{}* ile biter 
+* Tüm değişkenler bildirildikleri kapsama aittir 
+* Tüm değişkenler kapsamlarının sonunda ölür 
+* Bu C ++ bellek sisteminin çekirdeğidir
+
+[source , cpp]
+----
+1 int main() { // Start of main scope.
+2 float some_float = 13.13f; // Create variable.
+3 { // New inner scope.
+4 auto another_float = some_float; // Copy variable.
+5 } // another_float dies.
+6 return 0;
+7 } // some_float dies.
+----
+
+==== 2.7.1. Herhangi bir değişken const(sabit) olabilir
+
