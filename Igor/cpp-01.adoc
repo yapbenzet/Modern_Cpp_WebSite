@@ -1,8 +1,6 @@
 = Bilgisayarlı Görü ve Görüntü İşleme için Modern C ++
 :TOC:
 
-
-
 == 1. ÖZET
 
 Bu seride değişkenler ve temel tipleri (built-in types(yerleşik tipler), strings(dizgi), vector, array(dizi)) ve control yapıları (if statement, switch statement, loops) örneklerle anlatılmaktadır.
@@ -207,4 +205,147 @@ Bunun varsayılan bir kapsayıcı olduğunu düşünün aynı türden eşya kole
 ----
 
 ==== 2.7.1. Herhangi bir değişken const(sabit) olabilir
+* Sabit bildirmek için const kullanın
+* Derleyici herhangi bir değişiklikten koruyacaktır
+* Anahtar kelime const herhangi bir tür ile kullanılabilir
+* GOOGLE-STYLE küçük bir k harfiyle başlayan CamelCase ad sabitleri:
+
+[source, cpp]
+----
+ const float kImportantFloat = 20.0f;
+ const int kSomeInt = 20;
+ const std::string kHello = "hello";
+----
+
+[TIP]
+====
+Değiştirilmemesi gereken değişkenleri *const* ile tanımla
+====
+
+=== 2.8. Değişkenlere referanslar
+
+* Herhangi bir değişkene referans oluşturabiliriz
+* Bir değişkenin bir referans olduğunu belirtmek için *&* kullanın
+
+[source , cpp]
+----
+//Referans türün bir parçasıdır
+float& ref = original_variable;
+//ref değişkeni float& tipine sahiptir
+std::string& hello_ref = hello;
+----
+* Bir referansa ne olursa değişkene de olur ayrıca tam terside geçerlidir
+* Referanslar veri kopyalamayı önlediğinden performans kazancı sağlar
+
+==== 2.8.1 Referans ile const kullanımı
+* Referanslar hızlıdır ancak kontrolü azaltır
+* İstenmeyen değişiklikleri önlemek için const kullanın
+
+[source, cpp]
+----
+const float& ref = original_variable;
+const std::string& hello_ref = hello;
+----
+
+.örnek uygulama
+[source, cpp]
+----
+1 #include <iostream >
+2 using namespace std;
+3 int main() {
+4 int num = 42;
+5 int& ref = num;
+6 const int& kRef = num;
+7 ref = 0;
+8 cout << ref << " " << num << " " << kRef << endl;
+9 num = 42;
+10 cout << ref << " " << num << " " << kRef << endl;
+11 return 0;
+12 }
+----
+
+=== 2.9 if ifadesi
+
+[source, cpp]
+----
+1 if (koşul) {
+2 // if koşulu == true ise bu kısım çalışır
+3 } else if (diğer_koşul) {
+4 // Bu kısım çalışır if:(koşul == false) && (diğer_koşul == true)
+5 } else {
+6 // İkiside doğru değilse burası çalştırılır
+7 }
+----
+* Koşula bağlı kod çalıştırmak için kullanılır
+* Gerekirse diğer tüm durumlar göz ardı edilebilir
+* Koşul, herhangi bir boole ifadesi olabilir
+
+=== 2.10. Switch ifadesi
+
+[source, cpp]
+----
+1 switch(Seçim) {
+2 case CONST_1:
+3 // CONST_1 secilmişse bu kısım çalışır
+4 break;
+5 case CONST_2:
+6 // CONST_2 secilmişse bu kısım çalışır
+7 break;
+8 default:
+9 // seçenekler dışında bir seçim yapılmışsa bu kısım çalışır
+10 }
+----
+
+* Seçime bağlı kod çalıştırmak için kullanılır
+* Çok sayıda vaka ifadesi olabilir
+* break deyimi switch bloğundan çıkarır
+* Seçim genellikle int veya enum değerini döndürür
+
+=== 2.11. Döngüler
+
+==== 2.11.1 While
+
+----
+ while (Koşul) {
+// koşul sağlandığı sürece döngü döner
+ }
+----
+
+.while döngüsü için örnek
+[source, cpp]
+----
+1 bool kosul = true;
+2 while (kosul) {
+3 kosul = /*Kosulun döngü içerisinde güncellenmesi */
+4 }
+----
+
+==== 2.11.2 For
+
+----
+for (başlangıç_koşulu; son_bulma_koşulu; artış) {
+// on_bulma_koşulu == false olana kadar döngü döner
+ }
+----
+
+.for döngüsü için örnek
+[source, cpp]
+----
+1 for (int i = 0; i < COUNT; ++i) {
+2 // COUNT kez döngü döner
+3 }
+----
+
+* C++ da for dögüsü çok hızlıdır
+* *while* döngüsünden daha az esnek ama hata eğilimide daha az
+* Döngünün son bulma koşulu bilindiğinde *for*  döngüsünün kullanımı tavsiye edilir
+* 
+
+
+
+
+
+
+
+
 
