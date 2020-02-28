@@ -1,0 +1,88 @@
+= Bilgisayarlı Görü ve Görüntü İşleme için Modern C ++
+:TOC:
+
+== 1. ÖZET
+
+Bu seride derleme, hata ayıklama, fonksiyonlar, üstbilgi / kaynak ayrımı, kütüphaneler ve CMake giriş örneklerle anlatılmaktadır.
+
+== 2. GİRİŞ
+
+=== 2.1.Compilation flags(Derleme Bayrağı)
+
+//Bu kısıma ne derece ayrıntılı bilgi vermem gerektiğini biilmediğimden bu kısmı sonra yazıcağım
+
+=== 2.2.Hata Ayıklama Araçları
+
+* En iyi seçenek gdb kullanmaktır
+* Fazlasıyla popüler ve güçlü
+* Dahili GUI yok
+* Kullanıcı dostu bir arayüz için gdbgui kullanın
+* Gdbgui'yi pip'ten yükleyin:
+* sudo pip3 install - yükseltme gdbgui
+
+Derleyici Gezgini ile çalıştırın: https://godbolt.org/
+
+
+=== 2.2.Fonksiyonlar
+
+[source, cpp]
+----
+1 ReturnType FuncName( ParamType1 in_1 , ParamType2 in_2) {
+2 // Some awesome code here.
+3 return return_value ;
+4 }
+----
+
+* Kod fonksiyonlar ile organize edilebilir
+* Fonksiyonlar bir kapsam(scope) oluşturur.
+* Bir fonksiyonun bir dönüş değeri vardır
+* Fonksiyonlar isimlendirilirken açık, anlaşılır adlandırma yapılmalı
+* Adlandırmada GOOGLE-STYLE klavuzunda yer alan CamelCase kullanılır
+
+.Kullanımı doğru olan fonksiyon örneği
+[source, cpp]
+----
+1 #include <vector >
+2 using namespace std;
+3 vector <int> CreateVectorOfFullSquares (int size) {
+4 vector <int> result(size); // Vector of size `size `
+5 for (int i = 0; i < size; ++i) { result[i] = i * i; }
+6 return result;
+7 }
+8
+9 int main () {
+10 auto squares = CreateVectorOfFullSquares (10);
+11 return 0;
+12 }
+----
+
+* Tüm kodu bir kerede anlaşılacak kadar yeterli mi
+* İsimlendirme, işlevin ne yaptığını açıkça belirtir
+* Fonksiyon tek bir şey yapar
+
+.Kullanımı yanlış olan fonksiyon örneği
+[source, cpp]
+----
+1 #include <vector >
+2 using namespace std;
+3 vector <int> Func(int a, bool b) {
+4 if (b) { return vector <int >(10 , a); }
+5 vector <int> vec(a);
+6 for (int i = 0; i < a; ++i) { vec[i] = a * i; }
+7 if (vec.size () > a * 2) { vec[a] /= 2.0f; }
+8 return vec;
+9 }
+----
+
+* Fonksiyonun adı hiçbir şey ifade etmiyor
+* Değişkenlerin isimleri hiçbir şey ifade etmiyor
+* Fonksiyonun tek bir amacı yok
+* Fonksiyonlar belli bir işi yapan ve tekrar tekrar kullanılabilen işlemler topluluklarıdır.
+* Fonksiyonları, programı anlamlı parçalara bölmek için ya da aynı kodun program içerisinde tekrar tekrar yazılmasını önlemek için kullanabiliriz.
+* Fonksiyonlar değer döndürmek zorunda olmamakla birlikte genellikle değer döndürürler
+
+=== 2.3.Bildirim ve Tanımlama
+
+* Bir fonksiyon programda kullanılmadan önce mutlaka protitipi veya gövdesiyle birlikte tanımlanmalıdır. Tanımlanmayan fonksiyon programda kullanılamaz.
+
+
