@@ -1,10 +1,10 @@
 #include <iostream>
-#include "stdafx.h"
+
 #include <stack>
 using namespace std;
-/* bu kodu visual studio projenizin içine kopyalayin
-örnek kod 3: stackin boyutunu ve dolulugunu kontrol etme
-çýktý
+/* bu kodu visual studio projenizin iï¿½ine kopyalayin
+ï¿½rnek kod 3: stackin boyutunu ve dolulugunu kontrol etme
+ï¿½ï¿½ktï¿½
 1
 eleman sayisi 0
 0
@@ -14,16 +14,16 @@ eleman sayisi 2
 
 int main() {
 
-	stack<int> s;     // boþ stack
+	stack<int> s;     // boï¿½ stack
 	bool e;
-	e = s.empty();     // stack boþ olduðu için 1 döner
+	e = s.empty();     // stack boï¿½ olduï¿½u iï¿½in 1 dï¿½ner
 	cout << e << endl;  // 1
-	cout << "eleman sayisi " << s.size() << endl;  // eleman sayýsý 0
+	cout << "eleman sayisi " << s.size() << endl;  // eleman sayï¿½sï¿½ 0
 
 	s.push(12);      // 12 ekledik
 	s.push(13);      // 13 ekledik
 
-	e = s.empty();    // stack dolu olduðu için 0 döner
+	e = s.empty();    // stack dolu olduï¿½u iï¿½in 0 dï¿½ner
 	cout << e << endl; // 0
 	cout << "eleman sayisi " << s.size() << endl;   // eleman sayisi 2
 	e=s.empty();

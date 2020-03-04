@@ -15,8 +15,8 @@ std::cout << m;
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -50,8 +50,8 @@ Aynı yöntem matris oluşturmak için de kullanılabilir.
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -82,8 +82,8 @@ Virgül öndeğeri aynı zamanda m.row(i) gibi blok ifadelerini doldurmak için 
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -116,8 +116,8 @@ Matrix ve Array sınıflarında Zero() gibi statik fonksiyonlar vardır. Bu fonk
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -162,8 +162,8 @@ Benzer şekilde, Constant(value) statik fonksiyonu tüm elemanları value değer
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;

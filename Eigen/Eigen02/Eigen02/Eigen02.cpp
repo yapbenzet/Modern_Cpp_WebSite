@@ -35,10 +35,11 @@ int main()
 	MatrixXf a(2, 2); a << 1, 2, 3, 4;
 	MatrixXf b(3, 3);
 	a = b;
-	cout << "a matrisinin deðerleri: " << a(1, 2) << " - cols =   " << a.cols() << endl; 
+	cout << "a matrisinin degerleri: " << a(1, 2) << " - cols =   " << a.cols() << endl; 
 
 
-	cout << endl<<endl<<" a deðeri = " << a(1, 2) << endl;
+	cout << endl<<endl<<" a degeri = " << a(1, 2) << endl;
+
 
 
 	Eigen::Matrix4f mat;
@@ -50,7 +51,15 @@ int main()
 	cout << "Atama sonrasi, m = " << endl << mat << endl;
 
 
+   //Matrix4d abc(10,15);
+
+    MatrixXd a2(2, 2); a << 1, 2, 3, 4;
+    MatrixXd b2(3, 3);
+    a2 = b2;
+    cout << "a2 matrisinin deÄŸerleri: " << a2(2,1) ;
+    cout << " -  " << a2.cols() << endl;
 
 
-	return 0;
+
+    return 0;
 }

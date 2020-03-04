@@ -1,10 +1,10 @@
 #include <iostream>
-#include "stdafx.h"
+
 #include <queue>
 using namespace std;
-/* bu kodu visual studio projenizin içine kopyalayin
-örnek kod 1: listenin ilk ve son elemanýný görme
-çýktý
+/* bu kodu visual studio projenizin iï¿½ine kopyalayin
+ï¿½rnek kod 1: listenin ilk ve son elemanï¿½nï¿½ gï¿½rme
+ï¿½ï¿½ktï¿½
 
 12  12
 12  13
@@ -13,10 +13,10 @@ using namespace std;
 
 int main() {
 
-	queue<int> q;    // boþ sira
+	queue<int> q;    // boï¿½ sira
 	q.push(12);      // siraya 12 ekledik
 	cout << q.front() << "  " << q.back() << endl;   // ilk eleman 12 son eleman 12
-	q.push(13);      // sýraya 13 ekledik
+	q.push(13);      // sï¿½raya 13 ekledik
 	cout << q.front() << "  " << q.back() << endl; // ilk eleman 12 son eleman 13
 
 

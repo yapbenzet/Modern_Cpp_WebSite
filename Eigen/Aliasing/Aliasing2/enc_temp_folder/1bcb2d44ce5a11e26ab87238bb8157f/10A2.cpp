@@ -1,6 +1,6 @@
-#include "stdafx.h" //Visual Studio icin.
+ //Visual Studio icin.
 #include <iostream>
-#include <Eigen>
+#include <Eigen/Dense>
 using namespace std;
 using namespace Eigen;
 

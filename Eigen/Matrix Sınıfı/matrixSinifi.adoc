@@ -84,8 +84,8 @@ Eigen'de ilkel eleman erişimi parantez operatörünün overload edilmesiyle yap
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -135,8 +135,8 @@ Bir matrisin mevcut boyutu rows(), cols() ve size() fonksiyonları ile okunabili
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -164,8 +164,8 @@ Bu fonksiyonlar sabit boyutlu matrisler için de geçerlidir. Tabii ki sabit boy
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -189,8 +189,8 @@ Atama, operator= ile bir matrisi bir diğerine kopyalama işlemidir. Eigen otoma
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;

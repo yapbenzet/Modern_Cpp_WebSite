@@ -25,7 +25,7 @@ New line tuşuna tıklayalım. Sonrasında Eigen kütüphanesini çıkardığım
 Kod ekranında, Eigen kütüphanesini kullanabilmek için 
 
 ----
-#include <Eigen> 
+#include <Eigen/Dense>
 
 using namespace Eigen; /* C++ ozelligi simdilik konu karismasin diye boyle yaziyoruz. */
 ----
@@ -35,8 +35,8 @@ satırlarını ekleyelim.
 
 [source,c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;

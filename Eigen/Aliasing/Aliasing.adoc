@@ -6,9 +6,9 @@
 .Örnek
 [source,c++]
 ----
-//#include "stdafx.h" Visual Studio icin.
+// Visual Studio icin.
 #include <iostream>
-#include <Eigen>
+#include <Eigen/Dense>
 using namespace std;
 using namespace Eigen;
 
@@ -59,9 +59,9 @@ Fakat bazı örtüşmeler çalışma zamanında tespit edilebilir. Aşağıdaki 
 .Örnek
 [source,]
 ----
-//#include "stdafx.h" //Visual Studio icin.
+// //Visual Studio icin.
 #include <iostream>
-#include <Eigen>
+#include <Eigen/Dense>
 using namespace std;
 using namespace Eigen;
 
@@ -95,9 +95,9 @@ Assertion failed: (!check_transpose_aliasing_run_time_selector <typename Derived
 .Örnek
 [source,]
 ----
-//#include "stdafx.h" //Visual Studio icin.
+// //Visual Studio icin.
 #include <iostream>
-#include <Eigen>
+#include <Eigen/Dense>
 using namespace std;
 using namespace Eigen;
 
@@ -134,9 +134,9 @@ After the assignment, mat =
 .Örnek
 [source,]
 ----
-//#include "stdafx.h" //Visual Studio icin.
+// //Visual Studio icin.
 #include <iostream>
-#include <Eigen>
+#include <Eigen/Dense>
 using namespace std;
 using namespace Eigen;
 
@@ -188,9 +188,9 @@ Bununla birlikte, bileşen tabanlı işlemleri uygulamak (matris ekleme ve skale
 .Örnek
 [source,]
 ----
-//#include "stdafx.h" //Visual Studio icin.
+// //Visual Studio icin.
 #include <iostream>
-#include <Eigen>
+#include <Eigen/Dense>
 using namespace std;
 using namespace Eigen;
 
@@ -243,9 +243,9 @@ Doing everything at once yields
 .Örnek
 [source,]
 ----
-//#include "stdafx.h" //Visual Studio icin.
+// //Visual Studio icin.
 #include <iostream>
-#include <Eigen>
+#include <Eigen/Dense>
 using namespace std;
 using namespace Eigen;
 
