@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include <iostream>
-#include <Eigen>
+#include <Eigen/Dense>
 
 
 using namespace Eigen;

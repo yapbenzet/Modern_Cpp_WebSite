@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include <Eigen>
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
