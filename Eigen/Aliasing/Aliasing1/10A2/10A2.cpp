@@ -1,6 +1,6 @@
-//#include "stdafx.h" Visual Studio icin.
+// Visual Studio icin.
 #include <iostream>
-#include <Eigen>
+#include <Eigen/Dense>
 using namespace std;
 using namespace Eigen;
 
@@ -12,7 +12,7 @@ int main()
 		   7, 8, 9;
 	cout << "Here is the matrix mat:\n" << mat << endl;
 	// This assignment shows the aliasing problem
-	mat.bottomRightCorner(2, 2) = mat.topLeftCorner(2, 2); //Sag köseye sol koseyi ata.
+	mat.bottomRightCorner(2, 2) = mat.topLeftCorner(2, 2); //Sag kï¿½seye sol koseyi ata.
 	cout << "After the assignment, mat = \n" << mat << endl;
 	/*
 	1 2 3		 1 2 3			1 2 3

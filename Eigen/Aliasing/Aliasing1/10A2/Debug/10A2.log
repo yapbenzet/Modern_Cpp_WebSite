@@ -1,2 +1,2 @@
 ﻿  10A2.cpp
-c:\users\nursena\source\repos\10a2\10a2\10a2.cpp(32): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+c:\users\nursena\source\repos\10a2\10a2\10a2.cpp(32): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '' to your source?

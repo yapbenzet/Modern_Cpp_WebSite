@@ -24,7 +24,7 @@ a -= b
 
 ----
 #include <iostream>
-#include <Eigen>
+#include <Eigen/Dense>
 
 using namespace Eigen;
 using namespace std;
@@ -132,7 +132,7 @@ a *= b
 
 
 ----
-#include <Eigen>
+#include <Eigen/Dense>
 #include <iostream>
 
 

@@ -1,10 +1,10 @@
 #include <iostream>
-#include "stdafx.h"
+
 #include <stack>
 using namespace std;
-/* bu kodu visual studio projenizin içine kopyalayin
-örnek kod 1: stacktan eleman cikarma
-çýktý
+/* bu kodu visual studio projenizin iï¿½ine kopyalayin
+ï¿½rnek kod 1: stacktan eleman cikarma
+ï¿½ï¿½ktï¿½
 12
 13
 12
@@ -12,13 +12,13 @@ using namespace std;
 
 int main() {
 
-	stack<int> s;    // boþ stack
+	stack<int> s;    // boï¿½ stack
 	s.push(12);
-	cout << s.top() << endl;   // top 12 yi gösteriyor
+	cout << s.top() << endl;   // top 12 yi gï¿½steriyor
 	s.push(13);      // stacka 13 ekledik
-	cout << s.top() << endl; // top þimdi 13 ü gösterir
-	s.pop();        // son eklenen elemaný cýkartýr (13)
-	cout << s.top();  // top þimdi 12 yi gösterir
+	cout << s.top() << endl; // top ï¿½imdi 13 ï¿½ gï¿½sterir
+	s.pop();        // son eklenen elemanï¿½ cï¿½kartï¿½r (13)
+	cout << s.top();  // top ï¿½imdi 12 yi gï¿½sterir
 
 	getchar();
 	return 0;

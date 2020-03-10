@@ -32,7 +32,7 @@ Parantez operatörü, matrislerle olduğu gibi bir dizinin katsayılarına yazma
 
 [source,C++]
 ----
-#include <Eigen>
+#include <Eigen/Dense>
 #include <iostream>
 using namespace Eigen;
 using namespace std;
@@ -327,7 +327,7 @@ Map<typename MatrixType,    int MapOptions,    typename StrideType>
 
 [source,C++]
 ----
-#include <Eigen>
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -371,8 +371,8 @@ Yeniden biçimlendirme işlemi, aynı katsayıları koruyarak bir matrisin boyut
 
 [source,C++]
 ----
-//#include "stdafx.h" //Visual Studio eklentisi
-#include <Eigen>
+// //Visual Studio eklentisi
+#include <Eigen/Dense>
 #include <iostream>
 using namespace Eigen;
 
@@ -405,9 +405,9 @@ Giriş matrisinin saklama sırasının doğrusal görünümde katsayıların sı
 
 [source,C++]
 ----
-//#include "stdafx.h" //VS eklentisi
+// //VS eklentisi
 #include <iostream>
-#include <Eigen>
+#include <Eigen/Dense>
 
 
 using namespace Eigen;

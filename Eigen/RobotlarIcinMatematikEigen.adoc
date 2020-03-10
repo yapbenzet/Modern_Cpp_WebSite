@@ -98,9 +98,9 @@ Eigen'de ilkel eleman erişimi parantez operatörünün overload edilmesiyle yap
 
 [source, c++]
 ----
-#include "stdafx.h"
+
 #include <iostream>
-#include <Eigen>
+#include <Eigen/Dense>
 
 
 int main()
@@ -204,8 +204,8 @@ Bir matrisin mevcut boyutu rows(), cols() ve size() fonksiyonları ile okunabili
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -233,8 +233,8 @@ Bu fonksiyonlar sabit boyutlu matrisler için de geçerlidir. Tabii ki sabit boy
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -258,8 +258,8 @@ Atama, operator= ile bir matrisi bir diğerine kopyalama işlemidir. Eigen otoma
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -358,8 +358,8 @@ Her iki versiyon da sabit ve dinamik boyutlu matris ve dizilerde kullanılabilir
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -390,8 +390,8 @@ Yukarıdaki örnekte .block() fonksiyonu rvalue olarak kullanıldı, yani sadece
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -435,8 +435,8 @@ col() ve row()'a gönderilen argüman erişilecek satır veya sütunun indeksidi
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -482,8 +482,8 @@ Bu örnek aynı zamanda blok ifadelerinin diğer ifadeler gibi aritmetik işleml
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -520,8 +520,8 @@ int main()
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;

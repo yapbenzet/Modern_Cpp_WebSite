@@ -1,5 +1,5 @@
 #include <iostream>
-#include "stdafx.h"
+
 #include <forward_list>
 using namespace std;
 // bu kodu visual studio projenizin içine kopyalayin

@@ -20,8 +20,8 @@ Her iki versiyon da sabit ve dinamik boyutlu matris ve dizilerde kullanılabilir
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -71,8 +71,8 @@ Yukarıdaki örnekte .block() fonksiyonu rvalue olarak kullanıldı, yani sadece
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -116,8 +116,8 @@ col() ve row()'a gönderilen argüman erişilecek satır veya sütunun indeksidi
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -176,8 +176,8 @@ Bu örnek aynı zamanda blok ifadelerinin diğer ifadeler gibi aritmetik işleml
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;
@@ -234,8 +234,8 @@ Atama sonrasi, m =
 
 [source, c++]
 ----
-#include "stdafx.h"
-#include <Eigen>
+
+#include <Eigen/Dense>
 #include <iostream>
 
 using namespace Eigen;

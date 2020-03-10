@@ -1,7 +1,7 @@
 ﻿// partitioncopy.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
+
 #include <algorithm>
 #include <array>
 #include <iostream>

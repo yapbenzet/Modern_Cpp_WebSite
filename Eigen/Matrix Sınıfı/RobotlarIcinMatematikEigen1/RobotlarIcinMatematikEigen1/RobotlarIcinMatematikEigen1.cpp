@@ -1,9 +1,9 @@
 // RobotlarIcinMatematikEigen1.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
+
 #include <iostream>
-#include <Eigen>
+#include <Eigen/Dense>
 
 using namespace Eigen;
 
@@ -13,16 +13,16 @@ int main()
 	
 	Matrix3i mat2;
 
-	//Atama iþlemleri
+	//Atama iï¿½lemleri
 
 	Eigen::Matrix2i a ; //2 x 2 'lik integer kare matris  2->2x2  i->integer.
 
-	//a = [1 2 3 4];  yanlýþ atama þekli
+	//a = [1 2 3 4];  yanlï¿½ï¿½ atama ï¿½ekli
 	//a = [1, 2 : 3, 4];
 
-	a << 1, 2,// atama iþlemi operator<< ile yapýlabilir.(Virgül ile atama)
+	a << 1, 2,// atama iï¿½lemi operator<< ile yapï¿½labilir.(Virgï¿½l ile atama)
 		 3, 4;
-	//veya tek tek indislere deðer verilir.
+	//veya tek tek indislere deï¿½er verilir.
 	a(0, 0) = 1;
 	a(0, 1) = 2;
 	a(1, 0) = 3;
@@ -31,17 +31,17 @@ int main()
 	std::cout << "a matrisi: " << std::endl << a << std::endl << std::endl;
 	std::cout << "a matrisi 1. sutun 1. satir degeri: "  << a(1, 1) << std::endl << std::endl;
 
-	Eigen::RowVector3d vec1; //  3 elemanlý double satýr vektörü 3->3 eleman d->double
+	Eigen::RowVector3d vec1; //  3 elemanlï¿½ double satï¿½r vektï¿½rï¿½ 3->3 eleman d->double
 
-     //vec1 << 0.5, 1.3; //Boyutu derlenme zamanýnda belirlenmiþ matris ve vektörlere virgül ile atama yapýlacaksa
-	//vec1(2) = 3.2;  // tüm elemanlara deðer verilmesi gerekmektedir.
+     //vec1 << 0.5, 1.3; //Boyutu derlenme zamanï¿½nda belirlenmiï¿½ matris ve vektï¿½rlere virgï¿½l ile atama yapï¿½lacaksa
+	//vec1(2) = 3.2;  // tï¿½m elemanlara deï¿½er verilmesi gerekmektedir.
 
 	//vec1 << 0.5, 1.3, 3.2;
 	//std::cout << vec1;
 //	std::cin.get();
 	//veya
 
-	//vec1(0, 0) = 0.5; typedef tanýmlý vektör için yanlýþ atama þekli
+	//vec1(0, 0) = 0.5; typedef tanï¿½mlï¿½ vektï¿½r iï¿½in yanlï¿½ï¿½ atama ï¿½ekli
 	//vec1(0, 1) = 1.3;
 	//vec1(0, 2) = 3.2;
 
@@ -51,10 +51,10 @@ int main()
 
 	std::cout << "vec1 satir vektoru: " << std::endl << vec1 << std::endl << std::endl;
 	
-	/*Eigen::MatrixXi b(5,3); // 5 satýr 3 sütunluk integer matris
+	/*Eigen::MatrixXi b(5,3); // 5 satï¿½r 3 sï¿½tunluk integer matris
 	std::cout << b << std::endl;
-	for (int i = 0; i < b.rows(); ++i)//b.rows() -> b matrisinin satýr sayýsý
-		for (int j = 0; j < b.cols(); ++j)//b.cols() -> b matrisinin sütun sayýsý
+	for (int i = 0; i < b.rows(); ++i)//b.rows() -> b matrisinin satï¿½r sayï¿½sï¿½
+		for (int j = 0; j < b.cols(); ++j)//b.cols() -> b matrisinin sï¿½tun sayï¿½sï¿½
 			b(i, j) = j + i*b.cols();
 
 	std::cout << "b matrisi: " << std::endl << b << std::endl << std::endl;
@@ -66,7 +66,7 @@ int main()
 	x(0,4) = 6;
 	std::cout << x;*/
 	/*
-	//Matrix<double, Dynamic, Dynamic> m;//Boyutu derlenme sýrasýnda belirlenmemiþ double matris
+	//Matrix<double, Dynamic, Dynamic> m;//Boyutu derlenme sï¿½rasï¿½nda belirlenmemiï¿½ double matris
 	*/
 	
 	Matrix<int, 3, 1> vector;
@@ -76,31 +76,28 @@ int main()
 	std::cout << vector << "vektorun normu  " << vector.norm() << std::endl;
 
 
-	//m << 0.0, 1.1, 2.2,// Matrisin boyutu henüz belli olmadýðý için 
-	//	   3.3, 4.4, 5.5;// girilen deðerlerin anlamý yoktur.
-<<<<<<< HEAD
+	//m << 0.0, 1.1, 2.2,// Matrisin boyutu henï¿½z belli olmadï¿½ï¿½ï¿½ iï¿½in 
+	//	   3.3, 4.4, 5.5;// girilen deï¿½erlerin anlamï¿½ yoktur.
 	/*
-	Matrix<double, Dynamic, Dynamic> a2(2, 3);//2 satýr 3 sütundan oluþan double matris
+	Matrix<double, Dynamic, Dynamic> a2(2, 3);//2 satï¿½r 3 sï¿½tundan oluï¿½an double matris
 	a2 << 0.0, 1.1, 2.2, 
    	     3.3, 4.4, 5.5;*/
 
 	//veya 
 
 //	MatrixXd b(2, 3);//MatrixXd --> X = Dynamic , d = double
-=======
-	
-	Matrix<double, Dynamic, Dynamic,RowMajor> a(2, 3);//2 satýr 3 sütundan oluþan double matris
-	a << 0.0, 1.1, 2.2, 
+
+	Matrix<double, Dynamic, Dynamic,RowMajor> a3(2, 3);//2 satï¿½r 3 sï¿½tundan oluï¿½an double matris
+	a3 << 0.0, 1.1, 2.2,
    	     3.3, 4.4, 5.5;
 	//veya 
-	std::cout << *(a.data()+1);
+	std::cout << *(a3.data()+1);
 	MatrixXd b(2, 3);//MatrixXd --> X = Dynamic , d = double
->>>>>>> 9c474fbe4ff1d1ae618612ee30f0e17d061896bd
-	//b << 0.0, 1.1, 2.2, Eleman sayýsýndan fazla eleman girilmiþ, hata verir.
+	//b << 0.0, 1.1, 2.2, Eleman sayï¿½sï¿½ndan fazla eleman girilmiï¿½, hata verir.
 	//	   3.3, 4.4, 5.5,
 	// 	   6.6, 7.7, 8.8;
 
-	//Blok iþlemleri
+	//Blok iï¿½lemleri
 
     return 0;
 }

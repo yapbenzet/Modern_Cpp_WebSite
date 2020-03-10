@@ -1,6 +1,6 @@
 #include <iostream>
 #include <forward_list>
-#include "stdafx.h"
+
 using namespace std;
 /* bu kodu visual studio projenizin içine kopyalayın
 örnek kod 1: push_front ve pop_front fonksiyonlarını kullanma
