@@ -55,6 +55,7 @@ int main()
 	//sinir bazli for donguleri arrayler ile calismaktadir
 	for (auto &elem : myArray)
 	{
+		elem = elem * 2;
 		cout << elem << " " ;
 	}
 	cout << endl;
@@ -64,6 +65,7 @@ int main()
 
 	for (const auto &elem : myArray)
 	{
+		elem = elem / 2;
 		cout << elem << " ";
 	}
 	cout << endl;

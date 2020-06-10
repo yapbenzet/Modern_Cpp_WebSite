@@ -1,3 +1,3 @@
-﻿  array.cpp
-  ConsoleApplication9.vcxproj -> c:\users\alperen\documents\visual studio 2017\Projects\ConsoleApplication9\Debug\ConsoleApplication9.exe
-  ConsoleApplication9.vcxproj -> c:\users\alperen\documents\visual studio 2017\Projects\ConsoleApplication9\Debug\ConsoleApplication9.pdb (Partial PDB)
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (ConsoleApplication9.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  array.cpp
+d:\githubonline\modern_cpp_website\stl\array\array visual studio\consoleapplication9\array.cpp(68): error C3892: 'elem': you cannot assign to a variable that is const
