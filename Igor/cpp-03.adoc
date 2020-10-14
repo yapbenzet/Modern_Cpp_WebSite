@@ -1,0 +1,8 @@
+= Bilgisayarlı Görü ve Görüntü İşleme için Modern C ++
+:TOC:
+
+== 1. ÖZET
+
+== 2. GİRİŞ
+
+== Referanslar

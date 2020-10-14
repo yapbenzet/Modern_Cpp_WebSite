@@ -3,13 +3,57 @@
 
 == 1. ÖZET
 
-Bu seride derleme, hata ayıklama, fonksiyonlar, üstbilgi / kaynak ayrımı, kütüphaneler ve CMake giriş örneklerle anlatılmaktadır.
+Bu seride derleme, hata ayıklama, fonksiyonlar, üstbilgi / kaynak ayrımı, kütüphaneler ve CMake'e giriş örneklerle anlatılmaktadır.
 
 == 2. GİRİŞ
 
 === 2.1.Compilation flags(Derleme Bayrağı)
 
-//Bu kısıma ne derece ayrıntılı bilgi vermem gerektiğini biilmediğimden bu kısmı sonra yazıcağım
+Kodu derlerken aldığımız hatalar sonucu bir çok compilation flags kullanırız.Komut satırına *c++ --help*
+yazdığımızda kullanabileceğimiz bir cok parametreyi listelenmiş şekilde görürüz.
+
+* En yaygın GCC ve Clang compilation flags(derleyici bayrakları):
+
+** Std - C ++ sürümünü veya ISO standart sürümünü belirtir.
+
+*** -std=c++11 (ISO C++11)
+*** -std=c++14 (ISO C++14)
+*** -std=c++1z (ISO C++17)
+*** -std=c++20 (C++20 experimental)
+*** -std=gnu++ (ISO C++ with GNU extensions)
+
+** W uyarı anlamına gelir
+
+*** -Wall
+
+Çok sayıda derleyici uyarı işaretini döndürür, özellikle (-Waddress, -Wcomment, -Wformat, -Wbool-compare, -Wuninitialized, -Wunknown-pragmas, -Wunused-value, -Wunused-value …)
+
+*** -Werror
+
+Herhangi bir uyarıyı derleme hatasına dönüştürün.
+
+[NOTE]
+====
+-w ile Tüm uyarı mesajlarını engelleyin.
+
+-Wall, -Wextra, -Werror ile Tüm uyarıları etkinleştirin, hataları tespit edin.
+====
+
+** Optimizasyon seçenekleri:
+
+*** -O0 - no optimizations
+*** -O3 or -Ofast - full optimizations
+
+Her iki komutta aynı işi yapar bazen biri diğerine göre daha hızlıdır, bunu kodunuzda denereyek öğrenebilirsiniz.
+
+
+Eğer hata ayıklama yapmak için bir hata ayıklama aracı çalıştırmak istiyorsanız, hata ayıklama sembollerini tutmak için: **-g** kullanın.
+
+[NOTE]
+====
+Kodda neler olup bittiğini anlamak için bir araç,
+Compiler Explorer: https://godbolt.org/
+====
 
 === 2.2.Hata Ayıklama Araçları
 
@@ -23,7 +67,7 @@ Bu seride derleme, hata ayıklama, fonksiyonlar, üstbilgi / kaynak ayrımı, k�
 Derleyici Gezgini ile çalıştırın: https://godbolt.org/
 
 
-=== 2.2.Fonksiyonlar
+=== 2.3.Fonksiyonlar
 
 [source, cpp]
 ----
@@ -80,9 +124,138 @@ Derleyici Gezgini ile çalıştırın: https://godbolt.org/
 * Fonksiyonlar belli bir işi yapan ve tekrar tekrar kullanılabilen işlemler topluluklarıdır.
 * Fonksiyonları, programı anlamlı parçalara bölmek için ya da aynı kodun program içerisinde tekrar tekrar yazılmasını önlemek için kullanabiliriz.
 * Fonksiyonlar değer döndürmek zorunda olmamakla birlikte genellikle değer döndürürler
+* Fonksiyonlar çoğu arayüzde en kritik kısımdır, bu yüzden arayüz kurallarına dikkat edilmeli.
 
-=== 2.3.Bildirim ve Tanımlama
+==== 2.3.1.Bildirim ve Tanımlama
 
-* Bir fonksiyon programda kullanılmadan önce mutlaka protitipi veya gövdesiyle birlikte tanımlanmalıdır. Tanımlanmayan fonksiyon programda kullanılamaz.
+[source, C++]
+----
+donus_turu fonksiyon_ismi(Parametreler)
+{
+    //Fonksiyonun yapacağı işlem
+}
+----
+Bir fonksiyon kabaca yukarıdaki gibi tanımlanabilir.
+
+*Dönüş Türü:* Fonksiyonların bir dönüş değeri olabilir tanımlamada kullanılan dönüş değeri, değerin veri türüdür.Bazı fonksiyonlar istenen işlemleri bir değer döndürmeden gerçekleştirir.
+
+*Fonksiyon ismi:* Her fonksiyonun programda kullanılmak üzere bir ismi olmak zorundadır. Fonksiyon ismi, fonksiyonun işlevini de yansıtmalıdır.Fonksiyon isimlerinde kullanılması önerilen *camelCase* isimlendirme yöntemidir.
+
+*Parametreler:* Her fonksiyon parametre almak zorunda değildir. İşlevine göre farklılık gösterir. Aldığı parametre belirtilirken değişken tanımlamada olduğu gibi önce parametrenin veri tipi daha sonra da ismi bildirilir. Her parametreye kendi veri türü belirtilmedilir.
+
+*Fonksiyon Gövdesi:* Burada fonksiyonun yapacağı işlemler yazılır.**Fonksiyonlara bir den fazla iş verilmesi tavsiye edilmez.**
+
+Bir fonksiyon programda kullanılmadan önce mutlaka protitipi veya gövdesiyle birlikte tanımlanmalıdır. Tanımlanmayan fonksiyon programda kullanılamaz.
+
+.İyi tanımlanmış fonksiyon örneği
+[source, C++]
+----
+1 #include <vector >
+2 using namespace std;
+3 vector <int> CreateVectorOfFullSquares (int size) {
+4 vector <int> result(size); // Vector of size `size `
+5 for (int i = 0; i < size; ++i) { result[i] = i * i; }
+6 return result;
+7 }
+8
+9 int main () {
+10 auto squares = CreateVectorOfFullSquares (10);
+11 return 0;
+12 }
+----
+
+* Fonksiyonun adı fonksiyonun işlevi hakkında fikir verir.
+* Değişken isimleri kodun okunabilirliğini artırır.
+* Fonksiyonun tek bir görevi vardır.
+
+.Kötü tanımlanmış fonksiyon örneği
+[source, C++]
+----
+1 #include <vector >
+2 using namespace std;
+3 vector <int> Func(int a, bool b) {
+4 if (b) { return vector <int >(10 , a); }
+5 vector <int> vec(a);
+6 for (int i = 0; i < a; ++i) { vec[i] = a * i; }
+7 if (vec.size () > a * 2) { vec[a] /= 2.0f; }
+8 return vec;
+9 }
+----
+
+* Fonksiyonun adı fonksiyonun işlevi hakkında fikir vermez bir anlam ifade etmez.
+* a, b gibi kısa değişken isimleri kodun okunabilirliğini azaltır.
+* Fonksiyonun tek birden fazla görevi vardır.
+
+==== 2.3.2 Fonksiyonların Çağrılması
+
+image::download.png[]
+
+* Pass by reference:
+** void fillCup(Cup &cup);
+** cup is full
+* Pass by value:
+** void fillCup(Cup cup);
+** A copy of cup is full
+** cup is still empty
 
 
+[NOTE]
+====
+Pass by reference: Programlama dillerinde, fonksiyon çağırma işlemi sırasında kullanılan yöntemlerden birisidir. Farklı kaynaklarda atıf geçirme ( pass by reference ) olarak da geçmektedir. Genelde bir programlama dilinin standart çağrıma yöntemi değer ile çağırmadır (call by value) ancak gösterici (pointer) desteği olan dillerde bu standart çağırma yöntemine ilave olarak atıf ile çağırmak da mümkündür.
+
+Bu yöntemde fonksiyona parametre (argüman) olarak bir değer vermek yerine bir gösterici (pointer) referansı verilir. Dolayısıyla fonksiyonun içindeki bir yerel değişken (local variable), fonksiyonun çağrıldığı yerdeki bir değeri göstermiş olur. Bu sayede fonksiyonda bu gösterici marifetiyle yapılan bütün işlemler fonksiyonun çağrılması sırasında parametre olarak verilen değer üzerine de etkili olur.
+====
+
+[source, C++]
+----
+#include <iostream>
+using namespace std;
+void f(int *p){
+   *p=20;
+}
+int main(){
+   int a=10;
+   f(&a);
+   cout<<a;
+}
+----
+yukarıdaki kodda bulunan f fonksiyonuna a değişkeninin adresi (referansı) verilmiştir. Bu sayede f fonksiyonundaki parametre değişkeni olan p, a değişkeninin hafızadaki adresini göstermiş olur.
+
+*Çözüm: Sabit referansları kullanın*
+
+* İşleve const başvurusu iletin
+* Bir referansı geçerken harika hız
+* Geçilen nesne bozulmadan kalır
+
+[source, C++]
+----
+1 void DoSmth(const std :: string& huge_string );
+----
+
+* Tüm fonksiyon argümanları için snake_case kullanın
+* Sabit olmayan referanslar çoğunlukla C ++ 11'den önce yazılmış eski kodlarda kullanılır.
+* Yararlı olabilirler ancak okunabilirliği bozarlar
+* https://google.github.io/styleguide/cppguide.html#Reference_Arguments[GOOGLE-STYLE] Sabit olmayan referansları kullanmaktan kaçının
+
+==== 2.3.3. Fonksiyon Aşırı Yükleme(Function Overloading)
+
+* Derleyici, bağımsız değişkenlerden bir işlev çıkarır
+* İade türüne göre aşırı yükleme yapılamaz
+* Dönüş türü hiçbir rol oynamaz
+* https://google.github.io/styleguide/cppguide.html#Reference_Arguments[GOOGLE-STYLE] Belirgin olmayan aşırı yüklemelerden kaçının
+
+[source, C++]
+----
+1 #include <iostream >
+2 #include <string >
+3 using namespace std;
+4 string Func(int num) { return "int"; }
+5 string Func(const string& str) { return "string"; }
+6 int main () {
+7 cout << Func (1) << endl;
+8 cout << Func("hello") << endl;
+9 return 0;
+10 }
+----
+
+== Referanslar
