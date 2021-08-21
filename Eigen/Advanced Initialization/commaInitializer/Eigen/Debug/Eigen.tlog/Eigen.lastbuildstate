@@ -1,2 +1,2 @@
-#TargetFrameworkVersion=v4.0:PlatformToolSet=v141:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=10.0.15063.0
-Debug|Win32|C:\Users\faruk\documents\visual studio 2017\Projects\Eigen\|
+PlatformToolSet=v142:VCToolArchitecture=Native32Bit:VCToolsVersion=14.28.29333:TargetPlatformVersion=10.0.18362.0:
+Debug|Win32|C:\Users\binne\Documents\GitHub\CPP\Modern_Cpp_WebSite\Eigen\Advanced Initialization\commaInitializer\|

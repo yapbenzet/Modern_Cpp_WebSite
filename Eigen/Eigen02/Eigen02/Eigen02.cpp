@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <Eigen/Dense>
 
@@ -34,7 +33,6 @@ int main()
 	//a = b;
 	//cout << "a matrisinin de�erleri: " << a(1, 2) << " - cols =   " << a.cols() << endl; 
 
-		*/
 	MatrixXf a(2, 2); a << 1, 2, 3, 4;
 	MatrixXf b(3, 3);
 	a = b;

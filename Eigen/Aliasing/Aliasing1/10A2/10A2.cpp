@@ -6,14 +6,25 @@ using namespace Eigen;
 
 int main()
 {
-	MatrixXi mat(3, 3); //3x3'luk matris
-	mat << 1, 2, 3, 
-		   4, 5, 6, 
-		   7, 8, 9;
-	cout << "Here is the matrix mat:\n" << mat << endl;
-	// This assignment shows the aliasing problem
-	mat.bottomRightCorner(2, 2) = mat.topLeftCorner(2, 2); //Sag k�seye sol koseyi ata.
-	cout << "After the assignment, mat = \n" << mat << endl;
+   // MatrixXi mat(3, 3);
+    //mat << 1, 2, 3,
+            4, 5, 6,
+            7, 8, 9;
+    //mat.bottomRightCorner(2, 2) = mat.topLeftCorner(2, 2);
+   // cout << "mat = \n" << mat << endl;
+
+//cout<<"mat 0 " << mat.topRows(0)<< std::endl;
+ //   cout<<"mat 1 " << mat.topRows(1)<< std::endl;
+
+
+
+    Matrix<int, 2, 4> m;
+
+    m.resize(5, 8);
+
+    cout << "Eleman sayisi: " << m.size() << endl;
+
+
 	/*
 	1 2 3		 1 2 3			1 2 3
 	4 5 6   ->	 4 1 2			4 1 2

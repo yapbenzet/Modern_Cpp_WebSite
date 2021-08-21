@@ -2,6 +2,8 @@
 //
 
 //
+
+#include "stdafx.h"
 #include <Eigen/Dense>
 #include <iostream>
 
@@ -22,4 +24,3 @@ int main()
 
 	return 0;
 }
-
