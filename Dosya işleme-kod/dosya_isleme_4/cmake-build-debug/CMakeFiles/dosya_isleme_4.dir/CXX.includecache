@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/ozden/CLionProjects/dosya_isleme_4/main.cpp
+/mnt/c/GITHUBONLINE/CPP/Modern_Cpp_WebSite/Dosya işleme-kod/dosya_isleme_4/main.cpp
 iostream
 -
 fstream

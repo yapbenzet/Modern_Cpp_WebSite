@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/ozden/CLionProjects/dosya_isleme_4/main.cpp" "C:/Users/ozden/CLionProjects/dosya_isleme_4/cmake-build-debug/CMakeFiles/dosya_isleme_4.dir/main.cpp.obj"
+  "/mnt/c/GITHUBONLINE/CPP/Modern_Cpp_WebSite/Dosya işleme-kod/dosya_isleme_4/main.cpp" "/mnt/c/GITHUBONLINE/CPP/Modern_Cpp_WebSite/Dosya işleme-kod/dosya_isleme_4/cmake-build-debug/CMakeFiles/dosya_isleme_4.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

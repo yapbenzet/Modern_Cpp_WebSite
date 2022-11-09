@@ -1,9 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/dosya_isleme_4.dir/main.cpp.obj"
+  "CMakeFiles/dosya_isleme_4.dir/main.cpp.o"
+  "dosya_isleme_4"
   "dosya_isleme_4.pdb"
-  "dosya_isleme_4.exe"
-  "dosya_isleme_4.exe.manifest"
-  "libdosya_isleme_4.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.

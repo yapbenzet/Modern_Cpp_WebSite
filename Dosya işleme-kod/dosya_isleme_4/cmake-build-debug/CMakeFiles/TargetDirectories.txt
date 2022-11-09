@@ -1,3 +1,3 @@
-C:/Users/ozden/CLionProjects/dosya_isleme_4/cmake-build-debug/CMakeFiles/dosya_isleme_4.dir
-C:/Users/ozden/CLionProjects/dosya_isleme_4/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/ozden/CLionProjects/dosya_isleme_4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/mnt/c/GITHUBONLINE/CPP/Modern_Cpp_WebSite/Dosya işleme-kod/dosya_isleme_4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/mnt/c/GITHUBONLINE/CPP/Modern_Cpp_WebSite/Dosya işleme-kod/dosya_isleme_4/cmake-build-debug/CMakeFiles/edit_cache.dir
+/mnt/c/GITHUBONLINE/CPP/Modern_Cpp_WebSite/Dosya işleme-kod/dosya_isleme_4/cmake-build-debug/CMakeFiles/dosya_isleme_4.dir

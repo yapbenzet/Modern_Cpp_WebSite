@@ -1,0 +1,10 @@
+Dersin Kodu        : BLM109
+
+Dersin Adı         : Nesneye Yönelik Programlama
+
+Öğretim Elemanları : Prof. Dr. [[Ahmet ERDİL]]	erdil@kocaeli.edu.tr	02623033223
+                     Prof. Dr. [[Ahmet SAYAR]]	ahmet.sayar@kocaeli.edu.tr	02623033583
+                     Prof. Dr. [[Hikmet Hakan GÜREL]]	hhakan.gurel@kocaeli.edu.tr	2623032215
+                     Dr. Öğr. Üyesi [[Alev MUTLU]	alev.mutlu@kocaeli.edu.tr	02623033577
+
+Dersin İçeriği     : Bu ders;nesneye yönelik problem çözme, sınıf, nesne kavramları, sınıf yapısı, kurucu ve yok ediciler, özel, korunmuş ve genel bölümler, sınıf içinde operatör ve fonksiyon isimlerinin yeniden yüklenmesi, türemiş sınıflar, sanal sınıflar, çok şekillilik,kalıtım ve uygulamaları kapsar. [[Görsel Programlama]] dersi ile destekli ilerlemektedir.
