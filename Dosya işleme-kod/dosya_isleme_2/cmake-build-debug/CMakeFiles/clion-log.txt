@@ -1,18 +1,16 @@
-"C:\Program Files\JetBrains\CLion 2017.2\bin\cmake\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Users\ozden\CLionProjects\dosya_isleme_2
--- The C compiler identification is GNU 7.1.0
--- The CXX compiler identification is GNU 7.1.0
--- Check for working C compiler: C:/Program Files (x86)/mingw-w64/i686-7.1.0-posix-dwarf-rt_v5-rev0/mingw32/bin/gcc.exe
--- Check for working C compiler: C:/Program Files (x86)/mingw-w64/i686-7.1.0-posix-dwarf-rt_v5-rev0/mingw32/bin/gcc.exe -- works
+C:\Users\binne\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\222.4345.21\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/Users/binne/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/222.4345.21/bin/ninja/win/ninja.exe -G Ninja -S "C:\GITHUBONLINE\CPP\Modern_Cpp_WebSite\Dosya işleme-kod\dosya_isleme_2" -B "C:\GITHUBONLINE\CPP\Modern_Cpp_WebSite\Dosya işleme-kod\dosya_isleme_2\cmake-build-debug"
+-- The C compiler identification is MSVC 19.29.30146.0
+-- The CXX compiler identification is MSVC 19.29.30146.0
 -- Detecting C compiler ABI info
 -- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Tools/MSVC/14.29.30133/bin/Hostx86/x86/cl.exe - skipped
 -- Detecting C compile features
 -- Detecting C compile features - done
--- Check for working CXX compiler: C:/Program Files (x86)/mingw-w64/i686-7.1.0-posix-dwarf-rt_v5-rev0/mingw32/bin/g++.exe
--- Check for working CXX compiler: C:/Program Files (x86)/mingw-w64/i686-7.1.0-posix-dwarf-rt_v5-rev0/mingw32/bin/g++.exe -- works
 -- Detecting CXX compiler ABI info
 -- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Tools/MSVC/14.29.30133/bin/Hostx86/x86/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: C:/Users/ozden/CLionProjects/dosya_isleme_2/cmake-build-debug
+-- Build files have been written to: C:/GITHUBONLINE/CPP/Modern_Cpp_WebSite/Dosya işleme-kod/dosya_isleme_2/cmake-build-debug
