@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/faruk/CLionProjects/erisimBelirleyicilerOrnek/main.cpp" "C:/Users/faruk/CLionProjects/erisimBelirleyicilerOrnek/cmake-build-debug/CMakeFiles/erisimBelirleyicilerOrnek.dir/main.cpp.obj"
+  "/mnt/c/GithubONLINE/YAPBENZET-WORKSPACE/Modern_Cpp_WebSite/Erişim Belirleyiciler/erisimBelirleyicilerOrnek/main.cpp" "/mnt/c/GithubONLINE/YAPBENZET-WORKSPACE/Modern_Cpp_WebSite/Erişim Belirleyiciler/erisimBelirleyicilerOrnek/cmake-build-debug/CMakeFiles/erisimBelirleyicilerOrnek.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

@@ -9,7 +9,7 @@ int main()
 
     names.push_back("Tom");
     //push_back(): Sona eleman ekleme.
-    names.push_back("Dick");
+    names.push_back("Nick");
     names.push_back("Harry");
     names.push_back("Juliet");
 

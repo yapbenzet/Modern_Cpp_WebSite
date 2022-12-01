@@ -4,4 +4,5 @@ project(erisimBelirleyicilerOrnek)
 set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCE_FILES main.cpp)
+
 add_executable(erisimBelirleyicilerOrnek ${SOURCE_FILES})

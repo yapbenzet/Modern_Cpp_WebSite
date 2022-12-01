@@ -1,9 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/erisimBelirleyicilerOrnek.dir/main.cpp.obj"
+  "CMakeFiles/erisimBelirleyicilerOrnek.dir/main.cpp.o"
+  "erisimBelirleyicilerOrnek"
   "erisimBelirleyicilerOrnek.pdb"
-  "erisimBelirleyicilerOrnek.exe"
-  "erisimBelirleyicilerOrnek.exe.manifest"
-  "liberisimBelirleyicilerOrnek.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.

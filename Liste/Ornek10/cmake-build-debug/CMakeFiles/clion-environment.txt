@@ -1,3 +1,4 @@
-ToolSet: w64 5.0@C:\Program Files (x86)\mingw-w64\i686-7.1.0-posix-dwarf-rt_v5-rev1\mingw32
+ToolSet: 17.0 (local)@C:\Program Files\Microsoft Visual Studio\2022\Community
 Options: 
-CMake: 3.8.2@C:\Program Files\JetBrains\CLion 2017.2\bin\cmake\bin\cmake.exe
+
+Options:-DCMAKE_MAKE_PROGRAM=C:/Users/binner/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/222.4345.21/bin/ninja/win/ninja.exe

@@ -1,3 +1,3 @@
-C:/Users/Nursena/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/untitled1.dir
-C:/Users/Nursena/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Nursena/CLionProjects/untitled1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/GithubONLINE/YAPBENZET-WORKSPACE/Modern_Cpp_WebSite/Liste/Ornek2/cmake-build-debug/CMakeFiles/untitled1.dir
+C:/GithubONLINE/YAPBENZET-WORKSPACE/Modern_Cpp_WebSite/Liste/Ornek2/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/GithubONLINE/YAPBENZET-WORKSPACE/Modern_Cpp_WebSite/Liste/Ornek2/cmake-build-debug/CMakeFiles/rebuild_cache.dir

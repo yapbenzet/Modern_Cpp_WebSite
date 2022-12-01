@@ -5,7 +5,7 @@
 #include <iostream>
 
 template <typename T>
-const T& max(const T& x, const T& y){
+const T& myMax(const T& x, const T& y){
     return (x > y) ? x : y;
 }
 
@@ -21,6 +21,6 @@ int main()
 {
     Para besLira(5);
     Para onLira(10);
-    Para buyuk = max(besLira, onLira);
+    Para buyuk = myMax(besLira, onLira);
     return 0;
 }

@@ -69,7 +69,7 @@ Bir fonksiyon programda kullanılmadan önce mutlaka protitipi veya gövdesiyle 
 
 
 **Fonksiyonların Bir Değerle Çağrılması**
-[source,C++]
+[source,cpp]
 ----
 //swap fonksiyonu x ve y değişkenlerinin yerini değiştirir
 void swap(int x, int y) {
@@ -85,7 +85,7 @@ void swap(int x, int y) {
 Yukarıdaki fonksiyon aldığı iki parametreye göre x ve y değişkenlerinin yerini değiştirir fakat bu fonksiyonun yaptığı yer değiştirme işlemi fonksiyon blokları içerisinde geçerlidir. Çünkü tanımlanan değişkenler ve aldığı parametreler fonksiyonun skop alanı içerisinde kalmaktadır. 
 
 Örneğin;
-[source,C++]
+[source,cpp]
 ----
 #include <iostream>
 

@@ -21,6 +21,10 @@ int main()
 
     sayilar.sort(); //Ard arda oldugunda tekrar onlendigi icin siralama yapildi.
     //sort(): Kucukten buyuge siralar.
+    for (auto i : sayilar)
+        std::cout << ' ' << i;
+    std::cout << '\n';
+
     sayilar.unique();
     std::cout << "Tekrarsiz: ";
     for (auto i : sayilar)

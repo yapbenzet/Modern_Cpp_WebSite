@@ -34,6 +34,6 @@ int main()
     list<string> kelime3(kelime.begin(), kelime.end()); // kelimenin başlangıcından sonuna kelime3'e atar.
     cout << kelime3 <<endl;
 
-    list<string> kelime4(5, "La"); //5 tane Mo ekler
+    list<string> kelime4(5, "Merhaba"); //5 tane Mo ekler
     cout << kelime4 <<endl;
 }

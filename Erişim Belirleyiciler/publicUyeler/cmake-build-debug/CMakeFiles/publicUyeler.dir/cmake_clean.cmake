@@ -1,9 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/publicUyeler.dir/main.cpp.obj"
+  "CMakeFiles/publicUyeler.dir/main.cpp.o"
+  "publicUyeler"
   "publicUyeler.pdb"
-  "publicUyeler.exe"
-  "publicUyeler.exe.manifest"
-  "libpublicUyeler.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.
