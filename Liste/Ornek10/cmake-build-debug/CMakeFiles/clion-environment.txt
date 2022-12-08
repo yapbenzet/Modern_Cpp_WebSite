@@ -1,4 +1,4 @@
 ToolSet: 17.0 (local)@C:\Program Files\Microsoft Visual Studio\2022\Community
 Options: 
 
-Options:-DCMAKE_MAKE_PROGRAM=C:/Users/binner/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/222.4345.21/bin/ninja/win/ninja.exe
+Options:-DCMAKE_MAKE_PROGRAM=C:/Users/binner/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/ninja/win/ninja.exe

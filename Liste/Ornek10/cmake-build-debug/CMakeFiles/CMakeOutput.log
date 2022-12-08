@@ -21,7 +21,7 @@ Compilation of the C compiler identification source "CMakeCCompilerId.c" produce
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.obj"
 
-The C compiler identification is MSVC, found in "C:/GithubONLINE/YAPBENZET-WORKSPACE/Modern_Cpp_WebSite/Liste/Ornek10/cmake-build-debug/CMakeFiles/3.23.2/CompilerIdC/CMakeCCompilerId.exe"
+The C compiler identification is MSVC, found in "C:/GithubONLINE/YAPBENZET-WORKSPACE/Modern_Cpp_WebSite/Liste/Ornek10/cmake-build-debug/CMakeFiles/3.24.2/CompilerIdC/CMakeCCompilerId.exe"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.34.31933/bin/Hostx86/x86/cl.exe 
@@ -45,21 +45,21 @@ Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" p
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
 
-The CXX compiler identification is MSVC, found in "C:/GithubONLINE/YAPBENZET-WORKSPACE/Modern_Cpp_WebSite/Liste/Ornek10/cmake-build-debug/CMakeFiles/3.23.2/CompilerIdCXX/CMakeCXXCompilerId.exe"
+The CXX compiler identification is MSVC, found in "C:/GithubONLINE/YAPBENZET-WORKSPACE/Modern_Cpp_WebSite/Liste/Ornek10/cmake-build-debug/CMakeFiles/3.24.2/CompilerIdCXX/CMakeCXXCompilerId.exe"
 
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: C:/GithubONLINE/YAPBENZET-WORKSPACE/Modern_Cpp_WebSite/Liste/Ornek10/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Users/binner/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/222.4345.21/bin/ninja/win/ninja.exe cmTC_2b03b && [1/2] Building C object CMakeFiles\cmTC_2b03b.dir\CMakeCCompilerABI.c.obj
-[2/2] Linking C executable cmTC_2b03b.exe
+Run Build Command(s):C:/Users/binner/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/ninja/win/ninja.exe cmTC_1e95b && [1/2] Building C object CMakeFiles\cmTC_1e95b.dir\CMakeCCompilerABI.c.obj
+[2/2] Linking C executable cmTC_1e95b.exe
 
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: C:/GithubONLINE/YAPBENZET-WORKSPACE/Modern_Cpp_WebSite/Liste/Ornek10/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Users/binner/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/222.4345.21/bin/ninja/win/ninja.exe cmTC_cdec8 && [1/2] Building CXX object CMakeFiles\cmTC_cdec8.dir\CMakeCXXCompilerABI.cpp.obj
-[2/2] Linking CXX executable cmTC_cdec8.exe
+Run Build Command(s):C:/Users/binner/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/ninja/win/ninja.exe cmTC_3af74 && [1/2] Building CXX object CMakeFiles\cmTC_3af74.dir\CMakeCXXCompilerABI.cpp.obj
+[2/2] Linking CXX executable cmTC_3af74.exe
 
 
 

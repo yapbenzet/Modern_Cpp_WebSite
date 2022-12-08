@@ -5,4 +5,4 @@ project(modern_cpp_web_site)
 set(CMAKE_CXX_STANDARD 20)
 
 
-add_executable(merhaba merhaba.cpp)
+add_executable(Giris_Merhaba merhaba.cpp)
