@@ -6,3 +6,4 @@ set(CMAKE_CXX_STANDARD 20)
 
 
 add_executable(Giris_Merhaba merhaba.cpp)
+

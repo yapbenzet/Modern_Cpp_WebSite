@@ -8,17 +8,17 @@ Site açıldıktan sonra download repository'e tıklayarak indirebilirsiniz. İn
 
 Visual Studio'da file->new->project dedikten sonra Visual C++ seçeneğini seçiniz. Yanda  Windows Console Application vardır. Bunu seçiniz.
 
-image::Pictures/Captureasdasdasd.png[]
+
 
 Projeye ad girip OK dedikten sonra karşınıza kod ekranı gelecektir.
 
 Burada project sekmesine tıklayıp propeties'e tıklamamız gerekmektedir. Properties ekranından Önce C/C++ sonra da General sekmesine tıklayalım. 
 
-image::Pictures/pro.png[]
+
 
 Additional include directories'e tıkladıktan sonra sağda bir ok gözükecektir. O oke tıklayıp edit diyelim.
 
-image::Pictures/additi.png[]
+
 
 New line tuşuna tıklayalım. Sonrasında Eigen kütüphanesini çıkardığımız yolu buraya girelim. Kaydedip kod ekranına geri dönelim.
 

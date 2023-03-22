@@ -1,9 +1,9 @@
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required (VERSION 3.2)
 
 project (modern_cpp)
 
 
-find_package (Eigen3 3.3 REQUIRED NO_MODULE)
+find_package (Eigen3 3 REQUIRED NO_MODULE)
 
 
 add_executable(Aliasin1 Aliasing/Aliasing1/10A2/10A2.cpp)

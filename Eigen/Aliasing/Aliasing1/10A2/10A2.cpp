@@ -6,23 +6,27 @@ using namespace Eigen;
 
 int main()
 {
-   // MatrixXi mat(3, 3);
-    //mat << 1, 2, 3,
+   MatrixXi mat(3, 3);
+    mat << 1, 2, 3,
             4, 5, 6,
             7, 8, 9;
-    //mat.bottomRightCorner(2, 2) = mat.topLeftCorner(2, 2);
-   // cout << "mat = \n" << mat << endl;
+	cout << "mat = \n" << mat << endl;
+	cout << "\n sol ust kose = \n" << mat.topLeftCorner(2, 2) << std::endl;
+	cout << "\n sag alt kose = \n" << mat.bottomRightCorner(2, 2) << std::endl;
+
+    mat.bottomRightCorner(2, 2) = mat.topLeftCorner(2, 2);
+	cout << "mat = \n" << mat << endl;
 
 //cout<<"mat 0 " << mat.topRows(0)<< std::endl;
  //   cout<<"mat 1 " << mat.topRows(1)<< std::endl;
 
 
 
-    Matrix<int, 2, 4> m;
+   // Matrix<int, 2, 4> m;
 
-    m.resize(5, 8);
+   // m.resize(5, 8);
 
-    cout << "Eleman sayisi: " << m.size() << endl;
+   // cout << "Eleman sayisi: " << m.size() << endl;
 
 
 	/*
